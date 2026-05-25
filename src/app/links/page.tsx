@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import Link from "next/link";
-import Cursor from "@/components/Cursor";
 import LinkCard from "@/components/ui/LinkCard";
 import { links, linkCategories } from "@/data/links";
 
@@ -32,7 +31,6 @@ export default function LinksPage() {
 
   return (
     <>
-      <Cursor />
       <div className="min-h-screen bg-[#030712] text-white">
         {/* Background */}
         <div className="fixed inset-0 grid-bg opacity-50 pointer-events-none" />
