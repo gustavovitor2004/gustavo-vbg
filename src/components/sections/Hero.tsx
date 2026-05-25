@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { socials } from "@/data/socials";
 import { PlatformIcon } from "@/components/ui/PlatformIcon";
+import { profile } from "@/config/site";
 
 export default function Hero() {
   return (
@@ -43,33 +44,35 @@ export default function Hero() {
         {/* ── Left: content ── */}
         <div className="flex-1" style={{ maxWidth: "420px" }}>
           {/* Available badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="inline-flex items-center gap-1.5 mb-4"
-            style={{
-              padding: "4px 12px 4px 8px",
-              borderRadius: "9999px",
-              background: "rgba(34,197,94,0.08)",
-              border: "1px solid rgba(34,197,94,0.2)",
-            }}
-          >
-            <span
-              className="animate-pulse"
+          {profile.availableForProjects && (
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+              className="inline-flex items-center gap-1.5 mb-4"
               style={{
-                display: "block",
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                background: "#22c55e",
-                flexShrink: 0,
+                padding: "4px 12px 4px 8px",
+                borderRadius: "9999px",
+                background: "rgba(34,197,94,0.08)",
+                border: "1px solid rgba(34,197,94,0.2)",
               }}
-            />
-            <span style={{ fontSize: "11px", color: "rgba(134,239,172,0.85)", fontWeight: 500 }}>
-              Available for projects
-            </span>
-          </motion.div>
+            >
+              <span
+                className="animate-pulse"
+                style={{
+                  display: "block",
+                  width: "6px",
+                  height: "6px",
+                  borderRadius: "50%",
+                  background: "#22c55e",
+                  flexShrink: 0,
+                }}
+              />
+              <span style={{ fontSize: "11px", color: "rgba(134,239,172,0.85)", fontWeight: 500 }}>
+                Available for projects
+              </span>
+            </motion.div>
+          )}
 
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
@@ -78,7 +81,7 @@ export default function Hero() {
             className="font-black leading-[1.06] text-white"
             style={{ fontSize: "clamp(1.9rem, 3.8vw, 2.75rem)" }}
           >
-            Find Me{" "}
+            {profile.name.split(" ")[0]}{" "}
             <span
               style={{
                 background: "linear-gradient(130deg, #c4b5fd 15%, #818cf8 85%)",
@@ -87,7 +90,7 @@ export default function Hero() {
                 backgroundClip: "text",
               }}
             >
-              Online
+              {profile.name.split(" ").slice(1).join(" ")}
             </span>
           </motion.h1>
 
@@ -99,7 +102,7 @@ export default function Hero() {
             className="font-medium mt-1.5"
             style={{ fontSize: "13px", color: "rgba(167,139,250,0.65)" }}
           >
-            Developer &amp; Content Creator
+            {profile.tagline}
           </motion.p>
 
           <motion.p
@@ -109,8 +112,7 @@ export default function Hero() {
             className="mt-3 leading-relaxed"
             style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.38)", maxWidth: "340px" }}
           >
-            Building things for the web and sharing the journey. Follow along for
-            projects, content, and community vibes.
+            {profile.bio}
           </motion.p>
 
           <motion.div
@@ -243,7 +245,7 @@ export default function Hero() {
               className="font-black select-none"
               style={{ fontSize: "58px", color: "rgba(255,255,255,0.88)", lineHeight: 1, zIndex: 3, position: "relative" }}
             >
-              G
+              {profile.orbLetter}
             </span>
           </div>
           {/* Front ring */}

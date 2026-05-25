@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { meta } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "YourName — Creator Hub",
-  description: "Developer, creator, and community builder. Explore my projects, Discord servers, and socials.",
+  title: meta.title,
+  description: meta.description,
   keywords: ["portfolio", "developer", "creator", "discord", "projects"],
   openGraph: {
-    title: "YourName — Creator Hub",
-    description: "Developer, creator, and community builder.",
+    title: meta.title,
+    description: meta.description,
     type: "website",
+    url: meta.siteUrl,
   },
 };
 

@@ -3,15 +3,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { navbar } from "@/config/site";
 
-const navLinks = [
-  { label: "Home", id: "home" },
-  { label: "Socials", id: "connect" },
-  { label: "Projects", id: "projects" },
-  { label: "Servers", id: "servers" },
-  { label: "Links", id: "links", href: "/links" },
-  { label: "About", id: "about" },
-];
+const navLinks = navbar.links.map((l) => ({
+  label: l.label,
+  id: l.href.replace(/^#/, "").replace(/^\//, ""),
+  href: l.href.startsWith("/") ? l.href : undefined,
+}));
 
 export default function Navbar() {
   const [active, setActive] = useState("home");
@@ -58,9 +56,9 @@ export default function Navbar() {
                 boxShadow: "0 2px 10px rgba(124,58,237,0.4)",
               }}
             >
-              N
+              {navbar.brand[0]}
             </div>
-            <span className="font-bold text-white text-sm tracking-tight">Gustavo VBG</span>
+            <span className="font-bold text-white text-sm tracking-tight">{navbar.brand}</span>
           </button>
 
           {/* Desktop nav — centered */}
@@ -112,15 +110,19 @@ export default function Navbar() {
           </nav>
 
           {/* CTA */}
-          <button
+          <a
+            href={navbar.cta.href}
+            target="_blank"
+            rel="noopener noreferrer"
             className="hidden md:flex items-center gap-2 text-sm font-semibold text-white rounded-xl shrink-0 transition-all duration-200 hover:opacity-90 active:scale-95"
             style={{
               padding: "8px 18px",
               background: "linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)",
               boxShadow: "0 0 20px rgba(124,58,237,0.35), 0 2px 8px rgba(0,0,0,0.3)",
+              textDecoration: "none",
             }}
           >
-            Get in Touch
+            {navbar.cta.label}
             <svg
               width="13"
               height="13"
@@ -134,7 +136,7 @@ export default function Navbar() {
               <path d="M22 2L11 13" />
               <path d="M22 2l-7 20-4-9-9-4 20-7z" />
             </svg>
-          </button>
+          </a>
 
           {/* Mobile hamburger */}
           <button
