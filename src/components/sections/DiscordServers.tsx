@@ -2,73 +2,301 @@
 
 import { motion, type Variants } from "framer-motion";
 import { discordServers } from "@/data/servers";
-import ServerCard from "@/components/ui/ServerCard";
-import SectionTitle from "@/components/ui/SectionTitle";
+import { totalCommunityMembers } from "@/config/site";
 
 const container: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
+  show: { transition: { staggerChildren: 0.1 } },
 };
 
 const item: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.52, ease: "easeOut" as const } },
 };
+
+const serverIconMap: Record<string, string> = {
+  "main-community": "⚡",
+  "dev-hub": "</>",
+  gaming: "🎮",
+  creative: "✦",
+};
+
+function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
+  const iconText = serverIconMap[server.id] ?? server.name[0];
+  const smallFont = iconText.length > 2;
+
+  return (
+    <motion.div
+      variants={item}
+      className="card-shine group"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        borderRadius: "18px",
+        overflow: "hidden",
+        background: "rgba(255,255,255,0.026)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        transition: "border-color 0.25s, box-shadow 0.25s, transform 0.25s",
+      }}
+      whileHover={{ y: -4, boxShadow: `0 16px 50px rgba(0,0,0,0.5), 0 0 0 1px ${server.color}22` }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLDivElement).style.borderColor = `${server.color}30`;
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.07)";
+      }}
+    >
+      {/* Top color strip */}
+      <div style={{ height: "3px", background: server.color, opacity: 0.65 }} />
+
+      <div style={{ padding: "22px 24px" }}>
+        <div style={{ display: "flex", alignItems: "flex-start", gap: "14px", marginBottom: "14px" }}>
+          {/* Icon */}
+          <div
+            style={{
+              width: "48px",
+              height: "48px",
+              borderRadius: "14px",
+              background: server.color,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: smallFont ? "11px" : "22px",
+              fontWeight: 900,
+              color: "#ffffff",
+              flexShrink: 0,
+              boxShadow: `0 4px 16px ${server.glowColor}`,
+              fontFamily: smallFont ? "'JetBrains Mono', monospace" : "inherit",
+            }}
+          >
+            {iconText}
+          </div>
+
+          {/* Name + member count */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <p
+              style={{
+                fontSize: "15px",
+                fontWeight: 700,
+                color: "#ffffff",
+                lineHeight: 1.25,
+                letterSpacing: "-0.01em",
+                marginBottom: "4px",
+              }}
+            >
+              {server.name}
+            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <span
+                style={{
+                  display: "block",
+                  width: "6px",
+                  height: "6px",
+                  borderRadius: "50%",
+                  background: "#22c55e",
+                  flexShrink: 0,
+                }}
+                className="animate-pulse"
+              />
+              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)", fontWeight: 500 }}>
+                {server.memberCount} members
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Description */}
+        <p
+          style={{
+            fontSize: "12.5px",
+            color: "rgba(255,255,255,0.36)",
+            lineHeight: 1.65,
+            marginBottom: "18px",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical" as const,
+            overflow: "hidden",
+          }}
+        >
+          {server.description}
+        </p>
+
+        {/* Join button */}
+        <a
+          href={server.inviteUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "7px",
+            width: "100%",
+            padding: "11px 0",
+            borderRadius: "11px",
+            background: `${server.color}1a`,
+            border: `1px solid ${server.color}30`,
+            color: server.color,
+            fontSize: "13px",
+            fontWeight: 700,
+            textDecoration: "none",
+            transition: "background 0.2s, box-shadow 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget as HTMLAnchorElement;
+            el.style.background = `${server.color}28`;
+            el.style.boxShadow = `0 0 20px ${server.glowColor}`;
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget as HTMLAnchorElement;
+            el.style.background = `${server.color}1a`;
+            el.style.boxShadow = "none";
+          }}
+        >
+          {/* Discord icon */}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.014.043.031.057a19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z" />
+          </svg>
+          Join Server
+        </a>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function DiscordServers() {
   return (
-    <section id="servers" className="py-24 px-4 sm:px-8 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#5865F2]/4 to-transparent pointer-events-none" />
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-[#5865F2]/6 rounded-full blur-[130px] pointer-events-none" />
+    <section
+      id="servers"
+      style={{ padding: "100px 0 80px", position: "relative" }}
+    >
+      {/* Background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 50% 60% at 80% 40%, rgba(88,101,242,0.08) 0%, transparent 70%)",
+        }}
+      />
 
-      <div className="max-w-5xl mx-auto relative">
-        <SectionTitle
-          badge="COMMUNITY"
-          title="Discord Servers"
-          subtitle="Communities I've built and run. Join thousands of members across gaming, dev, and creative spaces."
-          accentColor="text-[#5865F2]"
-        />
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 32px", position: "relative" }}>
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "space-between",
+            marginBottom: "48px",
+            flexWrap: "wrap",
+            gap: "16px",
+          }}
+        >
+          <div>
+            <p
+              style={{
+                fontSize: "11px",
+                fontWeight: 700,
+                color: "#5865F2",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                marginBottom: "8px",
+              }}
+            >
+              COMMUNITY
+            </p>
+            <h2
+              style={{
+                fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
+                fontWeight: 900,
+                color: "#ffffff",
+                lineHeight: 1.05,
+                letterSpacing: "-0.025em",
+              }}
+            >
+              Discord Servers
+            </h2>
+          </div>
+          <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.3)" }}>
+            Join thousands of members across gaming, dev, and creative spaces.
+          </p>
+        </motion.div>
 
+        {/* Server grid */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-5"
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "-60px" }}
+          style={{ marginBottom: "28px" }}
         >
           {discordServers.map((server) => (
-            <motion.div key={server.id} variants={item}>
-              <ServerCard server={server} />
-            </motion.div>
+            <ServerCard key={server.id} server={server} />
           ))}
         </motion.div>
 
-        {/* Total members banner */}
+        {/* Community stats banner */}
         <motion.div
-          className="mt-10 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
-          style={{
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(88,101,242,0.2)",
-            backdropFilter: "blur(12px)",
-          }}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.25 }}
+          transition={{ duration: 0.55, delay: 0.2 }}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "24px 32px",
+            borderRadius: "18px",
+            background: "rgba(88,101,242,0.07)",
+            border: "1px solid rgba(88,101,242,0.18)",
+            flexWrap: "wrap",
+            gap: "16px",
+          }}
         >
           <div>
-            <p className="text-white/35 text-xs mb-1 font-mono tracking-widest uppercase">
+            <p
+              style={{
+                fontSize: "10px",
+                color: "rgba(255,255,255,0.28)",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                marginBottom: "4px",
+              }}
+            >
               Total Community Size
             </p>
-            <p className="text-4xl font-black gradient-text leading-none">5,870+</p>
-            <p className="text-white/35 text-sm mt-1">members across all servers</p>
+            <p
+              style={{
+                fontSize: "42px",
+                fontWeight: 900,
+                color: "#ffffff",
+                lineHeight: 1,
+                letterSpacing: "-0.03em",
+              }}
+            >
+              <span className="gradient-text">{totalCommunityMembers}</span>
+            </p>
+            <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.3)", marginTop: "4px" }}>
+              members across all servers
+            </p>
           </div>
-          <div className="flex flex-col items-center sm:items-end gap-1.5">
-            <p className="text-white/35 text-sm">New servers coming soon</p>
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-emerald-400 text-sm">Active &amp; growing</span>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "8px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "7px" }}>
+              <span
+                className="animate-pulse"
+                style={{ display: "block", width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e" }}
+              />
+              <span style={{ fontSize: "14px", fontWeight: 600, color: "#34d399" }}>Active &amp; Growing</span>
             </div>
+            <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.28)" }}>
+              New servers and events coming soon
+            </p>
           </div>
         </motion.div>
       </div>

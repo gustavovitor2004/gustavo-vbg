@@ -2,169 +2,432 @@
 
 import { motion, type Variants } from "framer-motion";
 import { projects } from "@/data/projects";
-import Link from "next/link";
 
 const container: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
+  show: { transition: { staggerChildren: 0.09 } },
 };
 
 const item: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.44, ease: "easeOut" as const } },
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
-const statusConfig: Record<string, { bg: string; color: string; pulse?: boolean }> = {
-  Online:   { bg: "rgba(16,185,129,0.15)",  color: "#34d399", pulse: true },
-  WIP:      { bg: "rgba(245,158,11,0.15)",  color: "#fbbf24" },
-  Beta:     { bg: "rgba(59,130,246,0.15)",  color: "#60a5fa" },
-  Finished: { bg: "rgba(124,58,237,0.15)", color: "#a78bfa" },
-  Archived: { bg: "rgba(107,114,128,0.12)", color: "#9ca3af" },
+const statusConfig: Record<string, { bg: string; color: string; pulse?: boolean; label: string }> = {
+  Online:   { bg: "rgba(16,185,129,0.15)",  color: "#34d399", pulse: true, label: "Online" },
+  WIP:      { bg: "rgba(245,158,11,0.15)",  color: "#fbbf24", label: "In Progress" },
+  Beta:     { bg: "rgba(59,130,246,0.15)",  color: "#60a5fa", label: "Beta" },
+  Finished: { bg: "rgba(124,58,237,0.15)",  color: "#a78bfa", label: "Finished" },
+  Archived: { bg: "rgba(107,114,128,0.12)", color: "#9ca3af", label: "Archived" },
 };
 
-const bannerGradient: Record<string, string> = {
-  "project-1": "linear-gradient(135deg, rgba(124,58,237,0.55) 0%, rgba(6,182,212,0.35) 100%)",
-  "project-2": "linear-gradient(135deg, rgba(37,99,235,0.55) 0%, rgba(124,58,237,0.35) 100%)",
-  "project-3": "linear-gradient(135deg, rgba(219,39,119,0.55) 0%, rgba(124,58,237,0.35) 100%)",
-  "project-4": "linear-gradient(135deg, rgba(6,182,212,0.55) 0%, rgba(37,99,235,0.35) 100%)",
-  "project-5": "linear-gradient(135deg, rgba(5,150,105,0.55) 0%, rgba(6,182,212,0.35) 100%)",
-  "project-6": "linear-gradient(135deg, rgba(234,88,12,0.55) 0%, rgba(219,39,119,0.35) 100%)",
+const bannerColors: Record<string, string> = {
+  "project-1": "linear-gradient(140deg, rgba(124,58,237,0.7) 0%, rgba(6,182,212,0.45) 100%)",
+  "project-2": "linear-gradient(140deg, rgba(37,99,235,0.7) 0%, rgba(124,58,237,0.45) 100%)",
+  "project-3": "linear-gradient(140deg, rgba(219,39,119,0.7) 0%, rgba(124,58,237,0.45) 100%)",
+  "project-4": "linear-gradient(140deg, rgba(6,182,212,0.7) 0%, rgba(37,99,235,0.45) 100%)",
+  "project-5": "linear-gradient(140deg, rgba(5,150,105,0.7) 0%, rgba(6,182,212,0.45) 100%)",
+  "project-6": "linear-gradient(140deg, rgba(234,88,12,0.7) 0%, rgba(219,39,119,0.45) 100%)",
 };
 
-const fallbackBanner = "linear-gradient(135deg, rgba(124,58,237,0.45), rgba(37,99,235,0.32))";
+const fallback = "linear-gradient(140deg, rgba(124,58,237,0.6), rgba(37,99,235,0.4))";
 
-export default function ProjectsSection() {
+// GitHub icon
+function GithubIcon({ size = 15 }: { size?: number }) {
   return (
-    <section id="projects" className="pb-6">
-      <div className="flex items-center justify-between mb-3.5">
-        <h2 className="text-white font-bold text-sm" style={{ letterSpacing: "-0.01em" }}>
-          My Projects
-        </h2>
-        <Link
-          href="/links"
-          className="flex items-center gap-1 text-xs font-medium transition-opacity hover:opacity-70"
-          style={{ color: "rgba(167,139,250,0.75)", textDecoration: "none" }}
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+    </svg>
+  );
+}
+
+// External link icon
+function ExternalIcon({ size = 13 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+      <polyline points="15 3 21 3 21 9" />
+      <line x1="10" y1="14" x2="21" y2="3" />
+    </svg>
+  );
+}
+
+function ProjectCard({ project, large = false }: { project: (typeof projects)[0]; large?: boolean }) {
+  const status = statusConfig[project.status] ?? statusConfig.Archived;
+  const bg = bannerColors[project.id] ?? fallback;
+  const bannerHeight = large ? "200px" : "164px";
+
+  return (
+    <motion.div
+      variants={item}
+      className="card-shine group rounded-2xl overflow-hidden flex flex-col"
+      style={{
+        backgroundColor: "rgba(255,255,255,0.025)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        height: "100%",
+        transition: "border-color 0.25s, box-shadow 0.25s, transform 0.25s",
+      }}
+      whileHover={{ y: -5, boxShadow: "0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.1)" }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.13)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.07)";
+      }}
+    >
+      {/* Banner */}
+      <div className="relative shrink-0" style={{ height: bannerHeight, background: bg }}>
+        {/* Subtle noise overlay */}
+        <div
+          className="absolute inset-0"
+          style={{ background: "rgba(5,8,22,0.25)", mixBlendMode: "multiply" }}
+        />
+
+        {/* Featured badge */}
+        {project.featured && (
+          <span
+            className="absolute top-3 left-3 font-bold tracking-widest"
+            style={{
+              fontSize: "8.5px",
+              padding: "3px 9px",
+              borderRadius: "9999px",
+              background: "rgba(255,255,255,0.14)",
+              color: "rgba(255,255,255,0.85)",
+              textTransform: "uppercase",
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            FEATURED
+          </span>
+        )}
+
+        {/* Status badge */}
+        <span
+          className="absolute top-3 right-3 flex items-center gap-1.5 font-bold tracking-wide"
+          style={{
+            fontSize: "8.5px",
+            padding: "4px 10px",
+            borderRadius: "9999px",
+            background: status.bg,
+            color: status.color,
+            textTransform: "uppercase",
+            backdropFilter: "blur(6px)",
+          }}
         >
-          View all projects
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </Link>
+          {status.pulse && (
+            <span
+              className="animate-pulse shrink-0"
+              style={{ display: "block", width: "5px", height: "5px", borderRadius: "50%", background: status.color }}
+            />
+          )}
+          {status.label}
+        </span>
+
+        {/* Project initial — decorative */}
+        <div
+          className="absolute"
+          style={{
+            bottom: "-22px",
+            left: "20px",
+            fontSize: "80px",
+            fontWeight: 900,
+            color: "rgba(255,255,255,0.06)",
+            lineHeight: 1,
+            userSelect: "none",
+            pointerEvents: "none",
+            fontFamily: "'Inter', sans-serif",
+            letterSpacing: "-0.05em",
+          }}
+        >
+          {project.title[0]}
+        </div>
       </div>
 
-      <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3"
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-      >
-        {projects.map((project) => {
-          const status = statusConfig[project.status] ?? statusConfig.Archived;
-          const bg = bannerGradient[project.id] ?? fallbackBanner;
+      {/* Content */}
+      <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", flex: 1 }}>
+        {/* Title */}
+        <h3
+          className="text-white font-bold"
+          style={{ fontSize: "15px", marginBottom: "8px", letterSpacing: "-0.01em", lineHeight: 1.3 }}
+        >
+          {project.title}
+        </h3>
 
-          return (
-            <motion.div
-              key={project.id}
-              variants={item}
-              className="group rounded-2xl overflow-hidden"
+        {/* Description */}
+        <p
+          style={{
+            fontSize: "12.5px",
+            color: "rgba(255,255,255,0.38)",
+            lineHeight: 1.65,
+            marginBottom: "14px",
+            flex: 1,
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical" as const,
+            overflow: "hidden",
+          }}
+        >
+          {project.description}
+        </p>
+
+        {/* Tech tags */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "5px", marginBottom: "18px" }}>
+          {project.technologies.slice(0, 4).map((tech) => (
+            <span
+              key={tech}
               style={{
-                backgroundColor: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                cursor: "pointer",
-                transition: "border-color 0.22s, box-shadow 0.22s, transform 0.22s",
+                fontSize: "10px",
+                padding: "3px 9px",
+                borderRadius: "6px",
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                color: "rgba(255,255,255,0.42)",
+                fontWeight: 500,
+                fontFamily: "'JetBrains Mono', monospace",
               }}
-              whileHover={{ y: -3, boxShadow: "0 12px 40px rgba(0,0,0,0.45)" }}
-              onMouseEnter={(e) =>
-                ((e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.14)")
-              }
-              onMouseLeave={(e) =>
-                ((e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.07)")
-              }
             >
-              {/* Banner */}
-              <div className="relative" style={{ height: "118px", background: bg }}>
-                {project.featured && (
-                  <span
-                    className="absolute top-2.5 left-2.5 font-bold uppercase tracking-wider"
-                    style={{
-                      fontSize: "9px",
-                      padding: "3px 8px",
-                      borderRadius: "9999px",
-                      background: "rgba(255,255,255,0.13)",
-                      color: "rgba(255,255,255,0.78)",
-                    }}
-                  >
-                    FEATURED
-                  </span>
-                )}
-                <span
-                  className="absolute top-2.5 right-2.5 font-bold uppercase tracking-wider flex items-center gap-1"
-                  style={{
-                    fontSize: "9px",
-                    padding: "3px 8px",
-                    borderRadius: "9999px",
-                    background: status.bg,
-                    color: status.color,
-                  }}
-                >
-                  {status.pulse && (
-                    <span
-                      className="animate-pulse"
-                      style={{
-                        display: "block",
-                        width: "5px",
-                        height: "5px",
-                        borderRadius: "50%",
-                        background: status.color,
-                        flexShrink: 0,
-                      }}
-                    />
-                  )}
-                  {project.status}
-                </span>
-              </div>
+              {tech}
+            </span>
+          ))}
+          {project.technologies.length > 4 && (
+            <span
+              style={{
+                fontSize: "10px",
+                padding: "3px 9px",
+                borderRadius: "6px",
+                background: "rgba(255,255,255,0.04)",
+                color: "rgba(255,255,255,0.28)",
+              }}
+            >
+              +{project.technologies.length - 4}
+            </span>
+          )}
+        </div>
 
-              {/* Content */}
-              <div style={{ padding: "14px 16px 16px" }}>
-                <h3 className="text-white font-bold" style={{ fontSize: "13px", marginBottom: "5px" }}>
-                  {project.title}
-                </h3>
-                <p
-                  style={{
-                    fontSize: "11.5px",
-                    color: "rgba(255,255,255,0.36)",
-                    marginBottom: "12px",
-                    lineHeight: 1.55,
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
-                  }}
-                >
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.technologies.slice(0, 3).map((tech) => (
-                    <span
-                      key={tech}
-                      style={{
-                        fontSize: "10px",
-                        padding: "2px 8px",
-                        borderRadius: "6px",
-                        background: "rgba(255,255,255,0.05)",
-                        color: "rgba(255,255,255,0.38)",
-                      }}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+        {/* Action row */}
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          {project.githubUrl && project.githubUrl !== "https://github.com/yourname/creatorhub-bot" && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="View on GitHub"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "34px",
+                height: "34px",
+                borderRadius: "10px",
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.09)",
+                color: "rgba(255,255,255,0.55)",
+                textDecoration: "none",
+                transition: "background 0.2s, color 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLAnchorElement;
+                el.style.background = "rgba(255,255,255,0.12)";
+                el.style.color = "#ffffff";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLAnchorElement;
+                el.style.background = "rgba(255,255,255,0.06)";
+                el.style.color = "rgba(255,255,255,0.55)";
+              }}
+            >
+              <GithubIcon size={15} />
+            </a>
+          )}
+
+          {(project.demoUrl || project.docsUrl) && (
+            <a
+              href={project.demoUrl ?? project.docsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                flex: 1,
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                height: "34px",
+                borderRadius: "10px",
+                background: "rgba(124,58,237,0.14)",
+                border: "1px solid rgba(124,58,237,0.25)",
+                color: "#a78bfa",
+                fontSize: "12px",
+                fontWeight: 600,
+                textDecoration: "none",
+                transition: "background 0.2s, color 0.2s, box-shadow 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLAnchorElement;
+                el.style.background = "rgba(124,58,237,0.24)";
+                el.style.color = "#c4b5fd";
+                el.style.boxShadow = "0 0 18px rgba(124,58,237,0.3)";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLAnchorElement;
+                el.style.background = "rgba(124,58,237,0.14)";
+                el.style.color = "#a78bfa";
+                el.style.boxShadow = "none";
+              }}
+            >
+              {project.demoUrl ? "Live Demo" : "View Docs"}
+              <ExternalIcon size={12} />
+            </a>
+          )}
+
+          {/* Fallback when no links */}
+          {!project.githubUrl && !project.demoUrl && !project.docsUrl && (
+            <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.2)", fontStyle: "italic" }}>
+              Coming soon
+            </span>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export default function ProjectsSection() {
+  const featured = projects.filter((p) => p.featured);
+  const rest = projects.filter((p) => !p.featured);
+
+  return (
+    <section id="projects" style={{ padding: "100px 0 80px", position: "relative" }}>
+      {/* Subtle section bg tint */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 80% 50%, rgba(124,58,237,0.06) 0%, transparent 70%)",
+        }}
+      />
+
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 32px", position: "relative" }}>
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "space-between",
+            marginBottom: "48px",
+            flexWrap: "wrap",
+            gap: "16px",
+          }}
+        >
+          <div>
+            <p
+              style={{
+                fontSize: "11px",
+                fontWeight: 700,
+                color: "#7c3aed",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                marginBottom: "8px",
+              }}
+            >
+              PORTFOLIO
+            </p>
+            <h2
+              style={{
+                fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
+                fontWeight: 900,
+                color: "#ffffff",
+                lineHeight: 1.05,
+                letterSpacing: "-0.025em",
+              }}
+            >
+              My Projects
+            </h2>
+          </div>
+          <a
+            href="/links"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              fontSize: "13px",
+              fontWeight: 600,
+              color: "rgba(167,139,250,0.75)",
+              textDecoration: "none",
+              transition: "color 0.2s",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#a78bfa"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(167,139,250,0.75)"; }}
+          >
+            View all projects
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </a>
+        </motion.div>
+
+        {/* Featured projects */}
+        {featured.length > 0 && (
+          <>
+            <p
+              style={{
+                fontSize: "11px",
+                color: "rgba(255,255,255,0.25)",
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                marginBottom: "16px",
+              }}
+            >
+              — Featured
+            </p>
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
+              variants={container}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-60px" }}
+              style={{ marginBottom: "48px" }}
+            >
+              {featured.map((project) => (
+                <ProjectCard key={project.id} project={project} large />
+              ))}
             </motion.div>
-          );
-        })}
-      </motion.div>
+          </>
+        )}
+
+        {/* More projects */}
+        {rest.length > 0 && (
+          <>
+            <p
+              style={{
+                fontSize: "11px",
+                color: "rgba(255,255,255,0.25)",
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                marginBottom: "16px",
+              }}
+            >
+              — More Projects
+            </p>
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
+              variants={container}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-60px" }}
+            >
+              {rest.map((project) => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+            </motion.div>
+          </>
+        )}
+      </div>
     </section>
   );
 }
