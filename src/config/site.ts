@@ -28,7 +28,7 @@ export const meta = {
   title: "Gustavo VBG — Developer & Content Creator",
   description:
     "Personal portfolio and creator hub of Gustavo Gomes — developer, content creator, and community builder.",
-  /** URL of your site once deployed (no trailing slash) */
+  /** URL of your site (no trailing slash) */
   siteUrl: "https://gustavo-vbg.vercel.app",
 } as const;
 
