@@ -1,6 +1,5 @@
 "use client";
 
-import Cursor from "@/components/Cursor";
 import LoadingScreen from "@/components/LoadingScreen";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/sections/Hero";
@@ -14,7 +13,6 @@ export default function Home() {
   return (
     <>
       <LoadingScreen />
-      <Cursor />
       <div style={{ background: "#050816", color: "white", minHeight: "100vh" }}>
         <Navbar />
         <Hero />

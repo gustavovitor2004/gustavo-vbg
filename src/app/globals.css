@@ -103,7 +103,6 @@ body {
   color: var(--foreground);
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
-  cursor: none;
 }
 
 /* Scrollbar */
