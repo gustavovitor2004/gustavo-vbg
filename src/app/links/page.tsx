@@ -5,6 +5,7 @@ import { motion, AnimatePresence, type Variants } from "framer-motion";
 import Link from "next/link";
 import LinkCard from "@/components/ui/LinkCard";
 import { links, linkCategories } from "@/data/links";
+import { profile } from "@/config/site";
 
 const container: Variants = {
   hidden: {},
@@ -66,9 +67,9 @@ export default function LinksPage() {
             </div>
 
             <h1 className="text-3xl font-black text-white mb-2">
-              <span className="gradient-text">YourName</span>
+              <span className="gradient-text">{profile.name}</span>
             </h1>
-            <p className="text-white/50 mb-1">Developer & Creator</p>
+            <p className="text-white/50 mb-1">{profile.tagline}</p>
             <div className="flex items-center justify-center gap-2 text-xs text-white/30">
               <span className="badge-pulse w-1.5 h-1.5 rounded-full bg-green-400 relative" />
               <span>Available for collaboration</span>
@@ -155,7 +156,7 @@ export default function LinksPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <p>© {new Date().getFullYear()} YourName</p>
+            <p>© {new Date().getFullYear()} {profile.name}</p>
             <Link href="/" className="hover:text-white/50 transition-colors">
               View full portfolio →
             </Link>

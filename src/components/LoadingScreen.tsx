@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { profile } from "@/config/site";
 
 export default function LoadingScreen() {
   const [visible, setVisible] = useState(true);
@@ -59,7 +60,7 @@ export default function LoadingScreen() {
 
             {/* Name */}
             <div className="text-center">
-              <h1 className="text-3xl font-bold gradient-text mb-1">YourName</h1>
+              <h1 className="text-3xl font-bold gradient-text mb-1">{profile.name}</h1>
               <p className="text-white/40 text-sm font-mono tracking-widest uppercase">
                 Loading...
               </p>

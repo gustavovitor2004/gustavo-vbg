@@ -206,7 +206,7 @@ function ProjectCard({ project, large = false }: { project: (typeof projects)[0]
 
         {/* Action row */}
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          {project.githubUrl && project.githubUrl !== "https://github.com/yourname/creatorhub-bot" && (
+          {project.githubUrl && (
             <a
               href={project.githubUrl}
               target="_blank"
