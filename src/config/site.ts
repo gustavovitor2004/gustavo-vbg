@@ -46,7 +46,7 @@ export const navbar = {
   ],
   /** Top-right call-to-action button */
   cta: {
-    label: "Get in Touch",
+    label: "WhatsApp",
     href: "https://wa.me/5575998596215",
   },
 } as const;
