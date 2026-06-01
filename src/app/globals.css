@@ -265,6 +265,32 @@ body {
   transform: scale(0.95);
 }
 
+/* Orbital ring rotation */
+@keyframes orbital-spin {
+  from { transform: rotateX(72deg) rotateZ(0deg); }
+  to   { transform: rotateX(72deg) rotateZ(360deg); }
+}
+@keyframes orbital-spin-rev {
+  from { transform: rotateX(72deg) rotateZ(0deg); }
+  to   { transform: rotateX(72deg) rotateZ(-360deg); }
+}
+.orbital-spin {
+  animation: orbital-spin 18s linear infinite;
+}
+.orbital-spin-rev {
+  animation: orbital-spin-rev 28s linear infinite;
+}
+
+/* Aurora sweep */
+@keyframes aurora-drift {
+  0%   { transform: translateX(-15%) scaleX(1);   opacity: 0.55; }
+  50%  { transform: translateX(10%)  scaleX(1.15); opacity: 0.75; }
+  100% { transform: translateX(-15%) scaleX(1);   opacity: 0.55; }
+}
+.aurora {
+  animation: aurora-drift 14s ease-in-out infinite;
+}
+
 
 /* Section */
 section {

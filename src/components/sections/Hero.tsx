@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { socials } from "@/data/socials";
 import { PlatformIcon } from "@/components/ui/PlatformIcon";
 import { profile, navbar } from "@/config/site";
+import CosmicBackground from "@/components/CosmicBackground";
 
 const floatingBadges = [
   { label: "React", top: "6%", left: "4%", delay: 0 },
@@ -72,50 +73,82 @@ export default function Hero() {
     >
       {/* ── Background layers ── */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Grid */}
-        <div className="absolute inset-0 grid-bg" style={{ opacity: 0.5 }} />
+        {/* Twinkling starfield */}
+        <CosmicBackground />
 
-        {/* Purple blob — top right */}
+        {/* Grid */}
+        <div className="absolute inset-0 grid-bg" style={{ opacity: 0.3 }} />
+
+        {/* Aurora sweep — top */}
+        <div
+          className="aurora absolute pointer-events-none"
+          style={{
+            top: 0,
+            left: "-10%",
+            width: "120%",
+            height: "320px",
+            background: "linear-gradient(180deg, rgba(124,58,237,0.18) 0%, rgba(6,182,212,0.08) 60%, transparent 100%)",
+            filter: "blur(40px)",
+            transformOrigin: "center top",
+          }}
+        />
+
+        {/* Purple nebula — top right */}
         <div
           className="orb"
           style={{
-            width: "700px",
-            height: "700px",
-            background: "radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 70%)",
-            top: "-20%",
-            right: "-5%",
-            filter: "blur(80px)",
+            width: "800px",
+            height: "800px",
+            background: "radial-gradient(circle, rgba(147,51,234,0.28) 0%, rgba(79,70,229,0.12) 45%, transparent 70%)",
+            top: "-25%",
+            right: "-8%",
+            filter: "blur(70px)",
             animationDuration: "10s",
           }}
         />
 
-        {/* Blue blob — bottom left */}
+        {/* Cyan nebula — bottom left */}
         <div
           className="orb"
           style={{
-            width: "500px",
-            height: "500px",
-            background: "radial-gradient(circle, rgba(37,99,235,0.16) 0%, transparent 70%)",
-            bottom: "0%",
-            left: "-5%",
-            filter: "blur(100px)",
+            width: "600px",
+            height: "600px",
+            background: "radial-gradient(circle, rgba(6,182,212,0.18) 0%, rgba(37,99,235,0.1) 50%, transparent 70%)",
+            bottom: "-5%",
+            left: "-8%",
+            filter: "blur(90px)",
             animationDuration: "13s",
             animationDelay: "2s",
           }}
         />
 
-        {/* Pink accent */}
+        {/* Magenta accent — center */}
         <div
           className="orb"
           style={{
-            width: "350px",
-            height: "350px",
-            background: "radial-gradient(circle, rgba(236,72,153,0.1) 0%, transparent 70%)",
-            top: "55%",
-            left: "40%",
-            filter: "blur(90px)",
+            width: "420px",
+            height: "420px",
+            background: "radial-gradient(circle, rgba(217,70,239,0.13) 0%, transparent 70%)",
+            top: "50%",
+            left: "38%",
+            filter: "blur(80px)",
             animationDuration: "9s",
             animationDelay: "4s",
+          }}
+        />
+
+        {/* Teal accent — far right mid */}
+        <div
+          className="orb"
+          style={{
+            width: "300px",
+            height: "300px",
+            background: "radial-gradient(circle, rgba(20,184,166,0.12) 0%, transparent 70%)",
+            top: "35%",
+            right: "5%",
+            filter: "blur(70px)",
+            animationDuration: "11s",
+            animationDelay: "6s",
           }}
         />
 
@@ -124,7 +157,7 @@ export default function Hero() {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 40%, rgba(5,8,22,0.6) 100%)",
+              "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 30%, rgba(5,8,22,0.55) 100%)",
           }}
         />
       </div>
@@ -412,30 +445,40 @@ export default function Hero() {
             <div
               className="absolute pointer-events-none"
               style={{
-                inset: "-70px",
-                background: "radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 65%)",
+                inset: "-90px",
+                background: "radial-gradient(circle, rgba(147,51,234,0.3) 0%, rgba(6,182,212,0.08) 50%, transparent 70%)",
                 borderRadius: "50%",
               }}
             />
 
-            {/* Back orbital ring */}
+            {/* Distant dust ring */}
             <div
-              className="absolute pointer-events-none"
+              className="orbital-spin-rev absolute pointer-events-none"
               style={{
-                inset: "-45px",
-                border: "1px solid rgba(124,58,237,0.16)",
+                inset: "-60px",
+                border: "1px dashed rgba(6,182,212,0.15)",
                 borderRadius: "50%",
-                transform: "rotateX(72deg) rotateZ(25deg)",
                 zIndex: 1,
               }}
             />
 
-            {/* Middle ring */}
+            {/* Back orbital ring — slow spin */}
+            <div
+              className="orbital-spin absolute pointer-events-none"
+              style={{
+                inset: "-45px",
+                border: "1px solid rgba(167,139,250,0.22)",
+                borderRadius: "50%",
+                zIndex: 1,
+              }}
+            />
+
+            {/* Middle ring — static tilt */}
             <div
               className="absolute pointer-events-none"
               style={{
                 inset: "-28px",
-                border: "1.5px solid rgba(79,70,229,0.22)",
+                border: "1.5px solid rgba(6,182,212,0.28)",
                 borderRadius: "50%",
                 transform: "rotateX(72deg) rotateZ(-10deg)",
                 zIndex: 1,
@@ -447,37 +490,49 @@ export default function Hero() {
               className="absolute inset-0 rounded-full flex items-center justify-center"
               style={{
                 background:
-                  "radial-gradient(circle at 33% 27%, #4c1d95 0%, #2d1282 20%, #1e1060 40%, #0e0838 65%, #060420 100%)",
+                  "radial-gradient(circle at 30% 25%, #6d28d9 0%, #3b0764 18%, #1e1060 38%, #0a0530 65%, #03021a 100%)",
                 boxShadow:
-                  "0 0 70px rgba(124,58,237,0.75), 0 0 140px rgba(124,58,237,0.28), inset 0 0 50px rgba(124,58,237,0.22)",
+                  "0 0 80px rgba(147,51,234,0.85), 0 0 160px rgba(147,51,234,0.3), 0 0 240px rgba(6,182,212,0.1), inset 0 0 60px rgba(109,40,217,0.3)",
                 zIndex: 2,
               }}
             >
+              {/* Surface highlight */}
+              <div
+                className="absolute pointer-events-none rounded-full"
+                style={{
+                  width: "55%",
+                  height: "45%",
+                  top: "8%",
+                  left: "12%",
+                  background: "radial-gradient(ellipse, rgba(167,139,250,0.18) 0%, transparent 70%)",
+                  filter: "blur(12px)",
+                }}
+              />
               <span
                 style={{
                   fontSize: "110px",
                   fontWeight: 900,
-                  color: "rgba(255,255,255,0.82)",
+                  color: "rgba(255,255,255,0.88)",
                   lineHeight: 1,
                   position: "relative",
                   zIndex: 3,
                   fontFamily: "'Inter', sans-serif",
                   letterSpacing: "-0.05em",
                   userSelect: "none",
+                  textShadow: "0 0 40px rgba(167,139,250,0.7)",
                 }}
               >
                 {profile.orbLetter}
               </span>
             </div>
 
-            {/* Front orbital ring */}
+            {/* Front orbital ring — reverse slow spin */}
             <div
-              className="absolute pointer-events-none"
+              className="orbital-spin-rev absolute pointer-events-none"
               style={{
                 inset: "-18px",
-                border: "2px solid rgba(167,139,250,0.3)",
+                border: "2px solid rgba(167,139,250,0.35)",
                 borderRadius: "50%",
-                transform: "rotateX(72deg) rotateZ(-3deg)",
                 zIndex: 4,
               }}
             />

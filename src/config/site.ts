@@ -29,7 +29,7 @@ export const meta = {
   description:
     "Personal portfolio and creator hub of Gustavo Gomes — developer, content creator, and community builder.",
   /** URL of your site (no trailing slash) */
-  siteUrl: "https://gustavo-vbg.vercel.app",
+  siteUrl: "https://bloggustavogomes.vercel.app",
 } as const;
 
 // ─── NAVBAR ────────────────────────────────────────────────────────────────
@@ -120,44 +120,13 @@ export const socialLinks = [
 // To remove a server: delete the block for that server.
 export const discordServerConfig = [
   {
-    id: "main-community",
-    name: "YourName Community",
-    description: "The main hub for everything I create. Hang out, get support, and vibe with the community.",
-    memberCount: "2,400+",
-    /**
-     * Get your invite link at: discord.com → your server → Invite People → Copy link
-     */
-    inviteUrl: "https://discord.gg/yourserver",
-    /** Hex colour for the server icon background */
-    color: "#a855f7",
-    glowColor: "rgba(168,85,247,0.4)",
-  },
-  {
-    id: "dev-hub",
-    name: "Dev & Coding Hub",
-    description: "For developers and programmers of all levels. Share code, ask questions, and level up.",
-    memberCount: "1,800+",
-    inviteUrl: "https://discord.gg/devhub",
-    color: "#3b82f6",
-    glowColor: "rgba(59,130,246,0.4)",
-  },
-  {
-    id: "gaming",
-    name: "Gaming Zone",
-    description: "Play games, find teammates, and compete in community tournaments. All games welcome!",
-    memberCount: "950+",
-    inviteUrl: "https://discord.gg/gamingzone",
-    color: "#22c55e",
-    glowColor: "rgba(34,197,94,0.4)",
-  },
-  {
-    id: "creative",
-    name: "Creative Studio",
-    description: "A space for designers, artists, and content creators. Share your work, get feedback.",
-    memberCount: "720+",
-    inviteUrl: "https://discord.gg/creativestudio",
-    color: "#ec4899",
-    glowColor: "rgba(236,72,153,0.4)",
+    id: "trophi",
+    name: "Trophi",
+    description: "O servidor oficial da Trophi. Comunidade, projetos e muito mais — venha fazer parte!",
+    memberCount: "Em crescimento",
+    inviteUrl: "https://discord.gg/5tMJDxH8vc",
+    color: "#7c3aed",
+    glowColor: "rgba(124,58,237,0.4)",
   },
 ] as const;
 
@@ -196,4 +165,4 @@ export const sidebarQuickLinks = [
 
 // ─── TOTAL COMMUNITY COUNT ─────────────────────────────────────────────────
 /** Shown in the "Active" banner at the bottom of the My Servers widget */
-export const totalCommunityMembers = "5,870+";
+export const totalCommunityMembers = "Em crescimento";
