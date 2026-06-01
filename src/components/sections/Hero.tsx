@@ -30,7 +30,7 @@ export default function Hero() {
 
       {/* ── Content — centered overlay ── */}
       <div
-        className="relative z-10 w-full flex flex-col items-center"
+        className="hero-content relative z-10 w-full flex flex-col items-center"
         style={{
           maxWidth: "860px",
           margin: "0 auto",
@@ -102,6 +102,7 @@ export default function Hero() {
 
         {/* Name — large centered */}
         <motion.h1
+          className="hero-name"
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
@@ -164,6 +165,7 @@ export default function Hero() {
 
         {/* CTAs */}
         <motion.div
+          className="hero-ctas"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.36 }}
@@ -263,6 +265,7 @@ export default function Hero() {
 
         {/* Stats row — centered */}
         <motion.div
+          className="hero-stats"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.44 }}
@@ -275,11 +278,13 @@ export default function Hero() {
             marginBottom: "24px",
             gap: "0",
             flexWrap: "wrap",
+            width: "100%",
           }}
         >
           {stats.map((stat, i) => (
             <div key={stat.label} style={{ display: "flex", alignItems: "center" }}>
               <div
+                className="hero-stat-item"
                 style={{
                   paddingLeft: i === 0 ? 0 : "28px",
                   paddingRight: "28px",
@@ -312,11 +317,11 @@ export default function Hero() {
               </div>
               {i < stats.length - 1 && (
                 <div
+                  className="hero-stat-divider"
                   style={{
                     width: "1px",
                     height: "32px",
                     background: "rgba(255,255,255,0.07)",
-                    marginRight: "0",
                   }}
                 />
               )}

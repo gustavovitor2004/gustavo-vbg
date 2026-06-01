@@ -318,3 +318,200 @@ section {
     gap: 40px;
   }
 }
+
+/* ============================================================
+   GLOBAL MOBILE BASELINE
+   Prevents horizontal scroll on all screen sizes
+   ============================================================ */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* ============================================================
+   TABLET / LARGE MOBILE  ≤ 767px
+   ============================================================ */
+@media (max-width: 767px) {
+
+  /* ── Sections: reduce vertical breathing ── */
+  section[id] {
+    padding-top: 72px !important;
+    padding-bottom: 64px !important;
+  }
+
+  /* ── Sections: reduce horizontal padding ── */
+  .hero-content {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-top: 120px !important;
+    padding-bottom: 80px !important;
+  }
+
+  /* ── Hero name ── */
+  .hero-name {
+    font-size: clamp(2.6rem, 10vw, 3.4rem) !important;
+    letter-spacing: -0.03em !important;
+    line-height: 1 !important;
+    margin-bottom: 18px !important;
+  }
+
+  /* ── Hero CTAs: stack on mobile ── */
+  .hero-ctas {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    gap: 10px !important;
+    margin-bottom: 44px !important;
+  }
+
+  .hero-ctas a {
+    justify-content: center !important;
+    min-height: 52px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ── Hero stats ── */
+  .hero-stats {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px 0 !important;
+    padding-top: 24px !important;
+    margin-bottom: 20px !important;
+    justify-items: center !important;
+  }
+
+  .hero-stat-item {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .hero-stat-divider {
+    display: none !important;
+  }
+
+  /* ── About Me: quick stats grid ── */
+  .about-quick-stats {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* ── Discord: card full width ── */
+  #servers .max-w-lg,
+  #servers [style*="max-width: 520px"],
+  #servers [style*="maxWidth"] {
+    max-width: 100% !important;
+  }
+
+  /* ── Navbar pill: hide nav links text, keep G + hamburger ── */
+  /* (links already hidden via md:hidden — only pill sizing) */
+  header.fixed {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
+/* ============================================================
+   SMALL MOBILE  ≤ 480px  (360 × 640 Android / 375 × 667 iOS)
+   ============================================================ */
+@media (max-width: 480px) {
+
+  /* ── Hero ── */
+  .hero-content {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 110px !important;
+  }
+
+  .hero-name {
+    font-size: clamp(2.4rem, 11.5vw, 3rem) !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Tagline: slightly smaller */
+  .hero-content > * > p:first-of-type {
+    font-size: 0.95rem !important;
+  }
+
+  /* Bio text */
+  .hero-content p {
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+  }
+
+  /* Hero CTAs max-width smaller */
+  .hero-ctas {
+    max-width: 100% !important;
+  }
+
+  /* ── About Me ── */
+  #about p {
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+  }
+
+  #about h2 {
+    font-size: 1.8rem !important;
+  }
+
+  /* About skill cards: icon + text horizontal */
+  #about .card-shine {
+    padding: 16px 18px !important;
+  }
+
+  /* Language bars container */
+  #about [style*="padding: \"24px\""] {
+    padding: 18px 16px !important;
+  }
+
+  /* ── Projects ── */
+  #projects h2 {
+    font-size: 1.8rem !important;
+  }
+
+  /* GitHub button: easier tap target */
+  #projects a[title="View on GitHub"],
+  #projects a[href*="github"] {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+
+  /* ── Discord card ── */
+  #servers {
+    padding-top: 60px !important;
+    padding-bottom: 52px !important;
+  }
+
+  #servers h2 {
+    font-size: 1.8rem !important;
+  }
+
+  /* Join Server button: full width, easy tap */
+  #servers a[href*="discord"] {
+    min-height: 52px !important;
+  }
+
+  /* ── Section titles consistent ── */
+  section h2 {
+    font-size: clamp(1.55rem, 7vw, 2.2rem) !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  /* ── General padding for all section inner containers ── */
+  section > div {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* ── Social media cards: stack full width ── */
+  #connect .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── Footer ── */
+  footer {
+    padding: 28px 16px !important;
+    text-align: center !important;
+  }
+}
