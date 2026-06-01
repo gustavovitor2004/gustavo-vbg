@@ -42,7 +42,6 @@ export const navbar = {
     { label: "About Me", href: "#about" },
     { label: "Projects", href: "#projects" },
     { label: "Servers", href: "#servers" },
-    { label: "Links", href: "/links" },
   ],
   /** Top-right call-to-action button */
   cta: {
