@@ -7,9 +7,8 @@ import { profile, navbar } from "@/config/site";
 import CosmicBackground from "@/components/CosmicBackground";
 
 const stats = [
-  { value: "5+", label: "Sites entregues" },
-  { value: "2+", label: "Anos de código" },
-  { value: "5", label: "Plataformas" },
+  { value: "5+", label: "Sites made" },
+  { value: "2+", label: "Years of coding" },
 ];
 
 export default function Hero() {
@@ -54,7 +53,7 @@ export default function Hero() {
             fontFamily: "'JetBrains Mono', monospace",
           }}
         >
-          DEVELOPER · 2025
+          VIBERCORDER · 2026
         </motion.p>
 
         {/* Available badge */}

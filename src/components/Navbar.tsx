@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { navbar } from "@/config/site";
 
 // Section IDs to watch (only hash-based links)
-const SECTION_IDS = ["home", "projects", "blog", "servers"];
+const SECTION_IDS = ["home", "about", "projects", "servers"];
 
 const navLinks = navbar.links.map((l) => ({
   label: l.label,

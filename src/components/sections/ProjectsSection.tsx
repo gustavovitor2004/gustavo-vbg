@@ -52,10 +52,10 @@ function ExternalIcon({ size = 13 }: { size?: number }) {
   );
 }
 
-function ProjectCard({ project, large = false }: { project: (typeof projects)[0]; large?: boolean }) {
+function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   const status = statusConfig[project.status] ?? statusConfig.Archived;
   const bg = bannerColors[project.id] ?? fallback;
-  const bannerHeight = large ? "200px" : "164px";
+  const bannerHeight = "164px";
 
   return (
     <motion.div
@@ -83,23 +83,7 @@ function ProjectCard({ project, large = false }: { project: (typeof projects)[0]
           style={{ background: "rgba(5,8,22,0.25)", mixBlendMode: "multiply" }}
         />
 
-        {/* Featured badge */}
-        {project.featured && (
-          <span
-            className="absolute top-3 left-3 font-bold tracking-widest"
-            style={{
-              fontSize: "8.5px",
-              padding: "3px 9px",
-              borderRadius: "9999px",
-              background: "rgba(255,255,255,0.14)",
-              color: "rgba(255,255,255,0.85)",
-              textTransform: "uppercase",
-              backdropFilter: "blur(6px)",
-            }}
-          >
-            FEATURED
-          </span>
-        )}
+        {/* Featured badge removed */}
 
         {/* Status badge */}
         <span
@@ -292,9 +276,6 @@ function ProjectCard({ project, large = false }: { project: (typeof projects)[0]
 }
 
 export default function ProjectsSection() {
-  const featured = projects.filter((p) => p.featured);
-  const rest = projects.filter((p) => !p.featured);
-
   return (
     <section id="projects" style={{ padding: "100px 0 80px", position: "relative" }}>
       {/* Subtle section bg tint */}
@@ -323,110 +304,40 @@ export default function ProjectsSection() {
           }}
         >
           <div>
-            <p
-              style={{
-                fontSize: "11px",
-                fontWeight: 700,
-                color: "#7c3aed",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                marginBottom: "8px",
-              }}
-            >
+            <p style={{ fontSize: "11px", fontWeight: 700, color: "#7c3aed", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
               PORTFOLIO
             </p>
-            <h2
-              style={{
-                fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
-                fontWeight: 900,
-                color: "#ffffff",
-                lineHeight: 1.05,
-                letterSpacing: "-0.025em",
-              }}
-            >
+            <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.05, letterSpacing: "-0.025em" }}>
               My Projects
             </h2>
           </div>
           <a
-            href="/links"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              fontSize: "13px",
-              fontWeight: 600,
-              color: "rgba(167,139,250,0.75)",
-              textDecoration: "none",
-              transition: "color 0.2s",
-            }}
+            href="https://github.com/gustavovitor2004"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "13px", fontWeight: 600, color: "rgba(167,139,250,0.75)", textDecoration: "none", transition: "color 0.2s" }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#a78bfa"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(167,139,250,0.75)"; }}
           >
-            View all projects
+            View on GitHub
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 18l6-6-6-6" />
             </svg>
           </a>
         </motion.div>
 
-        {/* Featured projects */}
-        {featured.length > 0 && (
-          <>
-            <p
-              style={{
-                fontSize: "11px",
-                color: "rgba(255,255,255,0.25)",
-                fontWeight: 600,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                marginBottom: "16px",
-              }}
-            >
-              — Featured
-            </p>
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
-              variants={container}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-60px" }}
-              style={{ marginBottom: "48px" }}
-            >
-              {featured.map((project) => (
-                <ProjectCard key={project.id} project={project} large />
-              ))}
-            </motion.div>
-          </>
-        )}
-
-        {/* More projects */}
-        {rest.length > 0 && (
-          <>
-            <p
-              style={{
-                fontSize: "11px",
-                color: "rgba(255,255,255,0.25)",
-                fontWeight: 600,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                marginBottom: "16px",
-              }}
-            >
-              — More Projects
-            </p>
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
-              variants={container}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-60px" }}
-            >
-              {rest.map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </motion.div>
-          </>
-        )}
+        {/* All projects — single unified grid */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </motion.div>
       </div>
     </section>
   );

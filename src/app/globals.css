@@ -307,3 +307,14 @@ section {
   position: relative;
   overflow: hidden;
 }
+
+/* About grid — 2 cols on desktop, 1 on mobile */
+.about-grid {
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 767px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}

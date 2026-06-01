@@ -3,10 +3,10 @@
 import LoadingScreen from "@/components/LoadingScreen";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/sections/Hero";
+import AboutSection from "@/components/sections/AboutSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
-import BlogSection from "@/components/sections/BlogSection";
-import ConnectSection from "@/components/sections/ConnectSection";
 import DiscordServers from "@/components/sections/DiscordServers";
+import ConnectSection from "@/components/sections/ConnectSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -16,10 +16,10 @@ export default function Home() {
       <div style={{ background: "#050816", color: "white", minHeight: "100vh" }}>
         <Navbar />
         <Hero />
+        <AboutSection />
         <ProjectsSection />
-        <BlogSection />
-        <ConnectSection />
         <DiscordServers />
+        <ConnectSection />
         <Footer />
       </div>
     </>

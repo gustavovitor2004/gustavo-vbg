@@ -14,7 +14,7 @@ export const profile = {
   /** Full legal name (used in meta/SEO) */
   fullName: "Gustavo Vitor Boaventura Gomes",
   /** Short title shown below name in the hero */
-  tagline: "Developer & Content Creator",
+  tagline: "Vibercorder & Content Creator",
   /** A short bio paragraph shown in the hero */
   bio: "Building things for the web and sharing the journey. Follow along for projects, content, and community vibes.",
   /** Show the green "Available for projects" badge? */
@@ -39,8 +39,8 @@ export const navbar = {
   /** Navigation links (add/remove freely) */
   links: [
     { label: "Home", href: "#home" },
+    { label: "About Me", href: "#about" },
     { label: "Projects", href: "#projects" },
-    { label: "Blog", href: "#blog" },
     { label: "Servers", href: "#servers" },
     { label: "Links", href: "/links" },
   ],

@@ -2,7 +2,6 @@
 
 import { motion, type Variants } from "framer-motion";
 import { discordServers } from "@/data/servers";
-import { totalCommunityMembers } from "@/config/site";
 
 const container: Variants = {
   hidden: {},
@@ -15,10 +14,7 @@ const item: Variants = {
 };
 
 const serverIconMap: Record<string, string> = {
-  "main-community": "⚡",
-  "dev-hub": "</>",
-  gaming: "🎮",
-  creative: "✦",
+  trophi: "✦",
 };
 
 function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
@@ -221,82 +217,22 @@ export default function DiscordServers() {
             </h2>
           </div>
           <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.3)" }}>
-            Join thousands of members across gaming, dev, and creative spaces.
+            Join the community — gamers, devs and creators all welcome.
           </p>
         </motion.div>
 
-        {/* Server grid */}
+        {/* Single server — centered */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-5"
           variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
-          style={{ marginBottom: "28px" }}
+          style={{ display: "flex", justifyContent: "center" }}
         >
-          {discordServers.map((server) => (
-            <ServerCard key={server.id} server={server} />
-          ))}
-        </motion.div>
-
-        {/* Community stats banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, delay: 0.2 }}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "24px 32px",
-            borderRadius: "18px",
-            background: "rgba(88,101,242,0.07)",
-            border: "1px solid rgba(88,101,242,0.18)",
-            flexWrap: "wrap",
-            gap: "16px",
-          }}
-        >
-          <div>
-            <p
-              style={{
-                fontSize: "10px",
-                color: "rgba(255,255,255,0.28)",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                marginBottom: "4px",
-              }}
-            >
-              Total Community Size
-            </p>
-            <p
-              style={{
-                fontSize: "42px",
-                fontWeight: 900,
-                color: "#ffffff",
-                lineHeight: 1,
-                letterSpacing: "-0.03em",
-              }}
-            >
-              <span className="gradient-text">{totalCommunityMembers}</span>
-            </p>
-            <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.3)", marginTop: "4px" }}>
-              members across all servers
-            </p>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "8px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-              <span
-                className="animate-pulse"
-                style={{ display: "block", width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e" }}
-              />
-              <span style={{ fontSize: "14px", fontWeight: 600, color: "#34d399" }}>Active &amp; Growing</span>
-            </div>
-            <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.28)" }}>
-              New servers and events coming soon
-            </p>
+          <div style={{ width: "100%", maxWidth: "520px" }}>
+            {discordServers.map((server) => (
+              <ServerCard key={server.id} server={server} />
+            ))}
           </div>
         </motion.div>
       </div>
