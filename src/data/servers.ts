@@ -8,6 +8,14 @@ export interface DiscordServer {
   inviteUrl: string;
   color: string;
   glowColor: string;
+  // optional legacy fields kept for type compatibility
+  icon?: string;
+  banner?: string;
+  onlineCount?: string;
+  longDescription?: string;
+  verified?: boolean;
+  partnered?: boolean;
+  featured?: boolean;
 }
 
 export const discordServers: DiscordServer[] = [
