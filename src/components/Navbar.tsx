@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { navbar } from "@/config/site";
+
+// Section IDs to watch (only hash-based links)
+const SECTION_IDS = ["home", "projects", "blog", "servers"];
 
 const navLinks = navbar.links.map((l) => ({
   label: l.label,
@@ -16,88 +19,188 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // ── Scroll state (background change) ──────────────────────────────────────
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  const handleNav = (id: string, href?: string) => {
+  // ── Scrollspy — Intersection Observer ─────────────────────────────────────
+  // Strategy: track which section has the highest intersection ratio at any
+  // given moment. Most-visible section wins. Falls back to topmost visible
+  // when ratios are equal (e.g. on very tall sections).
+  useEffect(() => {
+    // Map: sectionId → current intersection ratio
+    const ratios: Record<string, number> = {};
+    SECTION_IDS.forEach((id) => (ratios[id] = 0));
+
+    // Pick the section with the highest visible ratio.
+    // Tiebreak: topmost section in the DOM wins (lower index = higher priority).
+    const pickMostVisible = () => {
+      let best = "";
+      let bestRatio = 0;
+      SECTION_IDS.forEach((id) => {
+        if (ratios[id] > bestRatio) {
+          bestRatio = ratios[id];
+          best = id;
+        }
+      });
+      if (best) setActive(best);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          ratios[entry.target.id] = entry.intersectionRatio;
+        });
+        pickMostVisible();
+      },
+      {
+        // 21 thresholds from 0 to 1 in 0.05 steps — gives smooth updates
+        threshold: Array.from({ length: 21 }, (_, i) => i * 0.05),
+        // Shrink the observation zone: only count the middle 60 % of viewport.
+        // Sections outside this band count as 0 % visible.
+        rootMargin: "-20% 0px -20% 0px",
+      }
+    );
+
+    SECTION_IDS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // ── Click navigation ───────────────────────────────────────────────────────
+  const handleNav = (id: string) => {
     setMenuOpen(false);
     setActive(id);
-    if (!href) {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // ── Render ─────────────────────────────────────────────────────────────────
   return (
     <>
-      {/* ── Floating pill navbar ── */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-5 px-4">
+      {/* Floating pill */}
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-5 px-4 pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: "easeOut" as const }}
+          className="pointer-events-auto"
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "4px",
-            padding: "6px 8px 6px 14px",
+            gap: "2px",
+            padding: "5px 6px 5px 12px",
             borderRadius: "9999px",
             background: scrolled
-              ? "rgba(8,10,26,0.88)"
-              : "rgba(8,10,26,0.55)",
+              ? "rgba(6, 8, 22, 0.92)"
+              : "rgba(6, 8, 22, 0.6)",
             border: scrolled
-              ? "1px solid rgba(124,58,237,0.22)"
+              ? "1px solid rgba(124,58,237,0.28)"
               : "1px solid rgba(255,255,255,0.1)",
-            backdropFilter: "blur(24px)",
-            WebkitBackdropFilter: "blur(24px)",
+            backdropFilter: "blur(28px)",
+            WebkitBackdropFilter: "blur(28px)",
             boxShadow: scrolled
-              ? "0 4px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(124,58,237,0.1)"
-              : "0 2px 20px rgba(0,0,0,0.35)",
-            transition: "background 0.3s, border-color 0.3s, box-shadow 0.3s",
+              ? "0 4px 36px rgba(0,0,0,0.55), 0 0 0 1px rgba(124,58,237,0.08)"
+              : "0 2px 20px rgba(0,0,0,0.4)",
+            transition: "background 0.35s, border-color 0.35s, box-shadow 0.35s",
           }}
         >
-          {/* Logo */}
+          {/* Brand logo */}
           <button
             onClick={() => handleNav("home")}
-            className="flex items-center gap-2 shrink-0 mr-2"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "7px",
+              marginRight: "6px",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: "2px",
+              flexShrink: 0,
+            }}
           >
             <div
               style={{
-                width: "26px",
-                height: "26px",
-                borderRadius: "8px",
+                width: "28px",
+                height: "28px",
+                borderRadius: "9px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 background: "linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)",
-                boxShadow: "0 2px 10px rgba(124,58,237,0.45)",
-                fontSize: "12px",
+                boxShadow: "0 2px 12px rgba(124,58,237,0.5)",
+                fontSize: "13px",
                 fontWeight: 900,
                 color: "#fff",
+                flexShrink: 0,
               }}
             >
               {navbar.brand[0]}
             </div>
           </button>
 
-          {/* Desktop nav links */}
-          <nav className="hidden md:flex items-center gap-0.5">
+          {/* Desktop links — with Framer Motion sliding active pill */}
+          <nav
+            className="hidden md:flex items-center"
+            style={{ position: "relative" }}
+          >
             {navLinks.map((link) => {
               const isActive = active === link.id;
-              const style: React.CSSProperties = {
+
+              const inner = (
+                <>
+                  {/* Sliding background pill — layoutId makes it animate between items */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active-pill"
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 34,
+                      }}
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        borderRadius: "9999px",
+                        background: "rgba(124,58,237,0.18)",
+                        border: "1px solid rgba(124,58,237,0.3)",
+                        zIndex: 0,
+                      }}
+                    />
+                  )}
+                  <span
+                    style={{
+                      position: "relative",
+                      zIndex: 1,
+                      transition: "color 0.2s",
+                      color: isActive ? "#fff" : "rgba(255,255,255,0.48)",
+                      fontWeight: isActive ? 600 : 400,
+                    }}
+                  >
+                    {link.label}
+                  </span>
+                </>
+              );
+
+              const sharedStyle: React.CSSProperties = {
                 position: "relative",
                 padding: "6px 14px",
                 borderRadius: "9999px",
                 fontSize: "13px",
-                fontWeight: isActive ? 600 : 400,
-                color: isActive ? "#fff" : "rgba(255,255,255,0.5)",
-                background: isActive ? "rgba(124,58,237,0.15)" : "transparent",
+                background: "transparent",
                 border: "none",
                 cursor: "pointer",
-                transition: "all 0.18s",
+                outline: "none",
                 textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                overflow: "visible",
               };
 
               if (link.href) {
@@ -106,69 +209,125 @@ export default function Navbar() {
                     key={link.id}
                     href={link.href}
                     onClick={() => setActive(link.id)}
-                    style={style}
+                    style={sharedStyle}
                   >
-                    {link.label}
+                    {inner}
                   </Link>
                 );
               }
+
               return (
                 <button
                   key={link.id}
                   onClick={() => handleNav(link.id)}
-                  style={style}
+                  style={sharedStyle}
                 >
-                  {link.label}
+                  {inner}
                 </button>
               );
             })}
           </nav>
 
-          {/* CTA pill button */}
+          {/* CTA */}
           <a
             href={navbar.cta.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:inline-flex items-center gap-1.5 ml-2"
+            className="hidden md:inline-flex items-center gap-1.5"
             style={{
-              padding: "7px 16px",
+              marginLeft: "6px",
+              padding: "7px 18px",
               borderRadius: "9999px",
               fontSize: "13px",
               fontWeight: 600,
               color: "#fff",
               background: "linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)",
-              boxShadow: "0 2px 14px rgba(124,58,237,0.45)",
+              boxShadow: "0 2px 16px rgba(124,58,237,0.5)",
               textDecoration: "none",
-              transition: "opacity 0.18s, transform 0.18s",
               whiteSpace: "nowrap",
+              transition: "opacity 0.2s, transform 0.2s, box-shadow 0.2s",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.opacity = "0.88";
-              (e.currentTarget as HTMLAnchorElement).style.transform = "scale(1.03)";
+              const el = e.currentTarget as HTMLAnchorElement;
+              el.style.opacity = "0.88";
+              el.style.transform = "scale(1.04)";
+              el.style.boxShadow = "0 4px 24px rgba(124,58,237,0.7)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.opacity = "1";
-              (e.currentTarget as HTMLAnchorElement).style.transform = "scale(1)";
+              const el = e.currentTarget as HTMLAnchorElement;
+              el.style.opacity = "1";
+              el.style.transform = "scale(1)";
+              el.style.boxShadow = "0 2px 16px rgba(124,58,237,0.5)";
             }}
           >
             {navbar.cta.label}
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 2L11 13" /><path d="M22 2l-7 20-4-9-9-4 20-7z" />
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M22 2L11 13" />
+              <path d="M22 2l-7 20-4-9-9-4 20-7z" />
             </svg>
           </a>
 
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden ml-1 w-8 h-8 flex flex-col items-center justify-center gap-1.5 rounded-full"
-            style={{ background: "rgba(255,255,255,0.06)" }}
+            className="md:hidden ml-2"
+            style={{
+              width: "32px",
+              height: "32px",
+              borderRadius: "50%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "5px",
+              background: "rgba(255,255,255,0.07)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              cursor: "pointer",
+              flexShrink: 0,
+            }}
           >
-            <span className="block w-4 h-px bg-white/70 transition-all duration-200"
-              style={{ transform: menuOpen ? "rotate(45deg) translateY(4px)" : "none" }} />
-            <span className="block w-4 h-px bg-white/70 transition-all duration-200"
-              style={{ opacity: menuOpen ? 0 : 1 }} />
-            <span className="block w-4 h-px bg-white/70 transition-all duration-200"
-              style={{ transform: menuOpen ? "rotate(-45deg) translateY(-4px)" : "none" }} />
+            <span
+              style={{
+                display: "block",
+                width: "14px",
+                height: "1.5px",
+                background: "rgba(255,255,255,0.75)",
+                borderRadius: "2px",
+                transition: "transform 0.2s",
+                transform: menuOpen ? "rotate(45deg) translateY(4.5px)" : "none",
+              }}
+            />
+            <span
+              style={{
+                display: "block",
+                width: "14px",
+                height: "1.5px",
+                background: "rgba(255,255,255,0.75)",
+                borderRadius: "2px",
+                transition: "opacity 0.2s",
+                opacity: menuOpen ? 0 : 1,
+              }}
+            />
+            <span
+              style={{
+                display: "block",
+                width: "14px",
+                height: "1.5px",
+                background: "rgba(255,255,255,0.75)",
+                borderRadius: "2px",
+                transition: "transform 0.2s",
+                transform: menuOpen ? "rotate(-45deg) translateY(-4.5px)" : "none",
+              }}
+            />
           </button>
         </motion.div>
       </header>
@@ -181,22 +340,33 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
           >
+            {/* Backdrop */}
             <div
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)" }}
               onClick={() => setMenuOpen(false)}
             />
+            {/* Panel */}
             <motion.div
-              className="absolute top-20 left-4 right-4 rounded-2xl p-3 flex flex-col gap-1"
               style={{
-                background: "rgba(8,10,26,0.97)",
-                border: "1px solid rgba(124,58,237,0.18)",
-                backdropFilter: "blur(24px)",
+                position: "absolute",
+                top: "72px",
+                left: "12px",
+                right: "12px",
+                borderRadius: "20px",
+                padding: "10px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "2px",
+                background: "rgba(6,8,22,0.97)",
+                border: "1px solid rgba(124,58,237,0.2)",
+                backdropFilter: "blur(28px)",
               }}
               initial={{ y: -10, opacity: 0, scale: 0.97 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: -10, opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.18 }}
+              transition={{ duration: 0.2, ease: "easeOut" as const }}
             >
               {navLinks.map((link) =>
                 link.href ? (
@@ -204,8 +374,15 @@ export default function Navbar() {
                     key={link.id}
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className="text-left px-4 py-2.5 rounded-xl text-sm"
-                    style={{ color: "rgba(255,255,255,0.6)" }}
+                    style={{
+                      padding: "10px 16px",
+                      borderRadius: "12px",
+                      fontSize: "14px",
+                      color: "rgba(255,255,255,0.6)",
+                      textDecoration: "none",
+                      background: active === link.id ? "rgba(124,58,237,0.15)" : "transparent",
+                      transition: "background 0.15s",
+                    }}
                   >
                     {link.label}
                   </Link>
@@ -213,21 +390,42 @@ export default function Navbar() {
                   <button
                     key={link.id}
                     onClick={() => handleNav(link.id)}
-                    className="text-left px-4 py-2.5 rounded-xl text-sm"
-                    style={{ color: "rgba(255,255,255,0.6)" }}
+                    style={{
+                      padding: "10px 16px",
+                      borderRadius: "12px",
+                      fontSize: "14px",
+                      color: active === link.id ? "#fff" : "rgba(255,255,255,0.6)",
+                      background: active === link.id ? "rgba(124,58,237,0.15)" : "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      textAlign: "left",
+                      transition: "background 0.15s, color 0.15s",
+                    }}
                   >
                     {link.label}
                   </button>
                 )
               )}
-              <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", marginTop: "4px", paddingTop: "8px" }}>
+              {/* CTA */}
+              <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", marginTop: "6px", paddingTop: "8px" }}>
                 <a
                   href={navbar.cta.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white"
-                  style={{ background: "linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)" }}
                   onClick={() => setMenuOpen(false)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    padding: "11px 16px",
+                    borderRadius: "12px",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    color: "#fff",
+                    background: "linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)",
+                    textDecoration: "none",
+                  }}
                 >
                   {navbar.cta.label}
                 </a>
