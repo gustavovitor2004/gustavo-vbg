@@ -265,6 +265,16 @@ body {
   transform: scale(0.95);
 }
 
+/* Hamburger: visível só em mobile */
+.nav-hamburger {
+  display: flex;
+}
+@media (min-width: 768px) {
+  .nav-hamburger {
+    display: none !important;
+  }
+}
+
 /* Orbital ring rotation */
 @keyframes orbital-spin {
   from { transform: rotateX(72deg) rotateZ(0deg); }

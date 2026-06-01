@@ -269,7 +269,7 @@ export default function Navbar() {
           {/* Mobile hamburger — visível APENAS em mobile */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="flex md:hidden ml-2"
+            className="nav-hamburger ml-2"
             style={{
               width: "32px",
               height: "32px",
