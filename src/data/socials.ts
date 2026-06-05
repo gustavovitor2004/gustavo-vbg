@@ -20,15 +20,7 @@ export const socials: Social[] = [
     description: "Chat & connect with me",
     followers: "Add me",
   },
-  {
-    id: "youtube",
-    platform: "YouTube",
-    username: "@nnijup",
-    url: "https://www.youtube.com/@nnijup",
-    color: "#FF0000",
-    glowColor: "rgba(255,0,0,0.4)",
-    description: "Videos & content",
-  },
+
   {
     id: "instagram",
     platform: "Instagram",
