@@ -210,7 +210,7 @@ export default function AboutSection() {
             style={{ display: "flex", flexDirection: "column", gap: "12px" }}
           >
             {/* Quick stats */}
-            <div style={{
+            <div className="about-quick-stats" style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               gap: "12px",

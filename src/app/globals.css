@@ -308,14 +308,19 @@ section {
   overflow: hidden;
 }
 
-/* About grid — 2 cols on desktop, 1 on mobile */
+/* About grid — 2 cols desktop, 1 col mobile */
 .about-grid {
   grid-template-columns: 1fr 1fr;
 }
 @media (max-width: 767px) {
+  /* !important needed to override inline style gridTemplateColumns */
   .about-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .about-quick-stats {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
   }
 }
 
@@ -404,11 +409,34 @@ html, body {
     max-width: 100% !important;
   }
 
-  /* ── Navbar pill: hide nav links text, keep G + hamburger ── */
-  /* (links already hidden via md:hidden — only pill sizing) */
+  /* ── Navbar pill: compact on mobile ── */
   header.fixed {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    padding-top: 10px !important;
+  }
+
+  /* ── About bio text: smaller on mobile ── */
+  #about p {
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+  }
+
+  /* ── About stat cards: compact ── */
+  .about-quick-stats > div {
+    padding: 14px 10px !important;
+  }
+  .about-quick-stats p:first-child {
+    font-size: 22px !important;
+  }
+  .about-quick-stats p:last-child {
+    font-size: 9.5px !important;
+  }
+
+  /* ── Section inner padding ── */
+  section > div {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
   }
 }
 
@@ -447,33 +475,26 @@ html, body {
 
   /* ── About Me ── */
   #about p {
-    font-size: 14px !important;
+    font-size: 13.5px !important;
     line-height: 1.7 !important;
   }
-
   #about h2 {
     font-size: 1.8rem !important;
   }
-
-  /* About skill cards: icon + text horizontal */
   #about .card-shine {
-    padding: 16px 18px !important;
+    padding: 14px 16px !important;
   }
-
-  /* Language bars container */
-  #about [style*="padding: \"24px\""] {
+  /* Language bars */
+  #about > div > div:last-child > div:first-child > div:last-child {
     padding: 18px 16px !important;
   }
 
-  /* ── Projects ── */
-  #projects h2 {
+  /* ── Sites & Projects ── */
+  #sites h2, #projects h2 {
     font-size: 1.8rem !important;
   }
-
-  /* GitHub button: easier tap target */
-  #projects a[title="View on GitHub"],
-  #projects a[href*="github"] {
-    min-width: 44px !important;
+  /* Visit Site / Open App button: easier tap */
+  #sites a, #projects a {
     min-height: 44px !important;
   }
 
