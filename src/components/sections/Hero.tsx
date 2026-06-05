@@ -5,13 +5,17 @@ import { socials } from "@/data/socials";
 import { PlatformIcon } from "@/components/ui/PlatformIcon";
 import { profile, navbar } from "@/config/site";
 import CosmicBackground from "@/components/CosmicBackground";
-
-const stats = [
-  { value: "5+", label: "Sites made" },
-  { value: "2+", label: "Years of coding" },
-];
+import { useApp } from "@/context/AppContext";
 
 export default function Hero() {
+  const { t, theme } = useApp();
+  const isLight = theme === "light";
+
+  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
+  const textMuted = isLight ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.38)";
+  const textDim = isLight ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.18)";
+  const borderSub = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)";
+
   return (
     <section
       id="home"
@@ -22,7 +26,7 @@ export default function Hero() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background: "#030610",
+        background: isLight ? "var(--hero-bg)" : "#030610",
       }}
     >
       {/* ── Galaxy background ── */}
@@ -48,12 +52,12 @@ export default function Hero() {
             fontWeight: 700,
             letterSpacing: "0.22em",
             textTransform: "uppercase",
-            color: "rgba(255,255,255,0.3)",
+            color: textDim,
             marginBottom: "20px",
             fontFamily: "'JetBrains Mono', monospace",
           }}
         >
-          VIBERCORDER · 2026
+          {t("hero.label")}
         </motion.p>
 
         {/* Available badge */}
@@ -94,7 +98,7 @@ export default function Hero() {
                   letterSpacing: "0.02em",
                 }}
               >
-                Available for Projects
+                {t("hero.available")}
               </span>
             </div>
           </motion.div>
@@ -114,7 +118,7 @@ export default function Hero() {
             marginBottom: "24px",
           }}
         >
-          <span style={{ color: "#ffffff", display: "block" }}>
+          <span style={{ color: textPrimary, display: "block" }}>
             {profile.name.split(" ")[0]}
           </span>
           <span
@@ -139,12 +143,12 @@ export default function Hero() {
           style={{
             fontSize: "clamp(1rem, 2vw, 1.15rem)",
             fontWeight: 500,
-            color: "rgba(167,139,250,0.8)",
+            color: isLight ? "#7c3aed" : "rgba(167,139,250,0.8)",
             marginBottom: "16px",
             letterSpacing: "0.02em",
           }}
         >
-          {profile.tagline}
+          {t("hero.tagline")}
         </motion.p>
 
         {/* Bio */}
@@ -154,7 +158,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.28 }}
           style={{
             fontSize: "15px",
-            color: "rgba(255,255,255,0.38)",
+            color: textMuted,
             lineHeight: 1.8,
             maxWidth: "480px",
             marginBottom: "44px",
@@ -209,7 +213,7 @@ export default function Hero() {
                 "0 4px 32px rgba(124,58,237,0.55), 0 0 0 1px rgba(124,58,237,0.3)";
             }}
           >
-            View My Work
+            {t("hero.cta.work")}
             <svg
               width="14"
               height="14"
@@ -274,15 +278,18 @@ export default function Hero() {
             alignItems: "center",
             justifyContent: "center",
             paddingTop: "28px",
-            borderTop: "1px solid rgba(255,255,255,0.07)",
+            borderTop: `1px solid ${borderSub}`,
             marginBottom: "24px",
             gap: "0",
             flexWrap: "wrap",
             width: "100%",
           }}
         >
-          {stats.map((stat, i) => (
-            <div key={stat.label} style={{ display: "flex", alignItems: "center" }}>
+          {[
+            { value: "5+", labelKey: "hero.stat.sites" },
+            { value: "2+", labelKey: "hero.stat.years" },
+          ].map((stat, i, arr) => (
+            <div key={stat.labelKey} style={{ display: "flex", alignItems: "center" }}>
               <div
                 className="hero-stat-item"
                 style={{
@@ -296,7 +303,7 @@ export default function Hero() {
                   style={{
                     fontSize: "22px",
                     fontWeight: 900,
-                    color: "#ffffff",
+                    color: textPrimary,
                     lineHeight: 1,
                     letterSpacing: "-0.025em",
                   }}
@@ -306,22 +313,22 @@ export default function Hero() {
                 <p
                   style={{
                     fontSize: "11px",
-                    color: "rgba(255,255,255,0.3)",
+                    color: textDim,
                     marginTop: "4px",
                     fontWeight: 500,
                     letterSpacing: "0.02em",
                   }}
                 >
-                  {stat.label}
+                  {t(stat.labelKey)}
                 </p>
               </div>
-              {i < stats.length - 1 && (
+              {i < arr.length - 1 && (
                 <div
                   className="hero-stat-divider"
                   style={{
                     width: "1px",
                     height: "32px",
-                    background: "rgba(255,255,255,0.07)",
+                    background: borderSub,
                   }}
                 />
               )}
@@ -345,14 +352,14 @@ export default function Hero() {
           <span
             style={{
               fontSize: "10px",
-              color: "rgba(255,255,255,0.2)",
+              color: textDim,
               fontWeight: 700,
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               marginRight: "4px",
             }}
           >
-            Find me on
+            {t("social.findon")}
           </span>
           {socials.map((s) => (
             <a
@@ -389,7 +396,7 @@ export default function Hero() {
                 el.style.boxShadow = "none";
               }}
             >
-              <PlatformIcon id={s.id} size={15} className="text-white/55" />
+              <PlatformIcon id={s.id} size={15} className={isLight ? "text-indigo-600/70" : "text-white/55"} />
             </a>
           ))}
         </motion.div>
@@ -413,13 +420,13 @@ export default function Hero() {
         <span
           style={{
             fontSize: "9px",
-            color: "rgba(255,255,255,0.18)",
+            color: textDim,
             letterSpacing: "0.18em",
             fontWeight: 700,
             textTransform: "uppercase",
           }}
         >
-          SCROLL
+          {t("scroll")}
         </span>
         <motion.div
           style={{

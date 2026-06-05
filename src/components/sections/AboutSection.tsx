@@ -2,6 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import GitHubActivity from "@/components/GitHubActivity";
+import { useApp } from "@/context/AppContext";
 
 const container: Variants = {
   hidden: {},
@@ -64,6 +65,11 @@ const languages = [
 ];
 
 export default function AboutSection() {
+  const { t, theme } = useApp();
+  const isLight = theme === "light";
+  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
+  const textMuted = isLight ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.55)";
+
   return (
     <section
       id="about"
@@ -96,16 +102,16 @@ export default function AboutSection() {
             textTransform: "uppercase",
             marginBottom: "8px",
           }}>
-            ABOUT ME
+            {t("about.label")}
           </p>
           <h2 style={{
             fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
             fontWeight: 900,
-            color: "#ffffff",
+            color: textPrimary,
             lineHeight: 1.05,
             letterSpacing: "-0.025em",
           }}>
-            Who I Am
+            {t("about.title")}
           </h2>
         </motion.div>
 
@@ -129,7 +135,7 @@ export default function AboutSection() {
           >
             <p style={{
               fontSize: "15px",
-              color: "rgba(255,255,255,0.75)",
+              color: isLight ? "rgba(0,0,0,0.75)" : "rgba(255,255,255,0.75)",
               lineHeight: 1.9,
               marginBottom: "20px",
             }}>
@@ -141,7 +147,7 @@ export default function AboutSection() {
 
             <p style={{
               fontSize: "15px",
-              color: "rgba(255,255,255,0.55)",
+              color: textMuted,
               lineHeight: 1.9,
               marginBottom: "20px",
             }}>
@@ -167,27 +173,27 @@ export default function AboutSection() {
             <div style={{
               padding: "24px",
               borderRadius: "16px",
-              background: "rgba(255,255,255,0.025)",
-              border: "1px solid rgba(255,255,255,0.07)",
+              background: isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.025)",
+              border: isLight ? "1px solid rgba(0,0,0,0.07)" : "1px solid rgba(255,255,255,0.07)",
             }}>
               <p style={{
                 fontSize: "10px",
                 fontWeight: 700,
-                color: "rgba(255,255,255,0.28)",
+                color: isLight ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.28)",
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
                 marginBottom: "20px",
               }}>
-                Languages
+                {t("about.lang.title")}
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                 {languages.map((l) => (
                   <div key={l.lang}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "7px" }}>
-                      <span style={{ fontSize: "13px", fontWeight: 600, color: "#ffffff" }}>{l.lang}</span>
-                      <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)" }}>{l.level}</span>
+                      <span style={{ fontSize: "13px", fontWeight: 600, color: textPrimary }}>{l.lang}</span>
+                      <span style={{ fontSize: "11px", color: isLight ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.4)" }}>{l.level}</span>
                     </div>
-                    <div style={{ height: "4px", borderRadius: "9999px", background: "rgba(255,255,255,0.07)" }}>
+                    <div style={{ height: "4px", borderRadius: "9999px", background: isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)" }}>
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${l.pct}%` }}
@@ -226,14 +232,14 @@ export default function AboutSection() {
                 <div key={s.label} style={{
                   padding: "20px",
                   borderRadius: "14px",
-                  background: "rgba(255,255,255,0.025)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.025)",
+                  border: isLight ? "1px solid rgba(0,0,0,0.07)" : "1px solid rgba(255,255,255,0.07)",
                   textAlign: "center",
                 }}>
                   <p style={{ fontSize: "26px", fontWeight: 900, color: s.color, letterSpacing: "-0.03em", lineHeight: 1 }}>
                     {s.value}
                   </p>
-                  <p style={{ fontSize: "10.5px", color: "rgba(255,255,255,0.35)", marginTop: "6px", lineHeight: 1.4, fontWeight: 500 }}>
+                  <p style={{ fontSize: "10.5px", color: isLight ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.35)", marginTop: "6px", lineHeight: 1.4, fontWeight: 500 }}>
                     {s.label}
                   </p>
                 </div>
@@ -253,10 +259,12 @@ export default function AboutSection() {
               <span style={{ fontSize: "22px", lineHeight: 1, flexShrink: 0, marginTop: "2px" }}>📍</span>
               <div>
                 <p style={{ fontSize: "11px", fontWeight: 700, color: "#a78bfa", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "4px" }}>
-                  Currently
+                  {t("about.currently")}
                 </p>
-                <p style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.7)", lineHeight: 1.6 }}>
-                  Studying ADS (5th semester) · Building <strong style={{ color: "#c4b5fd" }}>Trophi.gg</strong> · Open to freelance &amp; collaborations
+                <p style={{ fontSize: "13.5px", color: isLight ? "rgba(0,0,0,0.65)" : "rgba(255,255,255,0.7)", lineHeight: 1.6 }}>
+                  {t("about.currently.text").split("Trophi.gg")[0]}
+                  <strong style={{ color: "#c4b5fd" }}>Trophi.gg</strong>
+                  {t("about.currently.text").split("Trophi.gg")[1]}
                 </p>
               </div>
             </div>
@@ -279,19 +287,19 @@ export default function AboutSection() {
               style={{
                 padding: "22px 24px",
                 borderRadius: "16px",
-                background: "rgba(255,255,255,0.025)",
-                border: "1px solid rgba(255,255,255,0.07)",
+                background: isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.025)",
+                border: isLight ? "1px solid rgba(0,0,0,0.07)" : "1px solid rgba(255,255,255,0.07)",
                 display: "flex",
                 alignItems: "flex-start",
                 gap: "16px",
                 transition: "border-color 0.25s, box-shadow 0.25s",
               }}
-              whileHover={{ y: -3, boxShadow: `0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px ${skill.color}22` }}
+              whileHover={{ y: -3, boxShadow: `0 12px 40px rgba(0,0,0,0.15), 0 0 0 1px ${skill.color}22` }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.borderColor = `${skill.color}30`;
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.07)";
+                (e.currentTarget as HTMLDivElement).style.borderColor = isLight ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.07)";
               }}
             >
               <div style={{
@@ -309,10 +317,10 @@ export default function AboutSection() {
                 {skill.icon}
               </div>
               <div style={{ flex: 1 }}>
-                <p style={{ fontSize: "13.5px", fontWeight: 700, color: "#ffffff", marginBottom: "5px", letterSpacing: "-0.01em" }}>
+                <p style={{ fontSize: "13.5px", fontWeight: 700, color: textPrimary, marginBottom: "5px", letterSpacing: "-0.01em" }}>
                   {skill.title}
                 </p>
-                <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.38)", lineHeight: 1.6 }}>
+                <p style={{ fontSize: "12px", color: isLight ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.38)", lineHeight: 1.6 }}>
                   {skill.desc}
                 </p>
               </div>
@@ -332,10 +340,10 @@ export default function AboutSection() {
           style={{ marginTop: "64px" }}
         >
           <p style={{ fontSize: "11px", fontWeight: 700, color: "#a855f7", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
-            TECHNICAL STACK
+            {t("about.stack.label")}
           </p>
-          <h3 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 900, color: "#ffffff", marginBottom: "40px", letterSpacing: "-0.02em" }}>
-            Technologies I Work With
+          <h3 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 900, color: textPrimary, marginBottom: "40px", letterSpacing: "-0.02em" }}>
+            {t("about.stack.title")}
           </h3>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
@@ -381,7 +389,7 @@ export default function AboutSection() {
                         borderRadius: "9999px",
                         fontSize: "12px",
                         fontWeight: 500,
-                        color: "rgba(255,255,255,0.72)",
+                        color: isLight ? "rgba(0,0,0,0.65)" : "rgba(255,255,255,0.72)",
                         background: `${group.color}12`,
                         border: `1px solid ${group.color}25`,
                         fontFamily: "'JetBrains Mono', monospace",
@@ -397,7 +405,7 @@ export default function AboutSection() {
                       onMouseLeave={(e) => {
                         const el = e.currentTarget as HTMLSpanElement;
                         el.style.background = `${group.color}12`;
-                        el.style.color = "rgba(255,255,255,0.72)";
+                        el.style.color = isLight ? "rgba(0,0,0,0.65)" : "rgba(255,255,255,0.72)";
                       }}
                     >
                       {pill}
@@ -418,10 +426,10 @@ export default function AboutSection() {
           style={{ marginTop: "64px" }}
         >
           <p style={{ fontSize: "11px", fontWeight: 700, color: "#06b6d4", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
-            EXPERIENCE
+            {t("about.exp.label")}
           </p>
-          <h3 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 900, color: "#ffffff", marginBottom: "40px", letterSpacing: "-0.02em" }}>
-            Professional Journey
+          <h3 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 900, color: textPrimary, marginBottom: "40px", letterSpacing: "-0.02em" }}>
+            {t("about.exp.title")}
           </h3>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
@@ -466,13 +474,13 @@ export default function AboutSection() {
                 style={{
                   padding: "24px 28px",
                   borderRadius: "16px",
-                  background: "rgba(255,255,255,0.025)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: isLight ? "rgba(0,0,0,0.025)" : "rgba(255,255,255,0.025)",
+                  border: isLight ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0.07)",
                   borderLeft: `3px solid ${exp.color}`,
                   transition: "box-shadow 0.25s",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px ${exp.color}22`;
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 32px rgba(0,0,0,0.15), 0 0 0 1px ${exp.color}22`;
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
@@ -480,17 +488,17 @@ export default function AboutSection() {
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "8px", marginBottom: "6px" }}>
                   <div>
-                    <p style={{ fontSize: "15px", fontWeight: 700, color: "#ffffff", letterSpacing: "-0.01em" }}>{exp.role}</p>
+                    <p style={{ fontSize: "15px", fontWeight: 700, color: textPrimary, letterSpacing: "-0.01em" }}>{exp.role}</p>
                     <p style={{ fontSize: "12px", color: exp.color, fontWeight: 600, marginTop: "2px" }}>{exp.company}</p>
                   </div>
                   <span style={{
                     fontSize: "10px",
                     fontWeight: 600,
-                    color: "rgba(255,255,255,0.35)",
+                    color: isLight ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.35)",
                     padding: "3px 10px",
                     borderRadius: "9999px",
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: isLight ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.06)",
+                    border: isLight ? "1px solid rgba(0,0,0,0.07)" : "1px solid rgba(255,255,255,0.08)",
                     whiteSpace: "nowrap",
                     fontFamily: "'JetBrains Mono', monospace",
                   }}>
@@ -499,7 +507,7 @@ export default function AboutSection() {
                 </div>
                 <ul style={{ marginTop: "12px", display: "flex", flexDirection: "column", gap: "6px", paddingLeft: "0", listStyle: "none" }}>
                   {exp.bullets.map((b, bi) => (
-                    <li key={bi} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "13px", color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>
+                    <li key={bi} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "13px", color: isLight ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>
                       <span style={{ color: exp.color, flexShrink: 0, marginTop: "4px", fontSize: "8px" }}>▶</span>
                       {b}
                     </li>
