@@ -16,6 +16,7 @@ export interface Project {
   gradient: string;
 }
 
+// ── Client websites (shown in "My Sites") ─────────────────────────────────
 export const projects: Project[] = [
   {
     id: "costelao-do-gaucho",
@@ -26,6 +27,7 @@ export const projects: Project[] = [
     technologies: ["HTML5", "CSS3", "Google Fonts"],
     status: "Finished",
     githubUrl: "https://github.com/gustavovitor2004/CostelaoDoGaucho",
+    demoUrl: "https://costelaodogaucho-whatsappgustavo-75998596215.vercel.app/",
     featured: true,
     gradient: "from-orange-600/20 to-red-600/20",
   },
@@ -37,6 +39,7 @@ export const projects: Project[] = [
     thumbnail: "/projects/cheiro-pao.png",
     technologies: ["HTML5", "CSS3", "JavaScript"],
     status: "Finished",
+    demoUrl: "https://cheiro-e-pao-whatsappgustavo-75998596215.vercel.app/",
     featured: true,
     gradient: "from-amber-600/20 to-yellow-600/20",
   },
@@ -48,6 +51,7 @@ export const projects: Project[] = [
     thumbnail: "/projects/lalay.png",
     technologies: ["HTML5", "CSS3", "JavaScript"],
     status: "Finished",
+    demoUrl: "https://lalaypetshop-whatsappgustavo-75998596215.vercel.app/",
     gradient: "from-pink-600/20 to-purple-600/20",
   },
   {
@@ -58,7 +62,19 @@ export const projects: Project[] = [
     thumbnail: "/projects/pinheiro.png",
     technologies: ["HTML5", "CSS3", "JavaScript"],
     status: "Finished",
+    demoUrl: "https://pinheiroescapamentos-whatsappgustavo-75998596215.vercel.app/",
     gradient: "from-slate-600/20 to-cyan-600/20",
+  },
+  {
+    id: "casa-da-mangueira",
+    title: "Casa da Mangueira Eventos",
+    description:
+      "Site para espaço de eventos em Salvador - BA. Layout elegante com galeria de fotos, pacotes disponíveis e formulário de reserva via WhatsApp.",
+    thumbnail: "/projects/casa-mangueira.png",
+    technologies: ["HTML5", "CSS3", "JavaScript"],
+    status: "Finished",
+    demoUrl: "https://casadamangueiraeventos-whatsappgustavo-75998596215.vercel.app/",
+    gradient: "from-rose-600/20 to-pink-600/20",
   },
   {
     id: "sabor-e-vida",

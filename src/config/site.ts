@@ -40,7 +40,8 @@ export const navbar = {
   links: [
     { label: "Home", href: "#home" },
     { label: "About Me", href: "#about" },
-    { label: "Projects", href: "#projects" },
+    { label: "My Sites", href: "#sites" },
+    { label: "My Projects", href: "#projects" },
     { label: "Servers", href: "#servers" },
     { label: "Social Media", href: "#connect" },
   ],

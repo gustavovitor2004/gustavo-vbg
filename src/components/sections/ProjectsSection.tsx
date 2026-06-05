@@ -258,7 +258,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
                 el.style.boxShadow = "none";
               }}
             >
-              {project.demoUrl ? "Live Demo" : "View Docs"}
+              {project.demoUrl ? "Visit Site" : "View Docs"}
               <ExternalIcon size={12} />
             </a>
           )}
@@ -277,7 +277,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" style={{ padding: "100px 0 80px", position: "relative" }}>
+    <section id="sites" style={{ padding: "100px 0 80px", position: "relative" }}>
       {/* Subtle section bg tint */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -305,10 +305,10 @@ export default function ProjectsSection() {
         >
           <div>
             <p style={{ fontSize: "11px", fontWeight: 700, color: "#7c3aed", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
-              PORTFOLIO
+              CLIENT SITES
             </p>
             <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.05, letterSpacing: "-0.025em" }}>
-              My Projects
+              My Sites
             </h2>
           </div>
           <a
