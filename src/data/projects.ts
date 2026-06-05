@@ -26,7 +26,6 @@ export const projects: Project[] = [
     thumbnail: "/projects/costelao.png",
     technologies: ["HTML5", "CSS3", "Google Fonts"],
     status: "Finished",
-    githubUrl: "https://github.com/gustavovitor2004/CostelaoDoGaucho",
     demoUrl: "https://costelaodogaucho-whatsappgustavo-75998596215.vercel.app/",
     featured: true,
     gradient: "from-orange-600/20 to-red-600/20",
