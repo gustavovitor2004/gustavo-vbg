@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { meta } from "@/config/site";
+import { AppProvider } from "@/context/AppContext";
 
 export const metadata: Metadata = {
   title: meta.title,
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark h-full antialiased">
+    <html lang="en" className="dark h-full antialiased" data-theme="dark">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -25,7 +26,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full bg-[#030712] text-white">{children}</body>
+      <body className="min-h-full text-white">
+        <AppProvider>{children}</AppProvider>
+      </body>
     </html>
   );
 }

@@ -82,9 +82,65 @@
   50% { opacity: 0; }
 }
 
+/* ── Theme tokens ── */
 :root {
   --background: #030712;
   --foreground: #f9fafb;
+  --page-bg: #050816;
+  --section-bg: transparent;
+  --card-bg: rgba(255,255,255,0.025);
+  --card-border: rgba(255,255,255,0.07);
+  --text-primary: #ffffff;
+  --text-muted: rgba(255,255,255,0.38);
+  --text-dim: rgba(255,255,255,0.55);
+  --vt-x: 50%;
+  --vt-y: 50%;
+}
+
+/* Light mode overrides */
+html[data-theme="light"] {
+  --page-bg: #f0f2ff;
+  --card-bg: rgba(255,255,255,0.8);
+  --card-border: rgba(0,0,0,0.08);
+  --text-primary: #0a0b1a;
+  --text-muted: rgba(0,0,0,0.45);
+  --text-dim: rgba(0,0,0,0.6);
+}
+html[data-theme="light"] body {
+  background: var(--page-bg);
+  color: var(--text-primary);
+}
+html[data-theme="light"] #home {
+  /* Keep hero dark — cosmic bg needs dark */
+  background: #050816 !important;
+}
+html[data-theme="light"] section:not(#home) {
+  background: var(--page-bg);
+}
+html[data-theme="light"] .glass,
+html[data-theme="light"] .card-shine {
+  background: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+  color: var(--text-primary) !important;
+}
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] p {
+  color: var(--text-primary);
+}
+
+/* ── View Transition (theme toggle circle reveal) ── */
+@keyframes vt-reveal {
+  from { clip-path: circle(0 at var(--vt-x) var(--vt-y)); }
+  to   { clip-path: circle(200vmax at var(--vt-x) var(--vt-y)); }
+}
+::view-transition-new(root) {
+  animation: vt-reveal 0.55s cubic-bezier(0.4,0,0.2,1);
+  z-index: 999;
+}
+::view-transition-old(root) {
+  animation: none;
+  z-index: -1;
 }
 
 * {

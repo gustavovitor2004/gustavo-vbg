@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import GitHubActivity from "@/components/GitHubActivity";
 
 const container: Variants = {
   hidden: {},
@@ -318,6 +319,9 @@ export default function AboutSection() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* ── GitHub Activity ── */}
+        <GitHubActivity />
 
         {/* ── Tech Stack ── */}
         <motion.div
