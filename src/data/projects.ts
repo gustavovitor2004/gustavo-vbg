@@ -76,14 +76,5 @@ export const projects: Project[] = [
     demoUrl: "https://casadamangueiraeventos-whatsappgustavo-75998596215.vercel.app/",
     gradient: "from-rose-600/20 to-pink-600/20",
   },
-  {
-    id: "sabor-e-vida",
-    title: "Sabor & Vida",
-    description:
-      "Site institucional para restaurante com foco em identidade visual forte e experiência do usuário otimizada para conversão.",
-    thumbnail: "/projects/sabor-vida.png",
-    technologies: ["HTML5", "CSS3", "JavaScript"],
-    status: "Finished",
-    gradient: "from-green-600/20 to-emerald-600/20",
-  },
+
 ];
