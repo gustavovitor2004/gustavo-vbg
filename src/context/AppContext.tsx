@@ -42,8 +42,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (typeof document !== "undefined" && "startViewTransition" in document) {
       document.documentElement.style.setProperty("--vt-x", `${x}px`);
       document.documentElement.style.setProperty("--vt-y", `${y}px`);
-      // @ts-expect-error startViewTransition not in TS types yet
-      document.startViewTransition(() => {
+      (document as Document & { startViewTransition: (cb: () => void) => void }).startViewTransition(() => {
         setTheme(newTheme);
       });
     } else {
