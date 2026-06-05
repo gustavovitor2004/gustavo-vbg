@@ -319,6 +319,193 @@ export default function AboutSection() {
           ))}
         </motion.div>
 
+        {/* ── Tech Stack ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55 }}
+          style={{ marginTop: "64px" }}
+        >
+          <p style={{ fontSize: "11px", fontWeight: 700, color: "#a855f7", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
+            TECHNICAL STACK
+          </p>
+          <h3 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 900, color: "#ffffff", marginBottom: "40px", letterSpacing: "-0.02em" }}>
+            Technologies I Work With
+          </h3>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+            {[
+              {
+                label: "Frontend & Web",
+                color: "#7c3aed",
+                pills: ["HTML5", "CSS3", "JavaScript", "Next.js", "React", "Tailwind CSS", "Framer Motion"],
+              },
+              {
+                label: "Backend & Bots",
+                color: "#06b6d4",
+                pills: ["Node.js", "Discord.js v14", "Python", "PM2", "REST APIs"],
+              },
+              {
+                label: "Automation & Scripting",
+                color: "#22c55e",
+                pills: ["Python Scripts", "JS Automation", "Custom Clickers", "Workflow Tools"],
+              },
+              {
+                label: "Infrastructure & Tools",
+                color: "#f59e0b",
+                pills: ["Git", "GitHub", "Linux / Debian", "Ubuntu", "VPS", "Nginx", "VS Code"],
+              },
+            ].map((group) => (
+              <div key={group.label}>
+                <p style={{
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  color: group.color,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  marginBottom: "12px",
+                }}>
+                  {group.label}
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                  {group.pills.map((pill) => (
+                    <span
+                      key={pill}
+                      style={{
+                        padding: "5px 14px",
+                        borderRadius: "9999px",
+                        fontSize: "12px",
+                        fontWeight: 500,
+                        color: "rgba(255,255,255,0.72)",
+                        background: `${group.color}12`,
+                        border: `1px solid ${group.color}25`,
+                        fontFamily: "'JetBrains Mono', monospace",
+                        letterSpacing: "0.01em",
+                        transition: "background 0.2s, color 0.2s",
+                        cursor: "default",
+                      }}
+                      onMouseEnter={(e) => {
+                        const el = e.currentTarget as HTMLSpanElement;
+                        el.style.background = `${group.color}22`;
+                        el.style.color = "#ffffff";
+                      }}
+                      onMouseLeave={(e) => {
+                        const el = e.currentTarget as HTMLSpanElement;
+                        el.style.background = `${group.color}12`;
+                        el.style.color = "rgba(255,255,255,0.72)";
+                      }}
+                    >
+                      {pill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* ── Experience ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55, delay: 0.1 }}
+          style={{ marginTop: "64px" }}
+        >
+          <p style={{ fontSize: "11px", fontWeight: 700, color: "#06b6d4", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
+            EXPERIENCE
+          </p>
+          <h3 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 900, color: "#ffffff", marginBottom: "40px", letterSpacing: "-0.02em" }}>
+            Professional Journey
+          </h3>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            {[
+              {
+                role: "Freelance Web Developer",
+                company: "Self-employed",
+                period: "2024 – Present",
+                color: "#7c3aed",
+                bullets: [
+                  "Built 5+ responsive landing pages for local businesses (restaurants, automotive, pet shops, events)",
+                  "Delivered high-conversion designs with WhatsApp CTA integration and advanced SEO",
+                  "Full project lifecycle: client briefing → design → code → deployment on Vercel",
+                ],
+              },
+              {
+                role: "IT Support Technician",
+                company: "Remote — 2+ years",
+                period: "2022 – Present",
+                color: "#06b6d4",
+                bullets: [
+                  "Remote technical support and system optimisation for end users",
+                  "Infrastructure management and troubleshooting across Linux/Windows environments",
+                  "Built automation scripts in Python and JavaScript to improve operational efficiency by 200%+",
+                ],
+              },
+              {
+                role: "Community Manager & Bot Developer",
+                company: "Trophi.gg",
+                period: "2023 – Present",
+                color: "#a855f7",
+                bullets: [
+                  "Founded and manage a growing Discord community (Trophi.gg)",
+                  "Developed custom Discord bots using discord.js v14 for moderation and automation",
+                  "Community strategy, events management and member engagement",
+                ],
+              },
+            ].map((exp, i) => (
+              <div
+                key={i}
+                className="card-shine"
+                style={{
+                  padding: "24px 28px",
+                  borderRadius: "16px",
+                  background: "rgba(255,255,255,0.025)",
+                  border: "1px solid rgba(255,255,255,0.07)",
+                  borderLeft: `3px solid ${exp.color}`,
+                  transition: "box-shadow 0.25s",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px ${exp.color}22`;
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "8px", marginBottom: "6px" }}>
+                  <div>
+                    <p style={{ fontSize: "15px", fontWeight: 700, color: "#ffffff", letterSpacing: "-0.01em" }}>{exp.role}</p>
+                    <p style={{ fontSize: "12px", color: exp.color, fontWeight: 600, marginTop: "2px" }}>{exp.company}</p>
+                  </div>
+                  <span style={{
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    color: "rgba(255,255,255,0.35)",
+                    padding: "3px 10px",
+                    borderRadius: "9999px",
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    whiteSpace: "nowrap",
+                    fontFamily: "'JetBrains Mono', monospace",
+                  }}>
+                    {exp.period}
+                  </span>
+                </div>
+                <ul style={{ marginTop: "12px", display: "flex", flexDirection: "column", gap: "6px", paddingLeft: "0", listStyle: "none" }}>
+                  {exp.bullets.map((b, bi) => (
+                    <li key={bi} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "13px", color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>
+                      <span style={{ color: exp.color, flexShrink: 0, marginTop: "4px", fontSize: "8px" }}>▶</span>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );

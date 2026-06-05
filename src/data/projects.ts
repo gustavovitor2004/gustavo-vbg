@@ -14,6 +14,7 @@ export interface Project {
   downloadUrl?: string;
   featured?: boolean;
   gradient: string;
+  category?: string;
 }
 
 // ── Client websites (shown in "My Sites") ─────────────────────────────────
@@ -28,6 +29,7 @@ export const projects: Project[] = [
     status: "Finished",
     demoUrl: "https://costelaodogaucho-whatsappgustavo-75998596215.vercel.app/",
     featured: true,
+    category: "Restaurant",
     gradient: "from-orange-600/20 to-red-600/20",
   },
   {
@@ -40,6 +42,7 @@ export const projects: Project[] = [
     status: "Finished",
     demoUrl: "https://cheiro-e-pao-whatsappgustavo-75998596215.vercel.app/",
     featured: true,
+    category: "Bakery",
     gradient: "from-amber-600/20 to-yellow-600/20",
   },
   {
@@ -51,6 +54,7 @@ export const projects: Project[] = [
     technologies: ["HTML5", "CSS3", "JavaScript"],
     status: "Finished",
     demoUrl: "https://lalaypetshop-whatsappgustavo-75998596215.vercel.app/",
+    category: "Pet Shop",
     gradient: "from-pink-600/20 to-purple-600/20",
   },
   {
@@ -62,6 +66,7 @@ export const projects: Project[] = [
     technologies: ["HTML5", "CSS3", "JavaScript"],
     status: "Finished",
     demoUrl: "https://pinheiroescapamentos-whatsappgustavo-75998596215.vercel.app/",
+    category: "Automotive",
     gradient: "from-slate-600/20 to-cyan-600/20",
   },
   {
@@ -73,6 +78,7 @@ export const projects: Project[] = [
     technologies: ["HTML5", "CSS3", "JavaScript"],
     status: "Finished",
     demoUrl: "https://casadamangueiraeventos-whatsappgustavo-75998596215.vercel.app/",
+    category: "Events",
     gradient: "from-rose-600/20 to-pink-600/20",
   },
 

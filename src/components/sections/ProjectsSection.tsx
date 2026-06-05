@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { projects } from "@/data/projects";
 
 const container: Variants = {
@@ -275,7 +276,14 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   );
 }
 
+const CATEGORIES = ["All", "Restaurant", "Bakery", "Pet Shop", "Automotive", "Events"];
+
 export default function ProjectsSection() {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const filtered = activeFilter === "All"
+    ? projects
+    : projects.filter((p) => p.category === activeFilter);
+
   return (
     <section id="sites" style={{ padding: "100px 0 80px", position: "relative" }}>
       {/* Subtle section bg tint */}
@@ -326,18 +334,70 @@ export default function ProjectsSection() {
           </a>
         </motion.div>
 
-        {/* All projects — single unified grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
+        {/* Filter tabs */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "8px",
+            marginBottom: "36px",
+          }}
         >
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </motion.div>
+          {CATEGORIES.map((cat) => {
+            const isActive = activeFilter === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setActiveFilter(cat)}
+                style={{
+                  padding: "6px 16px",
+                  borderRadius: "9999px",
+                  fontSize: "12px",
+                  fontWeight: isActive ? 700 : 500,
+                  color: isActive ? "#fff" : "rgba(255,255,255,0.45)",
+                  background: isActive ? "rgba(124,58,237,0.22)" : "rgba(255,255,255,0.05)",
+                  border: isActive ? "1px solid rgba(124,58,237,0.45)" : "1px solid rgba(255,255,255,0.08)",
+                  cursor: "pointer",
+                  transition: "all 0.18s",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.09)";
+                    (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.75)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.05)";
+                    (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.45)";
+                  }
+                }}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Filtered project grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeFilter}
+            className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+          >
+            {filtered.map((project) => (
+              <motion.div key={project.id} variants={item} initial="hidden" animate="show">
+                <ProjectCard project={project} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
