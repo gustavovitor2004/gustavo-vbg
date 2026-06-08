@@ -1,6 +1,8 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { motion, type Variants } from "framer-motion";
+import { Cpu } from "lucide-react";
 import GitHubActivity from "@/components/GitHubActivity";
 import { useApp } from "@/context/AppContext";
 import { useThemeTokens } from "@/hooks/useThemeTokens";
@@ -16,14 +18,14 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
-const SKILL_KEYS = ["python", "it", "discord", "web", "linux", "nextjs"] as const;
-const SKILL_COLORS: Record<(typeof SKILL_KEYS)[number], { color: string; glow: string; icon: string }> = {
-  python: { icon: "🐍", color: "#f59e0b", glow: "rgba(245,158,11,0.2)" },
-  it: { icon: "🖥️", color: "#3b82f6", glow: "rgba(59,130,246,0.2)" },
-  discord: { icon: "🤖", color: "#5865f2", glow: "rgba(88,101,242,0.2)" },
-  web: { icon: "🌐", color: "#06b6d4", glow: "rgba(6,182,212,0.2)" },
-  linux: { icon: "🐧", color: "#22c55e", glow: "rgba(34,197,94,0.2)" },
-  nextjs: { icon: "⚡", color: "#a855f7", glow: "rgba(168,85,247,0.2)" },
+const SKILL_KEYS = ["python", "it", "discord", "web", "hardware", "nextjs"] as const;
+const SKILL_COLORS: Record<(typeof SKILL_KEYS)[number], { color: string; glow: string; icon: ReactNode }> = {
+  python:   { icon: "🐍", color: "#f59e0b", glow: "rgba(245,158,11,0.2)" },
+  it:       { icon: "🖥️", color: "#3b82f6", glow: "rgba(59,130,246,0.2)" },
+  discord:  { icon: "🤖", color: "#5865f2", glow: "rgba(88,101,242,0.2)" },
+  web:      { icon: "🌐", color: "#06b6d4", glow: "rgba(6,182,212,0.2)" },
+  hardware: { icon: <Cpu size={20} />, color: "#22c55e", glow: "rgba(34,197,94,0.2)" },
+  nextjs:   { icon: "⚡", color: "#a855f7", glow: "rgba(168,85,247,0.2)" },
 };
 
 const LANGUAGE_KEYS = ["pt", "en"] as const;
@@ -179,7 +181,7 @@ export default function AboutSection() {
                 onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = surface.border; }}
               >
                 {/* light mode: stronger border (60% opacity) and slightly tinted bg */}
-                <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: isLight ? `${meta.color}20` : meta.glow, border: isLight ? `1px solid ${meta.color}55` : `1px solid ${meta.color}30`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", flexShrink: 0 }}>
+                <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: isLight ? `${meta.color}20` : meta.glow, border: isLight ? `1px solid ${meta.color}55` : `1px solid ${meta.color}30`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", flexShrink: 0, color: meta.color }}>
                   {meta.icon}
                 </div>
                 <div style={{ flex: 1 }}>
