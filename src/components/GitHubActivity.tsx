@@ -68,11 +68,32 @@ export default function GitHubActivity() {
         </a>
       </div>
 
-      <div style={{ overflow: "hidden", borderRadius: "10px" }}>
+      <div
+        style={{
+          overflow: "hidden",
+          borderRadius: "10px",
+          /* Dark mode: give the SVG a dark canvas so the bg bleeds correctly */
+          background: "var(--chart-bg, transparent)",
+        }}
+      >
         <img
           src="https://ghchart.rshah.org/7c3aed/gustavovitor2004"
           alt="GitHub Contribution Chart"
-          style={{ width: "100%", height: "auto", display: "block", filter: "brightness(1.1) contrast(1.05)" }}
+          style={{
+            width: "100%",
+            height: "auto",
+            display: "block",
+            /**
+             * Dark mode filter logic:
+             *  invert(1)          → #EBEDF0 (empty cells) become near-black
+             *  hue-rotate(180deg) → purple contribution cells (inverted→yellow-green) rotate back to ~purple
+             *  saturate(1.3)      → restore vividness lost in inversion
+             *  brightness(0.88)   → prevent blown-out highlights
+             *
+             * Light mode: gentle brightness/contrast boost only.
+             */
+            filter: "var(--chart-filter)",
+          }}
           loading="lazy"
         />
       </div>

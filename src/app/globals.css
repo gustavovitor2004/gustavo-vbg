@@ -107,22 +107,28 @@ html[data-theme="dark"] {
   --accent-green: #86efac;
   --vt-x: 50%;
   --vt-y: 50%;
+  /* GitHub contribution chart — dark mode: invert empty cells + rotate hue back to purple */
+  --chart-bg: #161b22;
+  --chart-filter: invert(1) hue-rotate(180deg) saturate(1.3) brightness(0.88);
 }
 
 html[data-theme="light"] {
   color-scheme: light;
-  --background: #f4f6fc;
+  --background: #f3f4f6;
   --foreground: #111827;
-  --page-bg: #f4f6fc;
-  --hero-bg: #eef1fb;
-  --section-bg: #f4f6fc;
+  /* Warm neutral gray — no pure white, no excessive blue tint */
+  --page-bg: #f3f4f6;
+  --hero-bg: #eef0ff;
+  --section-bg: #f3f4f6;
+  /* Cards are white — creates depth against the gray page */
   --card-bg: #ffffff;
-  --card-border: rgba(17,24,39,0.10);
-  --text-primary: #111827;
-  --text-secondary: #1f2937;
-  --text-muted: #4b5563;
-  --text-faint: #6b7280;
-  --text-dim: #6b7280;
+  --card-border: rgba(17,24,39,0.09);
+  /* Text scale: deep ink grays, never pure black */
+  --text-primary: #0f172a;
+  --text-secondary: #1e293b;
+  --text-muted: #475569;
+  --text-faint: #64748b;
+  --text-dim: #64748b;
   --text-on-accent: #ffffff;
   --glass-bg: rgba(255,255,255,0.92);
   --glass-border: rgba(17,24,39,0.10);
@@ -130,6 +136,9 @@ html[data-theme="light"] {
   --accent-highlight: #6d28d9;
   --accent-blue: #2563eb;
   --accent-green: #059669;
+  /* GitHub contribution chart — light mode: subtle boost only, no inversion */
+  --chart-bg: transparent;
+  --chart-filter: brightness(1.05) contrast(1.08) saturate(1.1);
 }
 
 html,
