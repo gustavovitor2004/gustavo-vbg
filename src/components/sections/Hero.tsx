@@ -76,8 +76,8 @@ export default function Hero() {
                 gap: "8px",
                 padding: "6px 16px 6px 10px",
                 borderRadius: "9999px",
-                background: "rgba(34,197,94,0.08)",
-                border: "1px solid rgba(34,197,94,0.2)",
+                background: isLight ? "rgba(22,163,74,0.12)" : "rgba(34,197,94,0.08)",
+                border: isLight ? "1px solid rgba(22,163,74,0.45)" : "1px solid rgba(34,197,94,0.2)",
               }}
             >
               <span
@@ -87,14 +87,15 @@ export default function Hero() {
                   width: "7px",
                   height: "7px",
                   borderRadius: "50%",
-                  background: "#22c55e",
+                  background: isLight ? "#16a34a" : "#22c55e",
                   flexShrink: 0,
                 }}
               />
               <span
                 style={{
                   fontSize: "12px",
-                  color: "rgba(134,239,172,0.9)",
+                  /* light: forest green (#065F46) for WCAG AA compliance */
+                  color: isLight ? "#065F46" : "rgba(134,239,172,0.9)",
                   fontWeight: 600,
                   letterSpacing: "0.02em",
                 }}
@@ -240,25 +241,26 @@ export default function Hero() {
               gap: "9px",
               fontSize: "14px",
               fontWeight: 600,
-              color: "#ffffff",
+              /* light: dark forest green for WCAG AA on light-green bg */
+              color: isLight ? "#14532d" : "#ffffff",
               padding: "14px 34px",
               borderRadius: "9999px",
-              border: "1px solid rgba(37,211,102,0.35)",
-              background: "rgba(37,211,102,0.1)",
+              border: isLight ? "1px solid rgba(22,163,74,0.55)" : "1px solid rgba(37,211,102,0.35)",
+              background: isLight ? "rgba(22,163,74,0.13)" : "rgba(37,211,102,0.1)",
               textDecoration: "none",
               transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget as HTMLAnchorElement;
-              el.style.background = "rgba(37,211,102,0.18)";
-              el.style.borderColor = "rgba(37,211,102,0.6)";
-              el.style.boxShadow = "0 0 24px rgba(37,211,102,0.25)";
+              el.style.background   = isLight ? "rgba(22,163,74,0.22)" : "rgba(37,211,102,0.18)";
+              el.style.borderColor  = isLight ? "rgba(22,163,74,0.72)" : "rgba(37,211,102,0.6)";
+              el.style.boxShadow    = isLight ? "0 0 24px rgba(22,163,74,0.22)" : "0 0 24px rgba(37,211,102,0.25)";
             }}
             onMouseLeave={(e) => {
               const el = e.currentTarget as HTMLAnchorElement;
-              el.style.background = "rgba(37,211,102,0.1)";
-              el.style.borderColor = "rgba(37,211,102,0.35)";
-              el.style.boxShadow = "none";
+              el.style.background   = isLight ? "rgba(22,163,74,0.13)" : "rgba(37,211,102,0.1)";
+              el.style.borderColor  = isLight ? "rgba(22,163,74,0.55)" : "rgba(37,211,102,0.35)";
+              el.style.boxShadow    = "none";
             }}
           >
             <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style={{ color: "#25d366", flexShrink: 0 }}>

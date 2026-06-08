@@ -136,9 +136,12 @@ html[data-theme="light"] {
   --accent-highlight: #6d28d9;
   --accent-blue: #2563eb;
   --accent-green: #059669;
-  /* GitHub contribution chart — light mode: subtle boost only, no inversion */
+  /* GitHub contribution chart — light mode
+     invert(0.2) shifts empty cells #EBEDF0 → ~#C0C2C5 (visible gray)
+     while leaving mid-range purple contribution cells almost unchanged.
+     saturate(1.4) restores vividness on the purple contribution squares. */
   --chart-bg: transparent;
-  --chart-filter: brightness(1.05) contrast(1.08) saturate(1.1);
+  --chart-filter: invert(0.2) saturate(1.4) brightness(0.95);
 }
 
 html,

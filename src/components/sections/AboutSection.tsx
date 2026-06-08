@@ -33,22 +33,22 @@ const LANGUAGE_META: Record<(typeof LANGUAGE_KEYS)[number], { pct: number; color
 };
 
 const STACK_GROUPS = [
-  { key: "about.stack.frontend", color: "#7c3aed", pills: ["HTML5", "CSS3", "JavaScript", "Next.js", "React", "Tailwind CSS", "Framer Motion"] },
-  { key: "about.stack.backend", color: "#06b6d4", pills: ["Node.js", "Discord.js v14", "Python", "PM2", "REST APIs"] },
-  { key: "about.stack.automation", color: "#22c55e", pills: ["Python Scripts", "JS Automation", "Custom Clickers", "Workflow Tools"] },
-  { key: "about.stack.infra", color: "#f59e0b", pills: ["Git", "GitHub", "Linux / Debian", "Ubuntu", "VPS", "Nginx", "VS Code"] },
+  { key: "about.stack.frontend",   color: "#7c3aed", lightColor: "#5b21b6", pills: ["HTML5", "CSS3", "JavaScript", "Next.js", "React", "Tailwind CSS", "Framer Motion"] },
+  { key: "about.stack.backend",    color: "#06b6d4", lightColor: "#0e7490", pills: ["Node.js", "Discord.js v14", "Python", "PM2", "REST APIs"] },
+  { key: "about.stack.automation", color: "#22c55e", lightColor: "#15803d", pills: ["Python Scripts", "JS Automation", "Custom Clickers", "Workflow Tools"] },
+  { key: "about.stack.infra",      color: "#f59e0b", lightColor: "#b45309", pills: ["Git", "GitHub", "Linux / Debian", "Ubuntu", "VPS", "Nginx", "VS Code"] },
 ] as const;
 
 const EXPERIENCE_KEYS = ["freelance", "it", "trophi"] as const;
-const EXPERIENCE_META: Record<(typeof EXPERIENCE_KEYS)[number], { color: string; bulletCount: number }> = {
-  freelance: { color: "#7c3aed", bulletCount: 3 },
-  it: { color: "#06b6d4", bulletCount: 3 },
-  trophi: { color: "#a855f7", bulletCount: 3 },
+const EXPERIENCE_META: Record<(typeof EXPERIENCE_KEYS)[number], { color: string; lightColor: string; bulletCount: number }> = {
+  freelance: { color: "#7c3aed", lightColor: "#5b21b6", bulletCount: 3 },
+  it:        { color: "#06b6d4", lightColor: "#0e7490", bulletCount: 3 },
+  trophi:    { color: "#a855f7", lightColor: "#7e22ce", bulletCount: 3 },
 };
 
 export default function AboutSection() {
   const { t } = useApp();
-  const { text, surface } = useThemeTokens();
+  const { isLight, text, surface } = useThemeTokens();
 
   const stats = [
     { value: "5+", labelKey: "about.stat.sites", color: "#a78bfa" },
@@ -170,10 +170,11 @@ export default function AboutSection() {
                 className="card-shine"
                 style={{ padding: "22px 24px", borderRadius: "16px", background: surface.card, border: `1px solid ${surface.border}`, display: "flex", alignItems: "flex-start", gap: "16px", transition: "border-color 0.25s, box-shadow 0.25s" }}
                 whileHover={{ y: -3, boxShadow: `0 12px 40px rgba(0,0,0,0.15), 0 0 0 1px ${meta.color}22` }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = `${meta.color}30`; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = isLight ? `${meta.color}60` : `${meta.color}30`; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = surface.border; }}
               >
-                <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: meta.glow, border: `1px solid ${meta.color}30`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", flexShrink: 0 }}>
+                {/* light mode: stronger border (60% opacity) and slightly tinted bg */}
+                <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: isLight ? `${meta.color}20` : meta.glow, border: isLight ? `1px solid ${meta.color}55` : `1px solid ${meta.color}30`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", flexShrink: 0 }}>
                   {meta.icon}
                 </div>
                 <div style={{ flex: 1 }}>
@@ -198,33 +199,51 @@ export default function AboutSection() {
           </h3>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
-            {STACK_GROUPS.map((group) => (
-              <div key={group.key}>
-                <p style={{ fontSize: "11px", fontWeight: 700, color: group.color, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "12px" }}>
-                  {t(group.key)}
-                </p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                  {group.pills.map((pill) => (
-                    <span
-                      key={pill}
-                      style={{ padding: "5px 14px", borderRadius: "9999px", fontSize: "12px", fontWeight: 500, color: text.muted, background: `${group.color}12`, border: `1px solid ${group.color}25`, fontFamily: "'JetBrains Mono', monospace", letterSpacing: "0.01em", transition: "background 0.2s, color 0.2s", cursor: "default" }}
-                      onMouseEnter={(e) => {
-                        const el = e.currentTarget as HTMLSpanElement;
-                        el.style.background = `${group.color}22`;
-                        el.style.color = text.onAccent;
-                      }}
-                      onMouseLeave={(e) => {
-                        const el = e.currentTarget as HTMLSpanElement;
-                        el.style.background = `${group.color}12`;
-                        el.style.color = text.muted;
-                      }}
-                    >
-                      {pill}
-                    </span>
-                  ))}
+            {STACK_GROUPS.map((group) => {
+              /* In light mode use the darker variant of each brand colour so
+                 borders and labels are legible on the white/light-gray page. */
+              const c = isLight ? group.lightColor : group.color;
+              return (
+                <div key={group.key}>
+                  <p style={{ fontSize: "11px", fontWeight: 700, color: c, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "12px" }}>
+                    {t(group.key)}
+                  </p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {group.pills.map((pill) => (
+                      <span
+                        key={pill}
+                        style={{
+                          padding: "5px 14px",
+                          borderRadius: "9999px",
+                          fontSize: "12px",
+                          fontWeight: 500,
+                          /* light: use darker colour with higher opacity border */
+                          color: isLight ? c : text.muted,
+                          background: isLight ? `${c}14` : `${group.color}12`,
+                          border: isLight ? `1px solid ${c}55` : `1px solid ${group.color}25`,
+                          fontFamily: "'JetBrains Mono', monospace",
+                          letterSpacing: "0.01em",
+                          transition: "background 0.2s, color 0.2s",
+                          cursor: "default",
+                        }}
+                        onMouseEnter={(e) => {
+                          const el = e.currentTarget as HTMLSpanElement;
+                          el.style.background = isLight ? `${c}24` : `${group.color}22`;
+                          el.style.color = isLight ? c : text.onAccent;
+                        }}
+                        onMouseLeave={(e) => {
+                          const el = e.currentTarget as HTMLSpanElement;
+                          el.style.background = isLight ? `${c}14` : `${group.color}12`;
+                          el.style.color = isLight ? c : text.muted;
+                        }}
+                      >
+                        {pill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </motion.div>
 
@@ -239,19 +258,20 @@ export default function AboutSection() {
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             {EXPERIENCE_KEYS.map((key) => {
               const meta = EXPERIENCE_META[key];
+              const mc = isLight ? meta.lightColor : meta.color;
               const bullets = Array.from({ length: meta.bulletCount }, (_, i) => t(`exp.${key}.bullet.${i}`));
               return (
                 <div
                   key={key}
                   className="card-shine"
-                  style={{ padding: "24px 28px", borderRadius: "16px", background: surface.card, border: `1px solid ${surface.border}`, borderLeft: `3px solid ${meta.color}`, transition: "box-shadow 0.25s" }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 32px rgba(0,0,0,0.15), 0 0 0 1px ${meta.color}22`; }}
+                  style={{ padding: "24px 28px", borderRadius: "16px", background: surface.card, border: `1px solid ${surface.border}`, borderLeft: `3px solid ${mc}`, transition: "box-shadow 0.25s" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 32px rgba(0,0,0,0.15), 0 0 0 1px ${mc}30`; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = "none"; }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "8px", marginBottom: "6px" }}>
                     <div>
                       <p style={{ fontSize: "15px", fontWeight: 700, color: text.primary, letterSpacing: "-0.01em" }}>{t(`exp.${key}.role`)}</p>
-                      <p style={{ fontSize: "12px", color: meta.color, fontWeight: 600, marginTop: "2px" }}>{t(`exp.${key}.co`)}</p>
+                      <p style={{ fontSize: "12px", color: mc, fontWeight: 600, marginTop: "2px" }}>{t(`exp.${key}.co`)}</p>
                     </div>
                     <span style={{ fontSize: "10px", fontWeight: 600, color: text.faint, padding: "3px 10px", borderRadius: "9999px", background: surface.border, border: `1px solid ${surface.border}`, whiteSpace: "nowrap", fontFamily: "'JetBrains Mono', monospace" }}>
                       {t(`exp.${key}.period`)}
@@ -260,7 +280,7 @@ export default function AboutSection() {
                   <ul style={{ marginTop: "12px", display: "flex", flexDirection: "column", gap: "6px", paddingLeft: "0", listStyle: "none" }}>
                     {bullets.map((b, bi) => (
                       <li key={bi} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "13px", color: text.muted, lineHeight: 1.6 }}>
-                        <span style={{ color: meta.color, flexShrink: 0, marginTop: "4px", fontSize: "8px" }}>▶</span>
+                        <span style={{ color: mc, flexShrink: 0, marginTop: "4px", fontSize: "8px" }}>▶</span>
                         {b}
                       </li>
                     ))}
