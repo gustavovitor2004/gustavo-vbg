@@ -33,7 +33,7 @@ const LANGUAGE_META: Record<(typeof LANGUAGE_KEYS)[number], { pct: number; color
 };
 
 const STACK_GROUPS = [
-  { key: "about.stack.frontend",   color: "#7c3aed", lightColor: "#5b21b6", pills: ["HTML5", "CSS3", "JavaScript", "Next.js", "React", "Tailwind CSS", "Framer Motion"] },
+  { key: "about.stack.frontend",   color: "#7c3aed", lightColor: "#047857", pills: ["HTML5", "CSS3", "JavaScript", "Next.js", "React", "Tailwind CSS", "Framer Motion"] },
   { key: "about.stack.backend",    color: "#06b6d4", lightColor: "#0e7490", pills: ["Node.js", "Discord.js v14", "Python", "PM2", "REST APIs"] },
   { key: "about.stack.automation", color: "#22c55e", lightColor: "#15803d", pills: ["Python Scripts", "JS Automation", "Custom Clickers", "Workflow Tools"] },
   { key: "about.stack.infra",      color: "#f59e0b", lightColor: "#b45309", pills: ["Git", "GitHub", "Linux / Debian", "Ubuntu", "VPS", "Nginx", "VS Code"] },
@@ -41,9 +41,9 @@ const STACK_GROUPS = [
 
 const EXPERIENCE_KEYS = ["freelance", "it", "trophi"] as const;
 const EXPERIENCE_META: Record<(typeof EXPERIENCE_KEYS)[number], { color: string; lightColor: string; bulletCount: number }> = {
-  freelance: { color: "#7c3aed", lightColor: "#5b21b6", bulletCount: 3 },
+  freelance: { color: "#7c3aed", lightColor: "#047857", bulletCount: 3 },
   it:        { color: "#06b6d4", lightColor: "#0e7490", bulletCount: 3 },
-  trophi:    { color: "#a855f7", lightColor: "#7e22ce", bulletCount: 3 },
+  trophi:    { color: "#a855f7", lightColor: "#047857", bulletCount: 3 },
 };
 
 export default function AboutSection() {
@@ -74,7 +74,7 @@ export default function AboutSection() {
           transition={{ duration: 0.5 }}
           style={{ marginBottom: "56px" }}
         >
-          <p style={{ fontSize: "11px", fontWeight: 700, color: "#a855f7", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
+          <p style={{ fontSize: "11px", fontWeight: 700, color: isLight ? "#047857" : "#a855f7", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
             {t("about.label")}
           </p>
           <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: text.primary, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
@@ -144,10 +144,15 @@ export default function AboutSection() {
               ))}
             </div>
 
-            <div style={{ padding: "20px 24px", borderRadius: "14px", background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)", display: "flex", alignItems: "flex-start", gap: "14px" }}>
+            <div style={{
+              padding: "20px 24px", borderRadius: "14px",
+              background: isLight ? "rgba(5,150,105,0.08)"       : "rgba(124,58,237,0.08)",
+              border:     isLight ? "1px solid rgba(5,150,105,0.22)" : "1px solid rgba(124,58,237,0.2)",
+              display: "flex", alignItems: "flex-start", gap: "14px",
+            }}>
               <span style={{ fontSize: "22px", lineHeight: 1, flexShrink: 0, marginTop: "2px" }}>📍</span>
               <div>
-                <p style={{ fontSize: "11px", fontWeight: 700, color: "#a78bfa", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "4px" }}>
+                <p style={{ fontSize: "11px", fontWeight: 700, color: isLight ? "#047857" : "#a78bfa", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "4px" }}>
                   {t("about.currently")}
                 </p>
                 <p style={{ fontSize: "13.5px", color: text.muted, lineHeight: 1.6 }}>
@@ -191,7 +196,7 @@ export default function AboutSection() {
         <GitHubActivity />
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} style={{ marginTop: "64px" }}>
-          <p style={{ fontSize: "11px", fontWeight: 700, color: "#a855f7", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
+          <p style={{ fontSize: "11px", fontWeight: 700, color: isLight ? "#047857" : "#a855f7", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
             {t("about.stack.label")}
           </p>
           <h3 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 900, color: text.primary, marginBottom: "40px", letterSpacing: "-0.02em" }}>

@@ -87,6 +87,15 @@ export default function MyProjectsSection() {
             const descKey = `projects.app.${app.id}.description`;
             const tagline = t(taglineKey) === taglineKey ? app.tagline : t(taglineKey);
             const description = t(descKey) === descKey ? app.description : t(descKey);
+
+            // Light mode: remap purple → emerald for accent/gradient/glow
+            const isPurple = app.accentColor === "#7c3aed";
+            const accent   = isLight && isPurple ? "#059669"                    : app.accentColor;
+            const glow     = isLight && isPurple ? "rgba(5,150,105,0.38)"       : app.glowColor;
+            const gradient = isLight && isPurple
+              ? "linear-gradient(140deg, rgba(5,150,105,0.70) 0%, rgba(6,182,212,0.50) 100%)"
+              : app.gradient;
+
             return (
               <motion.div
                 key={app.id}
@@ -101,11 +110,11 @@ export default function MyProjectsSection() {
                 whileHover={{
                   y: -5,
                   boxShadow: isLight
-                    ? `0 20px 60px rgba(0,0,0,0.12), 0 0 0 1px ${app.accentColor}22`
-                    : `0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px ${app.accentColor}22`,
+                    ? `0 20px 60px rgba(0,0,0,0.12), 0 0 0 1px ${accent}22`
+                    : `0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px ${accent}22`,
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = `${app.accentColor}33`;
+                  (e.currentTarget as HTMLDivElement).style.borderColor = `${accent}33`;
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLDivElement).style.borderColor = cardBorder;
@@ -114,7 +123,7 @@ export default function MyProjectsSection() {
                 {/* Banner */}
                 <div
                   className="relative shrink-0"
-                  style={{ height: "164px", background: app.gradient, overflow: "hidden" }}
+                  style={{ height: "164px", background: gradient, overflow: "hidden" }}
                 >
                   {/* Status badge */}
                   <span
@@ -167,9 +176,9 @@ export default function MyProjectsSection() {
                     textTransform: "uppercase",
                     padding: "3px 10px",
                     borderRadius: "9999px",
-                    background: `${app.accentColor}18`,
-                    border: `1px solid ${app.accentColor}30`,
-                    color: app.accentColor,
+                    background: `${accent}18`,
+                    border: `1px solid ${accent}30`,
+                    color: accent,
                     marginBottom: "10px",
                   }}>
                     {tagline}
@@ -228,9 +237,9 @@ export default function MyProjectsSection() {
                       gap: "7px",
                       height: "38px",
                       borderRadius: "11px",
-                      background: `${app.accentColor}18`,
-                      border: `1px solid ${app.accentColor}30`,
-                      color: app.accentColor,
+                      background: `${accent}18`,
+                      border: `1px solid ${accent}30`,
+                      color: accent,
                       fontSize: "13px",
                       fontWeight: 700,
                       textDecoration: "none",
@@ -238,12 +247,12 @@ export default function MyProjectsSection() {
                     }}
                     onMouseEnter={(e) => {
                       const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.background = `${app.accentColor}2e`;
-                      el.style.boxShadow = `0 0 22px ${app.glowColor}`;
+                      el.style.background = `${accent}2e`;
+                      el.style.boxShadow = `0 0 22px ${glow}`;
                     }}
                     onMouseLeave={(e) => {
                       const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.background = `${app.accentColor}18`;
+                      el.style.background = `${accent}18`;
                       el.style.boxShadow = "none";
                     }}
                   >

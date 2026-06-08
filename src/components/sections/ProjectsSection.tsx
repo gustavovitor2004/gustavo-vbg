@@ -16,6 +16,7 @@ const STATUS_STYLE: Record<ProjectStatus, { bg: string; color: string; pulse?: b
   Online:   { bg: "rgba(16,185,129,0.15)",  color: "#34d399", pulse: true, labelKey: "sites.status.online" },
   WIP:      { bg: "rgba(245,158,11,0.15)",  color: "#fbbf24", labelKey: "sites.status.wip" },
   Beta:     { bg: "rgba(59,130,246,0.15)",  color: "#60a5fa", labelKey: "sites.status.beta" },
+  // Dark mode default — overridden to green in light mode inside ProjectCard
   Finished: { bg: "rgba(124,58,237,0.15)",  color: "#a78bfa", labelKey: "sites.status.finished" },
   Archived: { bg: "rgba(107,114,128,0.12)", color: "#9ca3af", labelKey: "sites.status.archived" },
 };
@@ -114,7 +115,11 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   const iconColor    = text.faint;
   const hoverBorder  = isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.13)";
 
-  const status = STATUS_STYLE[project.status] ?? STATUS_STYLE.Archived;
+  const statusBase = STATUS_STYLE[project.status] ?? STATUS_STYLE.Archived;
+  // Light mode: "Finished" badge switches from purple to forest-green
+  const status = isLight && project.status === "Finished"
+    ? { ...statusBase, bg: "rgba(5,150,105,0.13)", color: "#047857" }
+    : statusBase;
   const banner = BANNER_DATA[project.id] ?? FALLBACK_BANNER;
 
   return (
@@ -348,9 +353,10 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
                 gap: "6px",
                 height: "34px",
                 borderRadius: "10px",
-                background: "rgba(124,58,237,0.14)",
-                border: "1px solid rgba(124,58,237,0.25)",
-                color: "#a78bfa",
+                // Light: emerald pastel; Dark: violet pastel
+                background: isLight ? "rgba(5,150,105,0.11)" : "rgba(124,58,237,0.14)",
+                border: isLight ? "1px solid rgba(5,150,105,0.28)" : "1px solid rgba(124,58,237,0.25)",
+                color: isLight ? "#047857" : "#a78bfa",
                 fontSize: "12px",
                 fontWeight: 600,
                 textDecoration: "none",
@@ -358,15 +364,15 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = "rgba(124,58,237,0.24)";
-                el.style.color = "#c4b5fd";
-                el.style.boxShadow = "0 0 18px rgba(124,58,237,0.3)";
+                el.style.background = isLight ? "rgba(5,150,105,0.22)" : "rgba(124,58,237,0.24)";
+                el.style.color      = isLight ? "#065f46"               : "#c4b5fd";
+                el.style.boxShadow  = isLight ? "0 0 18px rgba(5,150,105,0.25)" : "0 0 18px rgba(124,58,237,0.3)";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = "rgba(124,58,237,0.14)";
-                el.style.color = "#a78bfa";
-                el.style.boxShadow = "none";
+                el.style.background = isLight ? "rgba(5,150,105,0.11)" : "rgba(124,58,237,0.14)";
+                el.style.color      = isLight ? "#047857"               : "#a78bfa";
+                el.style.boxShadow  = "none";
               }}
             >
               {project.demoUrl ? t("sites.btn") : t("sites.docs")}
@@ -423,7 +429,7 @@ export default function ProjectsSection() {
           }}
         >
           <div>
-            <p style={{ fontSize: "11px", fontWeight: 700, color: "#7c3aed", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
+            <p style={{ fontSize: "11px", fontWeight: 700, color: isLight ? "#047857" : "#7c3aed", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
               {t("sites.label")}
             </p>
             <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: text.primary, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
@@ -440,12 +446,12 @@ export default function ProjectsSection() {
               gap: "6px",
               fontSize: "13px",
               fontWeight: 600,
-              color: isLight ? "rgba(124,58,237,0.7)" : "rgba(167,139,250,0.75)",
+              color: isLight ? "rgba(4,120,87,0.8)" : "rgba(167,139,250,0.75)",
               textDecoration: "none",
               transition: "color 0.2s",
             }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = isLight ? "#7c3aed" : "#a78bfa"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = isLight ? "rgba(124,58,237,0.7)" : "rgba(167,139,250,0.75)"; }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = isLight ? "#047857" : "#a78bfa"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = isLight ? "rgba(4,120,87,0.8)" : "rgba(167,139,250,0.75)"; }}
           >
             {t("sites.github")}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -474,9 +480,12 @@ export default function ProjectsSection() {
                   borderRadius: "9999px",
                   fontSize: "12px",
                   fontWeight: isActive ? 700 : 500,
-                  color: isActive ? "#fff" : inactiveColor,
-                  background: isActive ? "rgba(124,58,237,0.22)" : inactiveBg,
-                  border: isActive ? "1px solid rgba(124,58,237,0.45)" : `1px solid ${inactiveBorder}`,
+                  // Active pill: emerald in light, violet in dark
+                  color: isActive ? (isLight ? "#065f46" : "#fff") : inactiveColor,
+                  background: isActive ? (isLight ? "rgba(5,150,105,0.18)" : "rgba(124,58,237,0.22)") : inactiveBg,
+                  border: isActive
+                    ? (isLight ? "1px solid rgba(5,150,105,0.40)" : "1px solid rgba(124,58,237,0.45)")
+                    : `1px solid ${inactiveBorder}`,
                   cursor: "pointer",
                   transition: "all 0.18s",
                 }}

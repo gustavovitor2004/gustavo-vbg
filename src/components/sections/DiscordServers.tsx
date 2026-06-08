@@ -29,6 +29,11 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
   const cardBg = surface.card;
   const cardBorder = surface.border;
 
+  // Light mode: remap purple server accent → emerald
+  const isPurple = server.color === "#7c3aed";
+  const c    = isLight && isPurple ? "#059669"                    : server.color;
+  const glow = isLight && isPurple ? "rgba(5,150,105,0.38)"       : server.glowColor;
+
   const descriptionKey = `servers.${server.id}.description`;
   const memberKey = `servers.${server.id}.memberCount`;
   const description = t(descriptionKey) === descriptionKey ? server.description : t(descriptionKey);
@@ -53,18 +58,18 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
       whileHover={{
         y: -4,
         boxShadow: isLight
-          ? `0 16px 50px rgba(0,0,0,0.12), 0 0 0 1px ${server.color}22`
-          : `0 16px 50px rgba(0,0,0,0.5), 0 0 0 1px ${server.color}22`,
+          ? `0 16px 50px rgba(0,0,0,0.12), 0 0 0 1px ${c}22`
+          : `0 16px 50px rgba(0,0,0,0.5), 0 0 0 1px ${c}22`,
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = `${server.color}30`;
+        (e.currentTarget as HTMLDivElement).style.borderColor = `${c}30`;
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLDivElement).style.borderColor = cardBorder;
       }}
     >
       {/* Top color strip */}
-      <div style={{ height: "3px", background: server.color, opacity: 0.65 }} />
+      <div style={{ height: "3px", background: c, opacity: 0.65 }} />
 
       <div style={{ padding: "22px 24px" }}>
         <div style={{ display: "flex", alignItems: "flex-start", gap: "14px", marginBottom: "14px" }}>
@@ -74,7 +79,7 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
               width: "48px",
               height: "48px",
               borderRadius: "14px",
-              background: server.color,
+              background: c,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -82,7 +87,7 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
               fontWeight: 900,
               color: "#ffffff",
               flexShrink: 0,
-              boxShadow: `0 4px 16px ${server.glowColor}`,
+              boxShadow: `0 4px 16px ${glow}`,
               fontFamily: smallFont ? "'JetBrains Mono', monospace" : "inherit",
             }}
           >
@@ -151,9 +156,9 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
             width: "100%",
             padding: "11px 0",
             borderRadius: "11px",
-            background: `${server.color}1a`,
-            border: `1px solid ${server.color}30`,
-            color: server.color,
+            background: `${c}1a`,
+            border: `1px solid ${c}30`,
+            color: c,
             fontSize: "13px",
             fontWeight: 700,
             textDecoration: "none",
@@ -161,12 +166,12 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
           }}
           onMouseEnter={(e) => {
             const el = e.currentTarget as HTMLAnchorElement;
-            el.style.background = `${server.color}28`;
-            el.style.boxShadow = `0 0 20px ${server.glowColor}`;
+            el.style.background = `${c}28`;
+            el.style.boxShadow = `0 0 20px ${glow}`;
           }}
           onMouseLeave={(e) => {
             const el = e.currentTarget as HTMLAnchorElement;
-            el.style.background = `${server.color}1a`;
+            el.style.background = `${c}1a`;
             el.style.boxShadow = "none";
           }}
         >
