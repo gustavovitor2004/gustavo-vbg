@@ -29,16 +29,56 @@ const CATEGORY_FILTERS = [
   { id: "events", key: "sites.category.events" },
 ] as const;
 
-const bannerColors: Record<string, string> = {
-  "project-1": "linear-gradient(140deg, rgba(124,58,237,0.7) 0%, rgba(6,182,212,0.45) 100%)",
-  "project-2": "linear-gradient(140deg, rgba(37,99,235,0.7) 0%, rgba(124,58,237,0.45) 100%)",
-  "project-3": "linear-gradient(140deg, rgba(219,39,119,0.7) 0%, rgba(124,58,237,0.45) 100%)",
-  "project-4": "linear-gradient(140deg, rgba(6,182,212,0.7) 0%, rgba(37,99,235,0.45) 100%)",
-  "project-5": "linear-gradient(140deg, rgba(5,150,105,0.7) 0%, rgba(6,182,212,0.45) 100%)",
-  "project-6": "linear-gradient(140deg, rgba(234,88,12,0.7) 0%, rgba(219,39,119,0.45) 100%)",
+/**
+ * Per-project visual identity:
+ *
+ *  fallback   → CSS gradient used when the thumbnail image is absent
+ *              (matches each brand's colour palette)
+ *  overlay    → Semi-transparent gradient OVER the photo for text legibility
+ *  accent     → Colour used on the decorative watermark letter
+ *
+ * To swap in a real screenshot, place the image at the path stored in
+ * projects.ts (e.g. /public/projects/costelao.png) and it will appear
+ * automatically — the overlay ensures titles stay readable regardless.
+ */
+const BANNER_DATA: Record<string, { fallback: string; overlay: string; accent: string }> = {
+  /* 1 — Steakhouse: deep red, dark brown, warm amber */
+  "costelao-do-gaucho": {
+    fallback: "linear-gradient(150deg, #5a1212 0%, #3b1a08 50%, #1e0c04 100%)",
+    overlay:  "linear-gradient(180deg, rgba(70,15,15,0.28) 0%, rgba(20,8,4,0.78) 100%)",
+    accent:   "#C67C0A",
+  },
+  /* 2 — Bakery: coffee brown, warm beige, golden yellow */
+  "cheiro-e-pao": {
+    fallback: "linear-gradient(150deg, #6b4417 0%, #44280a 50%, #281605 100%)",
+    overlay:  "linear-gradient(180deg, rgba(80,50,15,0.28) 0%, rgba(32,18,6,0.78) 100%)",
+    accent:   "#D4A855",
+  },
+  /* 3 — Pet Shop: sky blue, soft purple, teal */
+  "lalay-petshop": {
+    fallback: "linear-gradient(150deg, #0e538f 0%, #6d28d9 50%, #0e7490 100%)",
+    overlay:  "linear-gradient(180deg, rgba(10,60,120,0.28) 0%, rgba(80,20,150,0.72) 100%)",
+    accent:   "#67E8F9",
+  },
+  /* 4 — Automotive: graphite black, industrial orange */
+  "pinheiro-escapamentos": {
+    fallback: "linear-gradient(150deg, #18181c 0%, #0d0d12 50%, #2c1800 100%)",
+    overlay:  "linear-gradient(180deg, rgba(18,18,22,0.35) 0%, rgba(185,70,0,0.72) 100%)",
+    accent:   "#F97316",
+  },
+  /* 5 — Events venue: forest green, golden, warm wood */
+  "casa-da-mangueira": {
+    fallback: "linear-gradient(150deg, #0f4d1e 0%, #1e3d10 50%, #3d2c08 100%)",
+    overlay:  "linear-gradient(180deg, rgba(10,55,22,0.28) 0%, rgba(65,45,8,0.78) 100%)",
+    accent:   "#C8A830",
+  },
 };
 
-const fallback = "linear-gradient(140deg, rgba(124,58,237,0.6), rgba(37,99,235,0.4))";
+const FALLBACK_BANNER = {
+  fallback: "linear-gradient(150deg, rgba(124,58,237,0.6) 0%, rgba(37,99,235,0.4) 100%)",
+  overlay:  "linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.65) 100%)",
+  accent:   "#a78bfa",
+};
 
 function GithubIcon({ size = 15 }: { size?: number }) {
   return (
@@ -62,20 +102,20 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   const { t } = useApp();
   const { isLight, text, surface } = useThemeTokens();
 
-  const textPrimary = text.primary;
-  const textMuted = text.muted;
-  const cardBg = surface.card;
-  const cardBorder = surface.border;
-  const tagBg = surface.border;
-  const tagBorder = surface.border;
-  const tagColor = text.muted;
-  const iconBg = surface.border;
-  const iconBorder = surface.border;
-  const iconColor = text.faint;
-  const hoverBorder = isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.13)";
+  const textPrimary  = text.primary;
+  const textMuted    = text.muted;
+  const cardBg       = surface.card;
+  const cardBorder   = surface.border;
+  const tagBg        = surface.border;
+  const tagBorder    = surface.border;
+  const tagColor     = text.muted;
+  const iconBg       = surface.border;
+  const iconBorder   = surface.border;
+  const iconColor    = text.faint;
+  const hoverBorder  = isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.13)";
 
   const status = STATUS_STYLE[project.status] ?? STATUS_STYLE.Archived;
-  const bg = bannerColors[project.id] ?? fallback;
+  const banner = BANNER_DATA[project.id] ?? FALLBACK_BANNER;
 
   return (
     <motion.div
@@ -100,11 +140,56 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
         (e.currentTarget as HTMLDivElement).style.borderColor = cardBorder;
       }}
     >
-      {/* Banner */}
-      <div className="relative shrink-0" style={{ height: "164px", background: bg }}>
+      {/* ── Banner ─────────────────────────────────────────────────────── */}
+      <div
+        className="relative shrink-0 overflow-hidden"
+        style={{
+          height: "164px",
+          /* Brand-identity gradient — visible while image loads or when absent */
+          background: banner.fallback,
+        }}
+      >
+        {/*
+         * Thumbnail image
+         * ─────────────────────────────────────────────────────────────
+         * Path format: /projects/<slug>.png  (served from /public/)
+         * e.g. /public/projects/costelao.png
+         *
+         * Replace with a real screenshot or mockup at any time.
+         * onError hides the <img> so the gradient fallback shows cleanly.
+         */}
+        <img
+          src={project.thumbnail}
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          className="project-thumb"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center top",
+            display: "block",
+            transition: "transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94)",
+          }}
+          onError={(e) => {
+            /* Image missing → hide it so the identity gradient shows */
+            (e.currentTarget as HTMLImageElement).style.display = "none";
+          }}
+        />
+
+        {/* Colour-identity overlay for text legibility & brand feel */}
         <div
           className="absolute inset-0"
-          style={{ background: "rgba(5,8,22,0.25)", mixBlendMode: "multiply" }}
+          style={{ background: banner.overlay }}
+        />
+
+        {/* Subtle top vignette — keeps the status badge readable */}
+        <div
+          className="absolute inset-x-0 top-0"
+          style={{ height: "60px", background: "linear-gradient(to bottom, rgba(0,0,0,0.28), transparent)" }}
         />
 
         {/* Status badge */}
@@ -117,7 +202,9 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
             background: status.bg,
             color: status.color,
             textTransform: "uppercase",
-            backdropFilter: "blur(6px)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            border: `1px solid ${status.color}30`,
           }}
         >
           {status.pulse && (
@@ -129,18 +216,17 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
           {t(status.labelKey)}
         </span>
 
-        {/* Decorative initial */}
+        {/* Decorative watermark initial */}
         <div
-          className="absolute"
+          className="absolute select-none pointer-events-none"
           style={{
             bottom: "-22px",
             left: "20px",
             fontSize: "80px",
             fontWeight: 900,
-            color: "rgba(255,255,255,0.06)",
+            color: banner.accent,
+            opacity: 0.12,
             lineHeight: 1,
-            userSelect: "none",
-            pointerEvents: "none",
             fontFamily: "'Inter', sans-serif",
             letterSpacing: "-0.05em",
           }}
@@ -149,16 +235,14 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
         </div>
       </div>
 
-      {/* Content */}
+      {/* ── Content ────────────────────────────────────────────────────── */}
       <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", flex: 1 }}>
         {/* Title */}
-        <h3
-          style={{ fontSize: "15px", fontWeight: 700, color: textPrimary, marginBottom: "8px", letterSpacing: "-0.01em", lineHeight: 1.3 }}
-        >
+        <h3 style={{ fontSize: "15px", fontWeight: 700, color: textPrimary, marginBottom: "8px", letterSpacing: "-0.01em", lineHeight: 1.3 }}>
           {project.title}
         </h3>
 
-        {/* Description */}
+        {/* Description — 2-line clamp */}
         <p
           style={{
             fontSize: "12.5px",
@@ -300,8 +384,6 @@ export default function ProjectsSection() {
   const { isLight, text } = useThemeTokens();
   const [activeFilter, setActiveFilter] = useState("all");
 
-  const textPrimary = text.primary;
-
   const filtered = activeFilter === "all"
     ? projects
     : projects.filter((p) => {
@@ -311,12 +393,10 @@ export default function ProjectsSection() {
 
   return (
     <section id="sites" style={{ padding: "100px 0 80px", position: "relative" }}>
-      {/* Subtle section bg tint */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background:
-            "radial-gradient(ellipse 60% 50% at 80% 50%, rgba(124,58,237,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse 60% 50% at 80% 50%, rgba(124,58,237,0.06) 0%, transparent 70%)",
         }}
       />
 
@@ -340,7 +420,7 @@ export default function ProjectsSection() {
             <p style={{ fontSize: "11px", fontWeight: 700, color: "#7c3aed", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
               {t("sites.label")}
             </p>
-            <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: textPrimary, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
+            <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: text.primary, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
               {t("sites.title")}
             </h2>
           </div>
@@ -372,12 +452,12 @@ export default function ProjectsSection() {
         <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "36px" }}>
           {CATEGORY_FILTERS.map((cat) => {
             const isActive = activeFilter === cat.id;
-            const inactiveColor = text.muted;
-            const inactiveBg = isLight ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.05)";
-            const inactiveBorder = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)";
-            const hoverColor = text.primary;
-            const hoverBg = isLight ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.09)";
-            const label = cat.key ? t(cat.key) : t("sites.filter.all");
+            const inactiveColor  = text.muted;
+            const inactiveBg     = isLight ? "rgba(0,0,0,0.04)"  : "rgba(255,255,255,0.05)";
+            const inactiveBorder = isLight ? "rgba(0,0,0,0.08)"  : "rgba(255,255,255,0.08)";
+            const hoverBg        = isLight ? "rgba(0,0,0,0.07)"  : "rgba(255,255,255,0.09)";
+            const hoverColor     = text.primary;
+            const label          = cat.key ? t(cat.key) : t("sites.filter.all");
 
             return (
               <button

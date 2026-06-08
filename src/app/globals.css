@@ -438,6 +438,11 @@ section {
   overflow: hidden;
 }
 
+/* Project card — thumbnail zoom on parent hover */
+.group:hover .project-thumb {
+  transform: scale(1.06);
+}
+
 /* About grid — 2 cols desktop, 1 col mobile */
 .about-grid {
   grid-template-columns: 1fr 1fr;
