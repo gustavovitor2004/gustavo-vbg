@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO AVANÇADO -->
+    <title>Pinheiro Escapamentos | Troca e Reparo Rápido em Salvador - BA</title>
+    <meta name="description"
+        content="Especialistas em escapamentos e silenciadores na Av. Barros Reis, Salvador. Atendimento rápido de 20 min sem chá de espera. Preço justo e transparente!">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pinheiro Escapamentos">
+    <meta name="keywords"
+        content="escapamentos Salvador, silenciadores Salvador, reparo escapamento, solda escapamento, catalisador, Barros Reis, sistema exaustão carro">
+    <link rel="canonical" href="https://pinheiroescapamentos.com.br">
+
+    <!-- OPEN GRAPH -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Pinheiro Escapamentos | Serviço Rápido em Salvador">
+    <meta property="og:description"
+        content="Problema no escapamento? Resolvemos em até 20 minutos com preço justo. Preço justo e serviço de qualidade na Av. Barros Reis.">
+    <meta property="og:url" content="https://pinheiroescapamentos.com.br">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Pinheiro Escapamentos">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pinheiro Escapamentos | Solução Automotiva Rápida em Salvador">
+    <meta name="twitter:description" content="O fim do barulho no seu carro — rápido, honesto e com preço justo.">
+
+    <!-- SEGURANÇA -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+
+    <!-- FAVICON -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+
+    <!-- PERFORMANCE & FONTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* VARIÁVEIS */
+        :root {
+            --primary: #dc2626;
+            --primary-dark: #b91c1c;
+            --accent: #facc15;
+            --dark: #171717;
+            --bg: #f8fafc;
+            --bg-dark: #0f172a;
+            --text: #334155;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.15);
+            --radius-sm: 4px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
+        /* RESET */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            line-height: 1.1;
+            letter-spacing: 1px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* HEADER */
+        .header {
+            background: var(--dark);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 3px solid var(--primary);
+            padding: 15px 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-top {
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.8rem;
+            padding: 5px 0;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn-nav {
+            background: var(--primary) !important;
+            color: #fff !important;
+            padding: 9px 20px;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem !important;
+            transition: var(--transition) !important;
+        }
+
+        .btn-nav:hover {
+            background: var(--primary-dark) !important;
+            transform: translateY(-1px);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.4rem;
+            color: var(--white);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--dark);
+            padding: 20px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav.open {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .mobile-nav a {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            text-transform: uppercase;
+        }
+
+        /* HERO */
+        .hero {
+            padding: 155px 0 90px;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2a0a0a 100%);
+            color: var(--white);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(220, 38, 38, 0.08));
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.4);
+            padding: 7px 16px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #fca5a5;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 5vw, 5rem);
+            color: var(--white);
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: #94a3b8;
+            margin-bottom: 36px;
+            max-width: 540px;
+            line-height: 1.7;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        /* BOTÃO PRIMÁRIO */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            border-radius: var(--radius-sm);
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 900;
+            font-size: 0.95rem;
+            font-family: 'Roboto', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            animation: pulse-btn 3s infinite;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            color: var(--white);
+        }
+
+        @keyframes pulse-btn {
+
+            0%,
+            100% {
+                box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4)
+            }
+
+            50% {
+                box-shadow: 0 6px 30px rgba(220, 38, 38, 0.7)
+            }
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            border-radius: var(--radius-sm);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* HERO VISUAL */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .hero-stat-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 4px solid var(--primary);
+            border-radius: var(--radius-md);
+            padding: 20px 28px;
+            width: 100%;
+        }
+
+        .hero-stat-box .num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.8rem;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .hero-stat-box .label {
+            font-size: 0.78rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* STATS BAR */
+        .stats-bar {
+            background: var(--primary);
+            padding: 36px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 10px;
+        }
+
+        .stat-item:not(:last-child) {
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.8rem;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 5px;
+        }
+
+        /* SEÇÕES */
+        .section-padding {
+            padding: 90px 0;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--dark);
+            margin-bottom: 14px;
+        }
+
+        .section-sub {
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        /* SERVIÇOS */
+        .services {
+            background: var(--white);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--bg);
+            padding: 36px 28px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border-bottom: 4px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-bottom-color: var(--primary);
+            background: var(--white);
+        }
+
+        .service-icon {
+            width: 58px;
+            height: 58px;
+            background: rgba(220, 38, 38, 0.08);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .service-card h3 {
+            font-size: 1.6rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.65;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* DIFERENCIAIS */
+        .diff-section {
+            background: #f1f5f9;
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .diff-list {
+            list-style: none;
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .diff-list li {
+            font-size: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            font-weight: 500;
+            color: var(--dark);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .diff-list li::before {
+            content: "✔";
+            color: var(--white);
+            background: var(--primary);
+            min-width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .diff-cta-box {
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            border-top: 5px solid var(--primary);
+        }
+
+        .diff-cta-box h3 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 12px;
+        }
+
+        .diff-cta-box p {
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            font-size: 0.95rem;
+        }
+
+        /* DEPOIMENTOS */
+        .testimonials {
+            background: var(--dark);
+        }
+
+        .testimonials .section-title {
+            color: var(--white);
+        }
+
+        .testimonials .section-sub {
+            color: #64748b;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .test-card {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: var(--radius-md);
+            padding: 32px;
+            border-top: 4px solid var(--accent);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 4px solid var(--accent);
+        }
+
+        .test-stars {
+            color: var(--accent);
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+
+        .test-quote {
+            font-style: italic;
+            font-size: 0.96rem;
+            line-height: 1.75;
+            color: #cbd5e1;
+            margin-bottom: 22px;
+            flex-grow: 1;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .test-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .test-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: var(--white);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .test-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--white);
+        }
+
+        .test-type {
+            font-size: 0.78rem;
+            color: #64748b;
+        }
+
+        /* CTA FINAL */
+        .cta-final {
+            background: linear-gradient(135deg, #7f1d1d, #b91c1c);
+            color: var(--white);
+            text-align: center;
+            padding: 90px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-final::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .cta-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .cta-final h2 {
+            color: var(--white);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 18px;
+        }
+
+        .cta-final p {
+            font-size: 1.1rem;
+            opacity: 0.88;
+            margin-bottom: 38px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .btn-accent {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 44px;
+            border-radius: var(--radius-sm);
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: 900;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            color: var(--dark);
+        }
+
+        .cta-hint {
+            font-size: 0.8rem;
+            opacity: 0.55;
+            margin-top: 14px;
+            display: block;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* LOCALIZAÇÃO */
+        .location {
+            background: var(--white);
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .contact-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .contact-card {
+            display: flex;
+            gap: 16px;
+            background: var(--bg);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--primary);
+        }
+
+        .contact-card-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(220, 38, 38, 0.08);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .contact-card-text h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+
+        .contact-card-text p,
+        .contact-card-text a {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .map-wrap {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 4px solid var(--white);
+            outline: 1px solid rgba(0, 0, 0, 0.08);
+            height: 420px;
+        }
+
+        .map-wrap iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #0a0a0a;
+            color: #64748b;
+            padding: 60px 0 28px;
+            border-top: 4px solid var(--primary);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--white);
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-brand-name i {
+            color: var(--primary);
+        }
+
+        .footer-brand p {
+            font-size: 0.88rem;
+            line-height: 1.7;
+            max-width: 280px;
+            margin-bottom: 18px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .footer-col h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            color: var(--white);
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .footer-col ul a {
+            font-size: 0.88rem;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul a:hover {
+            color: var(--primary);
+        }
+
+        .footer-col p {
+            font-size: 0.88rem;
+            margin-bottom: 8px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 22px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* FLOAT */
+        .wa-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            height: 54px;
+            border-radius: 50px;
+            background: #25d366;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 0 22px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 999;
+            transition: var(--transition);
+            animation: wa-pulse 2.5s infinite;
+        }
+
+        .wa-float:hover {
+            background: #20ba5a;
+            transform: translateY(-2px);
+            color: var(--white);
+        }
+
+        @keyframes wa-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4)
+            }
+
+            50% {
+                box-shadow: 0 6px 30px rgba(37, 211, 102, 0.7)
+            }
+        }
+
+        .back-top {
+            position: fixed;
+            bottom: 28px;
+            left: 28px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--dark);
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .back-top.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .back-top:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .cta-bar {
+            position: fixed;
+            bottom: -100px;
+            left: 0;
+            right: 0;
+            background: var(--primary);
+            border-top: 2px solid var(--primary-dark);
+            padding: 13px 24px;
+            z-index: 998;
+            transition: bottom 0.4s ease;
+        }
+
+        .cta-bar.show {
+            bottom: 0;
+        }
+
+        .cta-bar-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 16px;
+        }
+
+        .cta-bar-text {
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--white);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .btn-cta-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 22px;
+            border-radius: var(--radius-sm);
+            background: var(--white);
+            color: var(--primary);
+            font-weight: 900;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            transition: var(--transition);
+        }
+
+        .btn-cta-bar:hover {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-item:nth-child(even) {
+                border-right: none;
+            }
+
+            .test-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+            }
+
+            .diff-grid {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .location-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .back-top {
+                bottom: 80px;
+                left: 16px;
+            }
+
+            .wa-float {
+                bottom: 80px;
+                right: 16px;
+            }
+
+            .map-wrap {
+                height: 300px;
+            }
+
+            .cta-bar-text {
+                display: none;
+            }
+
+            .cta-bar-inner {
+                justify-content: center;
+            }
+
+            .btn-cta-bar {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SEÇÃO: HEADER -->
+    <header class="header" id="header">
+        <div class="header-top">
+            <i class="fa-solid fa-clock"></i> Salvador - BA &nbsp;|&nbsp; <i class="fa-solid fa-bolt"></i> Atendimento
+            Rápido Sem Agendamento &nbsp;|&nbsp; <i class="fa-solid fa-phone"></i> (71) 3382-1271
+        </div>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-car-burst logo-icon"></i>
+                PINHEIRO ESCAPAMENTOS
+            </a>
+            <nav class="nav-links">
+                <a href="#servicos">Serviços</a>
+                <a href="#diferenciais">Por que nos escolher?</a>
+                <a href="#depoimentos">Avaliações</a>
+                <a href="#contato">Localização</a>
+                <a href="https://api.whatsapp.com/send?phone=557133821271&text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20o%20meu%20veículo!"
+                    target="_blank" rel="noopener noreferrer" class="btn-nav">Orçamento Rápido</a>
+            </nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <nav class="mobile-nav container" id="mobileNav">
+            <a href="#servicos">Serviços</a>
+            <a href="#diferenciais">Por que nos escolher?</a>
+            <a href="#depoimentos">Avaliações</a>
+            <a href="#contato">Localização</a>
+            <a href="https://api.whatsapp.com/send?phone=557133821271&text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20o%20meu%20veículo!"
+                target="_blank" rel="noopener noreferrer" style="color:var(--primary);font-weight:900">→ Pedir
+                Orçamento</a>
+        </nav>
+    </header>
+
+    <!-- SEÇÃO: HERO -->
+    <section class="hero" id="inicio">
+        <div class="container hero-grid">
+            <div class="reveal">
+                <div class="hero-badge"><i class="fa-solid fa-star"></i> 4.7★ no Google · 218 avaliações reais</div>
+                <h1>Seu escapamento <span>resolvido</span> em 20 minutos</h1>
+                <p>Chega de barulho e fumaça no seu carro. Atendimento rápido, preço justo e a honestidade que só
+                    encontramos na Av. Barros Reis.</p>
+                <div class="hero-btns">
+                    <a href="https://api.whatsapp.com/send?phone=557133821271&text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20o%20meu%20veículo!"
+                        target="_blank" rel="noopener noreferrer" class="btn-primary"><i
+                            class="fa-brands fa-whatsapp"></i> Falar pelo WhatsApp</a>
+                    <a href="#servicos" class="btn-outline">Ver Serviços</a>
+                </div>
+            </div>
+            <div class="hero-visual reveal" style="transition-delay:0.1s">
+                <div class="hero-stat-box">
+                    <div class="num">20min</div>
+                    <div class="label">Tempo médio de serviço</div>
+                </div>
+                <div class="hero-stat-box">
+                    <div class="num">218+</div>
+                    <div class="label">Clientes satisfeitos</div>
+                </div>
+                <div class="hero-stat-box">
+                    <div class="num">4.7★</div>
+                    <div class="label">Avaliação Google</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: STATS BAR -->
+    <div class="stats-bar">
+        <div class="container stats-grid">
+            <div class="stat-item">
+                <div class="stat-num" data-target="4.7" data-suffix="★" data-decimal="1">0</div>
+                <div class="stat-label">Google Reviews</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" data-target="218" data-suffix="+">0</div>
+                <div class="stat-label">Clientes Satisfeitos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" data-target="20" data-suffix="min">0</div>
+                <div class="stat-label">Tempo Médio de Serviço</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num" data-target="0" data-prefix="" data-suffix="" data-zero="SEM FILA">SEM FILA</div>
+                <div class="stat-label">Sem Necessidade de Agendar</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO: SERVIÇOS -->
+    <main>
+        <section class="services section-padding" id="servicos">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">O que fazemos</span>
+                    <h2 class="section-title">Especialistas em Exaustão Automotiva</h2>
+                    <p class="section-sub">Qualquer problema no sistema de escapamento do seu carro, a gente resolve.
+                    </p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card reveal">
+                        <div class="service-icon"><i class="fa-solid fa-wind"></i></div>
+                        <h3>Escapamentos & Silenciadores</h3>
+                        <p>Substituição e reparo para devolver o conforto acústico e o desempenho original do seu
+                            veículo.</p>
+                    </div>
+                    <div class="service-card reveal">
+                        <div class="service-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                        <h3>Solda & Reparo Rápido</h3>
+                        <p>Serviço de solda executado com precisão para corrigir furos, trincas e vazamentos no sistema.
+                        </p>
+                    </div>
+                    <div class="service-card reveal">
+                        <div class="service-icon"><i class="fa-solid fa-gear"></i></div>
+                        <h3>Troca de Catalisador</h3>
+                        <p>Instalação de catalisadores para controle de emissões e aprovação em vistorias do DETRAN.</p>
+                    </div>
+                    <div class="service-card reveal">
+                        <div class="service-icon"><i class="fa-solid fa-stopwatch"></i></div>
+                        <h3>Atendimento Expresso</h3>
+                        <p>Sem agendamento, sem burocracia. Chegou, avaliamos, resolvemos. Em média 20 minutos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: DIFERENCIAIS -->
+        <section class="diff-section section-padding" id="diferenciais">
+            <div class="container diff-grid">
+                <div class="reveal">
+                    <span class="section-label">Por que escolher</span>
+                    <h2 class="section-title">Honestidade, Agilidade e Experiência.</h2>
+                    <p
+                        style="color:var(--text-muted);font-family:'Roboto',sans-serif;font-size:0.98rem;line-height:1.7">
+                        Nós sabemos o quanto é frustrante ficar esperando na oficina. Na Pinheiro Escapamentos, o
+                        processo é otimizado para que você não perca seu dia.</p>
+                    <ul class="diff-list">
+                        <li>Atendimento personalizado e direto com a equipe</li>
+                        <li>Serviços finalizados em média entre 15 a 20 minutos</li>
+                        <li>Preço justo e transparente — você sabe o que está pagando</li>
+                        <li>Experiência comprovada em escapamentos e exaustão</li>
+                        <li>Sem necessidade de agendamento — direto ao ponto</li>
+                    </ul>
+                </div>
+                <div class="diff-cta-box reveal" style="transition-delay:0.15s">
+                    <h3>Precisa de um orçamento?</h3>
+                    <p>Informe o modelo do carro e o problema. Respondemos rapidinho pelo WhatsApp.</p>
+                    <a href="https://api.whatsapp.com/send?phone=557133821271&text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20o%20meu%20veículo!"
+                        target="_blank" rel="noopener noreferrer" class="btn-primary"
+                        style="width:100%;justify-content:center"><i class="fa-brands fa-whatsapp"></i> Chamar Agora</a>
+                    <p style="font-size:0.8rem;color:var(--text-muted);margin-top:12px;font-family:'Roboto',sans-serif">
+                        Respondemos em minutos · Seg a Sex até 17h</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: DEPOIMENTOS -->
+        <section class="testimonials section-padding" id="depoimentos">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label" style="color:#64748b">O que falam de nós</span>
+                    <h2 class="section-title">O que dizem os motoristas da cidade</h2>
+                    <p class="section-sub">218 avaliações reais no Google. Veja o que estão falando.</p>
+                </div>
+                <div class="test-grid">
+                    <div class="test-card reveal">
+                        <div class="test-stars">★★★★★</div>
+                        <p class="test-quote">"Fui atendido rápido, não tomei chá de espera. Me atenderam super bem e o
+                            problema foi resolvido rápido e objetivo. De 15 a 20 minutos já estava liberado."</p>
+                        <div class="test-author">
+                            <div class="test-avatar">A</div>
+                            <div>
+                                <div class="test-name">Andre Guitarspace</div>
+                                <div class="test-type">Cliente Verificado ✓</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="test-card reveal">
+                        <div class="test-stars">★★★★★</div>
+                        <p class="test-quote">"Atendimento de qualidade, preço de acordo com a qualidade do produto,
+                            execução de serviço excelente! Vale muito a pena, sem dúvida o dinheiro foi bem gasto."</p>
+                        <div class="test-author">
+                            <div class="test-avatar">F</div>
+                            <div>
+                                <div class="test-name">Fabrisio Junior</div>
+                                <div class="test-type">Cliente Verificado ✓</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="test-card reveal">
+                        <div class="test-stars">★★★★★</div>
+                        <p class="test-quote">"Atendimento excelente, serviço de solda rápido e de boa qualidade.
+                            Demonstraram bastante experiência, honestidade e bom trato com o cliente. Valeu a pena!"</p>
+                        <div class="test-author">
+                            <div class="test-avatar">L</div>
+                            <div>
+                                <div class="test-name">Leonardo Freire</div>
+                                <div class="test-type">Cliente Verificado ✓</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: CTA FINAL -->
+        <section class="cta-final">
+            <div class="container cta-inner reveal">
+                <h2>Pronto para resolver o barulho do seu carro?</h2>
+                <p>Traga seu veículo agora na Av. Barros Reis, 176. Nossa equipe está de prontidão para te atender com
+                    agilidade e preço justo.</p>
+                <a href="https://api.whatsapp.com/send?phone=557133821271&text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20o%20meu%20veículo!"
+                    target="_blank" rel="noopener noreferrer" class="btn-accent"><i class="fa-brands fa-whatsapp"></i>
+                    Quero fazer um orçamento</a>
+                <span class="cta-hint">Sem agendamento necessário · Av. Barros Reis, 176 · Salvador - BA</span>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: LOCALIZAÇÃO -->
+        <section class="location section-padding" id="contato">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">Onde estamos</span>
+                    <h2 class="section-title">Nossa Oficina em Salvador</h2>
+                </div>
+                <div class="location-grid">
+                    <div class="contact-cards reveal">
+                        <div class="contact-card">
+                            <div class="contact-card-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="contact-card-text">
+                                <h4>Endereço</h4>
+                                <p>Av. Barros Reis, 176<br>Salvador - BA, CEP 40315-518</p>
+                            </div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-card-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div class="contact-card-text">
+                                <h4>Telefone</h4>
+                                <p><a href="tel:7133821271" style="color:var(--primary);font-weight:700">(71)
+                                        3382-1271</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-card-icon"><i class="fa-solid fa-clock"></i></div>
+                            <div class="contact-card-text">
+                                <h4>Horário</h4>
+                                <p>Segunda a Sexta: manhã até as 17h<br>Sábado: consultar<br>Sem necessidade de
+                                    agendamento</p>
+                            </div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-card-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                            <div class="contact-card-text">
+                                <h4>WhatsApp</h4>
+                                <p><a href="https://api.whatsapp.com/send?phone=557133821271" target="_blank"
+                                        rel="noopener noreferrer" style="color:var(--primary);font-weight:700">Chamar no
+                                        WhatsApp</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="map-wrap reveal" style="transition-delay:0.15s">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.7947113115433!2d-38.4871156!3d-12.9681749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x716052617118899%3A0x750853540590a6a9!2sPinheiro%20Escapamentos!5e0!3m2!1spt-BR!2sbr!4v1710000000000!5m2!1spt-BR!2sbr"
+                            allowfullscreen loading="lazy" title="Localização da Pinheiro Escapamentos em Salvador"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            sandbox="allow-scripts allow-same-origin"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-brand-name"><i class="fa-solid fa-car-burst"></i> PINHEIRO ESCAPAMENTOS</div>
+                    <p>Especialistas em silenciadores e exaustão automotiva com atendimento rápido, honesto e preço
+                        justo em Salvador - BA.</p>
+                    <a href="https://www.instagram.com/pinheiroescapamentos/" target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        style="display:inline-flex;align-items:center;gap:8px;margin-top:12px;color:#e1306c;font-weight:700;font-size:0.9rem;font-family:'Roboto',sans-serif;transition:opacity 0.2s"
+                        onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                        <i class="fa-brands fa-instagram" style="font-size:1.2rem"></i> @pinheiroescapamentos
+                    </a>
+                </div>
+                <div class="footer-col">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#servicos">Nossos Serviços</a></li>
+                        <li><a href="#diferenciais">Por que nos escolher?</a></li>
+                        <li><a href="#depoimentos">Avaliações</a></li>
+                        <li><a href="#contato">Como Chegar</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <p>📞 (71) 3382-1271</p>
+                    <p>📍 Av. Barros Reis, 176<br>Salvador - BA</p>
+                    <p>⏰ Até as 17h (Seg-Sex)</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> Pinheiro Escapamentos. Todos os direitos reservados. Salvador - BA</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ELEMENTOS FLUTUANTES -->
+    <a href="https://api.whatsapp.com/send?phone=557133821271&text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20o%20meu%20veículo!"
+        target="_blank" rel="noopener noreferrer" class="wa-float">
+        <i class="fa-brands fa-whatsapp" style="font-size:1.3rem"></i> Pedir Orçamento
+    </a>
+
+    <button class="back-top" id="backTop" aria-label="Voltar ao topo"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <div class="cta-bar" id="ctaBar">
+        <div class="cta-bar-inner">
+            <div class="cta-bar-text">🚗 Barulho no escapamento? Resolvemos em 20 minutos!</div>
+            <a href="https://api.whatsapp.com/send?phone=557133821271&text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20o%20meu%20veículo!"
+                target="_blank" rel="noopener noreferrer" class="btn-cta-bar"><i class="fa-brands fa-whatsapp"></i>
+                Fazer Orçamento</a>
+        </div>
+    </div>
+
+    <!-- SCHEMA.ORG JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoRepair",
+      "name": "Pinheiro Escapamentos",
+      "@id": "https://pinheiroescapamentos.com.br",
+      "url": "https://pinheiroescapamentos.com.br",
+      "telephone": "+557133821271",
+      "description": "Especialistas em escapamentos, silenciadores e sistema de exaustão em Salvador. Atendimento rápido sem agendamento.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Av. Barros Reis, 176",
+        "addressLocality": "Salvador",
+        "addressRegion": "BA",
+        "postalCode": "40315-518",
+        "addressCountry": "BR"
+      },
+      "openingHours": ["Mo-Fr 08:00-17:00"],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "reviewCount": "218"
+      }
+    }
+    </script>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // ANIMAÇÃO DE CONTAGEM DOS STATS
+        const animateCounters = () => {
+            const counters = document.querySelectorAll('.stat-num[data-target]');
+            counters.forEach(counter => {
+                if (counter.dataset.zero) return; // pula os que têm texto fixo
+                const target = parseFloat(counter.dataset.target);
+                const suffix = counter.dataset.suffix || '';
+                const decimal = parseInt(counter.dataset.decimal || 0);
+                const duration = 2000;
+                const steps = 60;
+                const stepTime = duration / steps;
+                let current = 0;
+                const increment = target / steps;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = decimal > 0
+                        ? current.toFixed(decimal) + suffix
+                        : Math.floor(current) + suffix;
+                }, stepTime);
+            });
+        };
+
+        // Dispara quando a stats bar entra na tela
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statsBar = document.querySelector('.stats-bar');
+        if (statsBar) statsObserver.observe(statsBar);
+
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        menuToggle.addEventListener('click', () => {
+            mobileNav.classList.toggle('open');
+            menuToggle.querySelector('i').className = mobileNav.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+        });
+        mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            mobileNav.classList.remove('open');
+            menuToggle.querySelector('i').className = 'fa-solid fa-bars';
+        }));
+
+        const backTop = document.getElementById('backTop');
+        const ctaBar = document.getElementById('ctaBar');
+        window.addEventListener('scroll', () => {
+            backTop.classList.toggle('show', window.scrollY > 400);
+            ctaBar.classList.toggle('show', window.scrollY > 600);
+        });
+        backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); observer.unobserve(e.target); } });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>

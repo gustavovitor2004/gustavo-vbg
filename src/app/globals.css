@@ -364,6 +364,7 @@ body {
   filter: blur(90px);
   pointer-events: none;
   animation: float 8s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* Selection */
@@ -412,9 +413,11 @@ body {
 }
 .orbital-spin {
   animation: orbital-spin 18s linear infinite;
+  will-change: transform;
 }
 .orbital-spin-rev {
   animation: orbital-spin-rev 28s linear infinite;
+  will-change: transform;
 }
 
 /* Aurora sweep */
@@ -425,6 +428,7 @@ body {
 }
 .aurora {
   animation: aurora-drift 14s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 

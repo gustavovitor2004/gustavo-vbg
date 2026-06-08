@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { profile } from "@/config/site";
 import { useApp } from "@/context/AppContext";
@@ -9,19 +9,23 @@ export default function LoadingScreen() {
   const { t } = useApp();
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
+  const exitTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((p) => {
         if (p >= 100) {
           clearInterval(interval);
-          setTimeout(() => setVisible(false), 400);
+          exitTimer.current = setTimeout(() => setVisible(false), 400);
           return 100;
         }
         return p + Math.random() * 18 + 4;
       });
     }, 80);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(exitTimer.current);
+    };
   }, []);
 
   return (

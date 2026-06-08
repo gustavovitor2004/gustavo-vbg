@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO AVANÇADO -->
+    <title>Lalay Pet Shop | Banho, Tosa e Veterinário em Feira de Santana - BA</title>
+    <meta name="description"
+        content="O 3º maior pet shop de Feira de Santana. Atendimento amoroso, banho, tosa e veterinário na Lagoa Salgada. Seu pet é amado como família na Lalay!">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Lalay Pet Shop">
+    <meta name="keywords"
+        content="Pet Shop, Feira de Santana, banho e tosa, veterinário, vacinas, ração, acessórios pet, Lagoa Salgada">
+    <link rel="canonical" href="https://lalaypetshop.com.br">
+
+    <!-- OPEN GRAPH & TWITTER CARD -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Lalay Pet Shop | Cuidado Completo em Feira de Santana">
+    <meta property="og:description"
+        content="Banho, tosa, vacinas e rações com o carinho que seu pet merece na Lagoa Salgada.">
+    <meta property="og:url" content="https://lalaypetshop.com.br">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Lalay Pet Shop">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Lalay Pet Shop | Veterinário e Banho em Feira de Santana">
+    <meta name="twitter:description" content="Onde o carinho das titias faz seu pet se sentir em casa.">
+
+    <!-- SEGURANÇA BÁSICA -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+
+    <!-- FAVICON SVG -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+
+    <!-- PERFORMANCE E FONTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- ESTILOS (CSS CRÍTICO E COMPONENTES) -->
+    <style>
+        /* VARIÁVEIS CSS PADRÃO */
+        :root {
+            --primary: #f472b6;
+            --secondary: #a855f7;
+            --accent: #ffedd5;
+            --bg: #f8fafc;
+            --bg-dark: #1e293b;
+            --text: #334155;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        /* RESET BÁSICO */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* HEADER FIXO */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 1px solid #eee;
+            padding: 16px 0;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .logo svg {
+            fill: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* BOTÃO PRIMÁRIO PULSANTE */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            border-radius: 50px;
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            animation: pulse-btn 3s infinite;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            color: var(--white);
+        }
+
+        @keyframes pulse-btn {
+
+            0%,
+            100% {
+                box-shadow: 0 4px 15px rgba(244, 114, 182, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 6px 30px rgba(244, 114, 182, 0.7);
+            }
+        }
+
+        /* HERO SECTION */
+        .hero {
+            padding: 180px 0 100px;
+            background: linear-gradient(135deg, #ffffff 0%, #fdf2f8 100%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* STATS BAR */
+        .stats-bar {
+            background: var(--primary);
+            padding: 32px 0;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+
+        .stat-num {
+            font-family: serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-top: 8px;
+            font-weight: 700;
+        }
+
+        /* SEÇÃO DE SERVIÇOS */
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--secondary);
+            margin-bottom: 50px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid #f1f5f9;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--secondary);
+        }
+
+        /* DIFERENCIAIS */
+        .diff-section {
+            background: var(--white);
+        }
+
+        .diff-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .diff-list {
+            list-style: none;
+            margin-top: 30px;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .diff-list li {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .diff-list li::before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* DEPOIMENTOS COM ESTRELAS */
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .test-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            border-top: 4px solid var(--accent);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .test-stars {
+            color: #fbbf24;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            font-size: 1.2rem;
+        }
+
+        .test-quote {
+            font-style: italic;
+            font-size: 1rem;
+            line-height: 1.75;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .test-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* CTA FINAL (FUNDO ESCURO) */
+        .cta-final {
+            background: var(--bg-dark);
+            color: var(--white);
+            text-align: center;
+            border-radius: var(--radius-lg);
+            margin: 0 24px;
+            padding: 80px 20px;
+        }
+
+        .cta-final h2 {
+            color: var(--white);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-final p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        /* LOCALIZAÇÃO E MAPA */
+        .map-section {
+            padding-bottom: 0;
+        }
+
+        .map-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            margin-top: 40px;
+        }
+
+        .map-info {
+            background: var(--white);
+            padding: 50px;
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .map-iframe {
+            flex: 2;
+            min-width: 300px;
+            min-height: 400px;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--white);
+            padding: 60px 0 30px;
+            border-top: 1px solid #eee;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer h3 {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-bottom: 16px;
+        }
+
+        /* WHATSAPP FLOAT COM LABEL E PULSE */
+        .wa-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            height: 52px;
+            border-radius: 50px;
+            background: #25d366;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 0 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+            z-index: 1000;
+            animation: wa-pulse 2.5s infinite;
+            transition: var(--transition);
+        }
+
+        .wa-float:hover {
+            transform: translateY(-2px) scale(1.03);
+            color: var(--white);
+        }
+
+        @keyframes wa-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 6px 30px rgba(37, 211, 102, 0.7);
+            }
+        }
+
+        /* CTA BAR FIXA */
+        .cta-bar {
+            position: fixed;
+            bottom: -100px;
+            left: 0;
+            right: 0;
+            background: var(--primary);
+            border-top: 2px solid var(--accent);
+            padding: 16px 24px;
+            z-index: 998;
+            transition: bottom 0.4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .cta-bar.show {
+            bottom: 0;
+        }
+
+        .cta-bar a {
+            background: var(--white);
+            color: var(--primary);
+            padding: 8px 24px;
+            border-radius: 50px;
+        }
+
+        /* BOTÃO VOLTAR AO TOPO (ESQUERDA) */
+        .back-to-top {
+            position: fixed;
+            bottom: 28px;
+            left: 28px;
+            width: 45px;
+            height: 45px;
+            background: var(--bg-dark);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: var(--shadow-sm);
+            font-size: 1.2rem;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* SCROLL REVEAL (CSS) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SEÇÃO: HEADER FIXO -->
+    <header class="header">
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    <circle cx="7" cy="7" r="1.5" fill="#fff" />
+                    <circle cx="17" cy="7" r="1.5" fill="#fff" />
+                    <circle cx="12" cy="10" r="1.5" fill="#fff" />
+                </svg>
+                Lalay Pet Shop
+            </a>
+            <nav class="nav-links">
+                <a href="#servicos">Serviços</a>
+                <a href="#diferenciais">Diferenciais</a>
+                <a href="#depoimentos">Avaliações</a>
+                <a href="https://api.whatsapp.com/send?phone=5575981116670&text=Olá!%20Gostaria%20de%20agendar%20um%20horário!"
+                    target="_blank" rel="noopener noreferrer nofollow" class="btn-primary"
+                    style="padding: 10px 24px;">Agendar</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SEÇÃO: HERO EMOCIONAL -->
+    <section class="hero">
+        <div class="container reveal">
+            <h1>Aqui seu pet é amado<br>como família</h1>
+            <p>Atendimento humanizado no 3º maior pet shop de Feira de Santana. Deixe as titias cuidarem do seu melhor
+                amigo com muito carinho e excelência.</p>
+            <a href="https://api.whatsapp.com/send?phone=5575981116670&text=Olá!%20Gostaria%20de%20agendar%20um%20horário!"
+                target="_blank" rel="noopener noreferrer nofollow" class="btn-primary">
+                Agendar um Horário no WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: BARRA DE STATS -->
+    <div class="stats-bar reveal">
+        <div class="container stats-grid">
+            <div>
+                <div class="stat-num">4.9★</div>
+                <div class="stat-label">Google Reviews</div>
+            </div>
+            <div>
+                <div class="stat-num">32</div>
+                <div class="stat-label">Avaliações Reais</div>
+            </div>
+            <div>
+                <div class="stat-num">3º</div>
+                <div class="stat-label">Maior da Cidade</div>
+            </div>
+            <div>
+                <div class="stat-num">100%</div>
+                <div class="stat-label">Gestão Feminina</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO: SERVIÇOS -->
+    <section id="servicos" class="section-padding">
+        <div class="container">
+            <h2 class="section-title reveal">Tudo que seu pet precisa num só lugar</h2>
+            <div class="services-grid">
+                <div class="service-card reveal">
+                    <div class="service-icon">🛁</div>
+                    <h3>Banho & Tosa</h3>
+                    <p>Higiene profunda, hidratação e tosa especializada com profissionais atenciosas.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon">🩺</div>
+                    <h3>Consultas & Vacinas</h3>
+                    <p>Acompanhamento veterinário de confiança para proteger a saúde do seu pet.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon">💊</div>
+                    <h3>Farmácia Pet</h3>
+                    <p>Ampla linha de medicamentos e suplementos para cuidados essenciais.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon">🛍️</div>
+                    <h3>Rações & Acessórios</h3>
+                    <p>Alimentação premium, brinquedos e entrega a domicílio em toda a cidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: DIFERENCIAIS -->
+    <section id="diferenciais" class="section-padding diff-section">
+        <div class="container diff-content reveal">
+            <h2 class="section-title" style="margin-bottom: 20px;">Criado por mulheres, feito com amor</h2>
+            <p>A Lalay Pet Shop nasceu do amor incondicional pelos animais. Entendemos que eles são parte da família e,
+                por isso, nosso ambiente é projetado para minimizar o estresse e maximizar o conforto.</p>
+            <ul class="diff-list">
+                <li>Fundada e gerida por empreendedoras apaixonadas</li>
+                <li>Atendimento 100% amoroso e humanizado</li>
+                <li>Preços incríveis e acessíveis</li>
+                <li>Ambiente seguro e transparente</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: DEPOIMENTOS COM ESTRELAS -->
+    <section id="depoimentos" class="section-padding">
+        <div class="container">
+            <h2 class="section-title reveal">O que os tutores dizem</h2>
+            <div class="test-grid">
+                <div class="test-card reveal">
+                    <div class="test-stars">★★★★★</div>
+                    <p class="test-quote">"Minha mel amou os cuidados das titias, sem dúvidas um ótimo petshop!"</p>
+                    <div class="test-avatar">M</div>
+                </div>
+                <div class="test-card reveal">
+                    <div class="test-stars">★★★★★</div>
+                    <p class="test-quote">"Profissionais de qualidade, tratam nossa bb Maia com muito amor e carinho!"
+                    </p>
+                    <div class="test-avatar">P</div>
+                </div>
+                <div class="test-card reveal">
+                    <div class="test-stars">★★★★★</div>
+                    <p class="test-quote">"Excelente atendimento, tem uma atenção e cuidado muito especial com o pet,
+                        super recomendo!!!"</p>
+                    <div class="test-avatar">A</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: CTA FINAL DE CONVERSÃO -->
+    <section class="section-padding">
+        <div class="cta-final reveal">
+            <h2>Seu pet também merece esse mimo hoje!</h2>
+            <p>Agende agora mesmo um horário com nossas especialistas.</p>
+            <a href="https://api.whatsapp.com/send?phone=5575981116670&text=Olá!%20Gostaria%20de%20agendar%20um%20horário!"
+                target="_blank" rel="noopener noreferrer nofollow" class="btn-primary">
+                Falar com a Lalay Pet Shop
+            </a>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: LOCALIZAÇÃO -->
+    <section class="section-padding map-section reveal">
+        <div class="container">
+            <h2 class="section-title">Venha nos visitar</h2>
+            <div class="map-container">
+                <div class="map-info">
+                    <h3>📍 Lalay Pet Shop</h3>
+                    <p style="margin: 16px 0;">R. Oscar Freitas, 55A<br>Lagoa Salgada<br>Feira de Santana - BA<br>CEP:
+                        44082-070</p>
+                    <p><strong>⏰ Horário:</strong><br>Segunda a Sábado até as 19h<br>Domingo fechado.</p>
+                </div>
+                <!-- IFRAME SEGURO -->
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.13327680789!2d-38.9248564!3d-12.2385611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x714383c3e8000001%3A0x67c29377b3f9b8a!2sLalay%20Pet%20Shop!5e0!3m2!1spt-BR!2sbr!4v1716900000000"
+                    class="map-iframe" style="border:0;" allowfullscreen="" loading="lazy"
+                    title="Mapa de localização da Lalay Pet Shop em Feira de Santana"
+                    sandbox="allow-scripts allow-same-origin"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO: FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 class="logo" style="margin-bottom: 16px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg>
+                        Lalay Pet Shop
+                    </h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Seu pet amado como família.</p>
+                </div>
+                <div>
+                    <h3>Contato</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">📞 (75) 98111-6670</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">📱 WhatsApp: (75) 98111-6670</p>
+                </div>
+                <div>
+                    <h3>Links Rápidos</h3>
+                    <p style="font-size: 0.9rem;"><a href="#servicos" style="color: var(--text-muted);">Nossos
+                            Serviços</a></p>
+                    <p style="font-size: 0.9rem;"><a href="#depoimentos"
+                            style="color: var(--text-muted);">Avaliações</a></p>
+                </div>
+            </div>
+            <div
+                style="text-align: center; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid #eee; padding-top: 20px;">
+                &copy; 2026 Lalay Pet Shop. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://api.whatsapp.com/send?phone=5575981116670&text=Olá!%20Gostaria%20de%20agendar%20um%20horário!"
+        target="_blank" rel="noopener noreferrer nofollow" class="wa-float">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+            <path
+                d="M12.031 6.172c-2.32 0-4.519.903-6.16 2.544-3.4 3.4-3.4 8.92 0 12.319l-1.14 4.14 4.25-1.11c1.55.85 3.3 1.3 5.09 1.3 6.04 0 10.96-4.91 10.96-10.96s-4.92-10.959-10.96-10.959z" />
+        </svg>
+        <span>Agendar com as titias</span>
+    </a>
+
+    <!-- CTA BAR FIXA -->
+    <div class="cta-bar" id="ctaBar">
+        <span>Seu pet precisa de banho? 🐶</span>
+        <a href="https://api.whatsapp.com/send?phone=5575981116670" target="_blank"
+            rel="noopener noreferrer nofollow">Chamar no WhatsApp</a>
+    </div>
+
+    <!-- BOTÃO VOLTAR AO TOPO (ESQUERDA) -->
+    <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">↑</button>
+
+    <!-- SCHEMA.ORG (JSON-LD) PARA SEO LOCAL -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Lalay Pet Shop",
+      "image": "https://lalaypetshop.com.br/logo.png",
+      "@id": "https://lalaypetshop.com.br",
+      "url": "https://lalaypetshop.com.br",
+      "telephone": "+5575981116670",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "R. Oscar Freitas, 55A",
+        "addressLocality": "Feira de Santana",
+        "addressRegion": "BA",
+        "postalCode": "44082-070",
+        "addressCountry": "BR"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+        ],
+        "opens": "08:00",
+        "closes": "19:00"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "32"
+      }
+    }
+    </script>
+
+    <!-- SCRIPTS SEGUROS -->
+    <script>
+        // JS Usa const/let, sem eval ou innerHTML com dados e event listeners ao invés de onclick.
+
+        // SCROLL REVEAL COM INTERSECTION OBSERVER
+        const setupScrollReveal = () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+        };
+
+        // CONTROLE DA CTA BAR FIXA E BOTÃO VOLTAR AO TOPO
+        const handleScrollEvents = () => {
+            const ctaBar = document.getElementById('ctaBar');
+            const backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', () => {
+                const scrollPos = window.scrollY;
+
+                // CTA Bar
+                if (scrollPos > 500) {
+                    ctaBar.classList.add('show');
+                } else {
+                    ctaBar.classList.remove('show');
+                }
+
+                // Voltar ao Topo
+                if (scrollPos > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+        };
+
+        // EVENT LISTENER PARA BOTÃO VOLTAR AO TOPO
+        const setupBackToTop = () => {
+            const backToTopBtn = document.getElementById('backToTop');
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        };
+
+        // INICIALIZAÇÃO SEGURA
+        document.addEventListener('DOMContentLoaded', () => {
+            setupScrollReveal();
+            handleScrollEvents();
+            setupBackToTop();
+        });
+    </script>
+</body>
+
+</html>

@@ -192,6 +192,7 @@ export default function CosmicBackground() {
         height: "100%",
         pointerEvents: "none",
         zIndex: 0,
+        willChange: "transform",
       }}
     />
   );

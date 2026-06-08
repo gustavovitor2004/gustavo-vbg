@@ -41,6 +41,11 @@ export default function Navbar() {
   const clickLock = useRef<boolean>(false);
   const clickLockTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
+  // Cleanup click-lock timer on unmount
+  useEffect(() => {
+    return () => { clearTimeout(clickLockTimer.current); };
+  }, []);
+
   // Scroll-shadow state
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
