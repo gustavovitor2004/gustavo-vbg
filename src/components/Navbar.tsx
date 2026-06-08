@@ -121,7 +121,7 @@ export default function Navbar() {
               ? (isLight ? "rgba(255,255,255,0.92)" : "rgba(6,8,22,0.92)")
               : (isLight ? "rgba(255,255,255,0.75)" : "rgba(6,8,22,0.6)"),
             border: scrolled
-              ? (isLight ? "1px solid rgba(124,58,237,0.25)" : "1px solid rgba(124,58,237,0.28)")
+              ? (isLight ? "1px solid rgba(5,150,105,0.28)" : "1px solid rgba(124,58,237,0.28)")
               : "1px solid rgba(255,255,255,0.1)",
             backdropFilter: "blur(28px)", WebkitBackdropFilter: "blur(28px)",
             boxShadow: scrolled ? "0 4px 36px rgba(0,0,0,0.35)" : "0 2px 20px rgba(0,0,0,0.3)",
@@ -143,9 +143,12 @@ export default function Navbar() {
                 <>
                   {isActive && (
                     <motion.span layoutId="nav-active-pill" transition={{ type: "spring", stiffness: 400, damping: 34 }}
-                      style={{ position: "absolute", inset: 0, borderRadius: "9999px", background: "rgba(124,58,237,0.18)", border: "1px solid rgba(124,58,237,0.3)", zIndex: 0 }} />
+                      style={{ position: "absolute", inset: 0, borderRadius: "9999px",
+                        background: isLight ? "rgba(5,150,105,0.16)" : "rgba(124,58,237,0.18)",
+                        border: isLight ? "1px solid rgba(5,150,105,0.32)" : "1px solid rgba(124,58,237,0.3)",
+                        zIndex: 0 }} />
                   )}
-                  <span style={{ position: "relative", zIndex: 1, transition: "color 0.2s", color: isActive ? (isLight ? "#5b21b6" : "#fff") : (isLight ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.48)"), fontWeight: isActive ? 600 : 400 }}>{label}</span>
+                  <span style={{ position: "relative", zIndex: 1, transition: "color 0.2s", color: isActive ? (isLight ? "#047857" : "#fff") : (isLight ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.48)"), fontWeight: isActive ? 600 : 400 }}>{label}</span>
                 </>
               );
               return <button key={id} onClick={() => handleNav(id)} style={style}>{inner}</button>;
@@ -159,9 +162,13 @@ export default function Navbar() {
               href="/gustavo-resume.pdf"
               download="Gustavo_Gomes_Resume.pdf"
               title={t("nav.resume")}
-              style={{ display: "inline-flex", alignItems: "center", gap: "5px", padding: "6px 12px", borderRadius: "9999px", fontSize: "12px", fontWeight: 600, color: "rgba(167,139,250,0.9)", background: "rgba(124,58,237,0.1)", border: "1px solid rgba(124,58,237,0.2)", textDecoration: "none", transition: "background 0.2s, box-shadow 0.2s", whiteSpace: "nowrap" }}
-              onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = "rgba(124,58,237,0.2)"; el.style.boxShadow = "0 0 16px rgba(124,58,237,0.3)"; }}
-              onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = "rgba(124,58,237,0.1)"; el.style.boxShadow = "none"; }}
+              style={{ display: "inline-flex", alignItems: "center", gap: "5px", padding: "6px 12px", borderRadius: "9999px", fontSize: "12px", fontWeight: 600,
+                color: isLight ? "#047857" : "rgba(167,139,250,0.9)",
+                background: isLight ? "rgba(5,150,105,0.1)" : "rgba(124,58,237,0.1)",
+                border: isLight ? "1px solid rgba(5,150,105,0.25)" : "1px solid rgba(124,58,237,0.2)",
+                textDecoration: "none", transition: "background 0.2s, box-shadow 0.2s", whiteSpace: "nowrap" }}
+              onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = isLight ? "rgba(5,150,105,0.18)" : "rgba(124,58,237,0.2)"; el.style.boxShadow = isLight ? "0 0 16px rgba(5,150,105,0.25)" : "0 0 16px rgba(124,58,237,0.3)"; }}
+              onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = isLight ? "rgba(5,150,105,0.1)" : "rgba(124,58,237,0.1)"; el.style.boxShadow = "none"; }}
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
@@ -216,7 +223,7 @@ export default function Navbar() {
               onMouseLeave={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.background = "rgba(255,255,255,0.07)"; el.style.transform = "scale(1)"; }}
             >
               {isLight ? (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={isLight ? "#5b21b6" : "#fff"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={isLight ? "#047857" : "#fff"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
                 </svg>
               ) : (

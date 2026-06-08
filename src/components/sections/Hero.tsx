@@ -125,8 +125,9 @@ export default function Hero() {
           </span>
           <span
             style={{
-              background:
-                "linear-gradient(130deg, #c4b5fd 0%, #818cf8 40%, #67e8f9 100%)",
+              background: isLight
+                ? "linear-gradient(130deg, #6ee7b7 0%, #10b981 40%, #22d3ee 100%)"
+                : "linear-gradient(130deg, #c4b5fd 0%, #818cf8 40%, #67e8f9 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -145,7 +146,7 @@ export default function Hero() {
           style={{
             fontSize: "clamp(1rem, 2vw, 1.15rem)",
             fontWeight: 500,
-            color: isLight ? "#7c3aed" : "rgba(167,139,250,0.8)",
+            color: isLight ? "#047857" : "rgba(167,139,250,0.8)",
             marginBottom: "16px",
             letterSpacing: "0.02em",
           }}
@@ -196,23 +197,28 @@ export default function Hero() {
               color: "#ffffff",
               padding: "14px 34px",
               borderRadius: "9999px",
-              background: "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)",
-              boxShadow:
-                "0 4px 32px rgba(124,58,237,0.55), 0 0 0 1px rgba(124,58,237,0.3)",
+              background: isLight
+                ? "linear-gradient(135deg, #059669 0%, #0891b2 100%)"
+                : "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)",
+              boxShadow: isLight
+                ? "0 4px 32px rgba(5,150,105,0.45), 0 0 0 1px rgba(5,150,105,0.25)"
+                : "0 4px 32px rgba(124,58,237,0.55), 0 0 0 1px rgba(124,58,237,0.3)",
               textDecoration: "none",
               transition: "transform 0.2s, box-shadow 0.2s",
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget as HTMLAnchorElement;
               el.style.transform = "translateY(-2px)";
-              el.style.boxShadow =
-                "0 8px 40px rgba(124,58,237,0.7), 0 0 0 1px rgba(124,58,237,0.45)";
+              el.style.boxShadow = isLight
+                ? "0 8px 40px rgba(5,150,105,0.6), 0 0 0 1px rgba(5,150,105,0.4)"
+                : "0 8px 40px rgba(124,58,237,0.7), 0 0 0 1px rgba(124,58,237,0.45)";
             }}
             onMouseLeave={(e) => {
               const el = e.currentTarget as HTMLAnchorElement;
               el.style.transform = "translateY(0)";
-              el.style.boxShadow =
-                "0 4px 32px rgba(124,58,237,0.55), 0 0 0 1px rgba(124,58,237,0.3)";
+              el.style.boxShadow = isLight
+                ? "0 4px 32px rgba(5,150,105,0.45), 0 0 0 1px rgba(5,150,105,0.25)"
+                : "0 4px 32px rgba(124,58,237,0.55), 0 0 0 1px rgba(124,58,237,0.3)";
             }}
           >
             {t("hero.cta.work")}
@@ -435,7 +441,9 @@ export default function Hero() {
           style={{
             width: "1px",
             height: "44px",
-            background: "linear-gradient(to bottom, rgba(124,58,237,0.7), transparent)",
+            background: isLight
+              ? "linear-gradient(to bottom, rgba(5,150,105,0.7), transparent)"
+              : "linear-gradient(to bottom, rgba(124,58,237,0.7), transparent)",
           }}
           animate={{ scaleY: [0.25, 1, 0.25], opacity: [0.3, 1, 0.3] }}
           transition={{

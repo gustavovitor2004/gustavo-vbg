@@ -118,7 +118,8 @@ html[data-theme="light"] {
   --foreground: #111827;
   /* Warm neutral gray — no pure white, no excessive blue tint */
   --page-bg: #f3f4f6;
-  --hero-bg: #eef0ff;
+  /* Triadic shift: purple (dark) → green (light). Emerald-50 base. */
+  --hero-bg: #f0fdf4;
   --section-bg: #f3f4f6;
   /* Cards are white — creates depth against the gray page */
   --card-bg: #ffffff;
@@ -133,7 +134,8 @@ html[data-theme="light"] {
   --glass-bg: rgba(255,255,255,0.92);
   --glass-border: rgba(17,24,39,0.10);
   --scrollbar-track: #e8eaff;
-  --accent-highlight: #6d28d9;
+  /* Triadic accent: emerald replaces violet in light mode */
+  --accent-highlight: #047857;    /* emerald-700 — was violet-700 */
   --accent-blue: #2563eb;
   --accent-green: #059669;
   /* GitHub contribution chart — light mode
@@ -152,6 +154,54 @@ body {
 
 html[data-theme="light"] body {
   color: var(--text-primary) !important;
+}
+
+/* ── Triadic color shift: Purple → Green in Light Mode ───────────────────
+   All decorative elements that used violet/indigo accent colours
+   are remapped to an emerald-to-cyan palette for the light theme.
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* Gradient text (hero title "Gomes", loading screen, etc.) */
+html[data-theme="light"] .gradient-text {
+  background: linear-gradient(135deg, #059669 0%, #0891b2 50%, #34d399 100%) !important;
+  background-size: 200% 200% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+html[data-theme="light"] .gradient-text-blue {
+  background: linear-gradient(135deg, #047857, #0891b2) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Section title underline decoration */
+html[data-theme="light"] .section-title-underline::after {
+  background: linear-gradient(90deg, #059669, #06b6d4, transparent);
+}
+
+/* Neon border → emerald variant */
+html[data-theme="light"] .neon-border-purple {
+  border-color: rgba(5,150,105,0.45) !important;
+  box-shadow: 0 0 18px rgba(5,150,105,0.18), inset 0 0 18px rgba(5,150,105,0.05) !important;
+}
+
+/* Focus ring → emerald */
+html[data-theme="light"] :focus-visible {
+  outline-color: rgba(5,150,105,0.7);
+}
+
+/* Scrollbar thumb → emerald gradient */
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #10b981, #0891b2);
+}
+
+/* Text selection → emerald tint */
+html[data-theme="light"] ::selection {
+  background: rgba(16,185,129,0.2);
+  color: #064e3b;
 }
 
 html[data-theme="light"] section,

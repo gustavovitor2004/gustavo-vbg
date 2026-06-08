@@ -36,15 +36,15 @@ export default function CosmicBackground() {
       ctx.clearRect(0, 0, width, height);
 
       // 1 — Background fill
-      ctx.fillStyle = light ? "#eef0ff" : "#030610";
+      ctx.fillStyle = light ? "#f0fdf4" : "#030610";
       ctx.fillRect(0, 0, width, height);
 
-      // 2 — Outer haze / nebula bleed
+      // 2 — Outer haze / nebula bleed  (light: emerald-cyan triad)
       const haze = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.6);
       if (light) {
-        haze.addColorStop(0, "rgba(124,58,237,0.07)");
-        haze.addColorStop(0.5, "rgba(99,102,241,0.05)");
-        haze.addColorStop(1, "rgba(238,240,255,0.0)");
+        haze.addColorStop(0, "rgba(16,185,129,0.09)");
+        haze.addColorStop(0.5, "rgba(6,182,212,0.06)");
+        haze.addColorStop(1, "rgba(240,253,244,0.0)");
       } else {
         haze.addColorStop(0, "rgba(8,20,80,0.0)");
         haze.addColorStop(0.5, "rgba(6,15,60,0.25)");
@@ -65,12 +65,14 @@ export default function CosmicBackground() {
         const offset = (i % 2 === 0 ? 1 : -1) * t * speed + i * 0.55;
         const arcLen = Math.PI * (1.2 + pct * 0.6);
         const baseAlpha = pct < 0.15 ? 0.22 : pct > 0.75 ? 0.18 * (1 - (pct - 0.75) / 0.25) : 0.2 - pct * 0.08;
-        const alpha = light ? baseAlpha * 0.25 : baseAlpha;
+        // light: boost to 0.62× so orbital rings are clearly visible
+        const alpha = light ? baseAlpha * 0.62 : baseAlpha;
 
         const bVal = Math.floor(180 - pct * 80);
         const gVal = Math.floor(110 - pct * 60);
+        // light: alternate emerald / cyan bands; dark: keep original deep-blue
         const bandColor = light
-          ? `rgba(99,102,241,${alpha})`
+          ? (i % 2 === 0 ? `rgba(16,185,129,${alpha})` : `rgba(6,182,212,${alpha})`)
           : `rgba(55,${gVal},${bVal},${alpha})`;
 
         ctx.beginPath();
@@ -85,10 +87,11 @@ export default function CosmicBackground() {
       // 4 — Core glow
       const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.38);
       if (light) {
-        core.addColorStop(0, "rgba(167,139,250,0.35)");
-        core.addColorStop(0.12, "rgba(124,58,237,0.18)");
-        core.addColorStop(0.35, "rgba(99,102,241,0.07)");
-        core.addColorStop(1, "rgba(238,240,255,0)");
+        // Emerald-teal core glow for the green triad
+        core.addColorStop(0, "rgba(52,211,153,0.38)");
+        core.addColorStop(0.12, "rgba(16,185,129,0.20)");
+        core.addColorStop(0.35, "rgba(6,182,212,0.09)");
+        core.addColorStop(1, "rgba(240,253,244,0)");
       } else {
         core.addColorStop(0, "rgba(220,240,255,0.95)");
         core.addColorStop(0.04, "rgba(160,210,255,0.85)");
@@ -110,7 +113,7 @@ export default function CosmicBackground() {
         const twinkle = 0.4 + 0.6 * Math.abs(Math.sin(frame * 0.012 * ((i % 14) * 0.07 + 0.4) + i));
         const sr = i % 28 === 0 ? 1.8 : i % 9 === 0 ? 1.1 : 0.55;
         const sa = (light ? 0.06 : 0.2 + (i % 11) * 0.065) * twinkle;
-        const starRgb = light ? "99,102,241" : "200,215,255";
+        const starRgb = light ? "16,185,129" : "200,215,255";
 
         ctx.beginPath();
         ctx.arc(sx, sy, sr, 0, Math.PI * 2);
@@ -156,9 +159,10 @@ export default function CosmicBackground() {
       // 7 — Vignette
       const vignette = ctx.createRadialGradient(cx, cy, R * 0.35, cx, cy, Math.max(width, height) * 0.82);
       if (light) {
-        vignette.addColorStop(0, "rgba(238,240,255,0)");
-        vignette.addColorStop(0.55, "rgba(238,240,255,0.35)");
-        vignette.addColorStop(1, "rgba(240,242,255,0.85)");
+        // Green-tinted vignette — matches the emerald hero-bg
+        vignette.addColorStop(0, "rgba(240,253,244,0)");
+        vignette.addColorStop(0.55, "rgba(240,253,244,0.35)");
+        vignette.addColorStop(1, "rgba(236,253,245,0.85)");
       } else {
         vignette.addColorStop(0, "rgba(3,6,16,0)");
         vignette.addColorStop(0.45, "rgba(3,6,16,0.55)");
