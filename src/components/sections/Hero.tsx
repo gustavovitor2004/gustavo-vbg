@@ -380,44 +380,82 @@ export default function Hero() {
           >
             {t("social.findon")}
           </span>
-          {socials.map((s) => (
-            <a
-              key={s.id}
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              title={`${s.platform} — ${s.username}`}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "36px",
-                height: "36px",
-                borderRadius: "50%",
-                background: `${s.color}12`,
-                border: `1px solid ${s.color}22`,
-                textDecoration: "none",
-                transition: "all 0.2s",
-                flexShrink: 0,
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = `${s.color}28`;
-                el.style.borderColor = `${s.color}55`;
-                el.style.transform = "translateY(-3px)";
-                el.style.boxShadow = `0 6px 22px ${s.glowColor}`;
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = `${s.color}12`;
-                el.style.borderColor = `${s.color}22`;
-                el.style.transform = "translateY(0)";
-                el.style.boxShadow = "none";
-              }}
-            >
-              <PlatformIcon id={s.id} size={15} className={isLight ? "text-indigo-600/70" : "text-white/55"} />
-            </a>
-          ))}
+          {socials.map((s) => {
+            /**
+             * Light-mode circle contrast fix
+             * ─────────────────────────────────────────────────────────────
+             * Dark mode  → low-opacity tints are fine on a dark canvas
+             *   bg:     ${color}12  (7%)   border: ${color}22 (13%)
+             *
+             * Light mode → same percentages vanish on #f8f9fa.
+             *   Non-GitHub: raise bg → 16% (28 hex), border → 38% (60 hex)
+             *   GitHub:     #e2e8f0 (slate-200) is near-white → completely
+             *               invisible in light mode.  Override with GitHub's
+             *               canonical dark charcoal (#24292e) so the ring
+             *               and icon are clearly readable.
+             */
+            const isGH = s.id === "github";
+
+            // Rest bg/border (light vs dark)
+            const bg     = isLight
+              ? (isGH ? "rgba(36,41,46,0.09)"  : `${s.color}28`)
+              : `${s.color}12`;
+            const border = isLight
+              ? (isGH ? "rgba(36,41,46,0.32)"  : `${s.color}60`)
+              : `${s.color}22`;
+
+            // Hover bg/border
+            const hoverBg     = isLight
+              ? (isGH ? "rgba(36,41,46,0.18)"  : `${s.color}40`)
+              : `${s.color}28`;
+            const hoverBorder = isLight
+              ? (isGH ? "rgba(36,41,46,0.52)"  : `${s.color}90`)
+              : `${s.color}55`;
+
+            // Icon colour class — GitHub gets explicit dark gray in light mode
+            const iconClass = isLight
+              ? (isGH ? "text-gray-800" : "text-gray-600")
+              : "text-white/55";
+
+            return (
+              <a
+                key={s.id}
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={`${s.platform} — ${s.username}`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "50%",
+                  background: bg,
+                  border: `1px solid ${border}`,
+                  textDecoration: "none",
+                  transition: "all 0.2s",
+                  flexShrink: 0,
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLAnchorElement;
+                  el.style.background = hoverBg;
+                  el.style.borderColor = hoverBorder;
+                  el.style.transform = "translateY(-3px)";
+                  el.style.boxShadow = `0 6px 22px ${isGH && isLight ? "rgba(36,41,46,0.22)" : s.glowColor}`;
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLAnchorElement;
+                  el.style.background = bg;
+                  el.style.borderColor = border;
+                  el.style.transform = "translateY(0)";
+                  el.style.boxShadow = "none";
+                }}
+              >
+                <PlatformIcon id={s.id} size={15} className={iconClass} />
+              </a>
+            );
+          })}
         </motion.div>
       </div>
 
