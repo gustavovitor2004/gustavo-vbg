@@ -118,8 +118,9 @@ html[data-theme="light"] {
   --foreground: #111827;
   /* Warm neutral gray — no pure white, no excessive blue tint */
   --page-bg: #f3f4f6;
-  /* Triadic shift: purple (dark) → green (light). Emerald-50 base. */
-  --hero-bg: #f0fdf4;
+  /* Hero section bg: clean off-white — same as page, NO green tint.
+     Green is used ONLY for accent elements, never for backgrounds. */
+  --hero-bg: #f8f9fa;
   --section-bg: #f3f4f6;
   /* Cards are white — creates depth against the gray page */
   --card-bg: #ffffff;
@@ -200,8 +201,8 @@ html[data-theme="light"] ::-webkit-scrollbar-thumb {
 
 /* Text selection → emerald tint */
 html[data-theme="light"] ::selection {
-  background: rgba(16,185,129,0.2);
-  color: #064e3b;
+  background: rgba(5,150,105,0.18);
+  color: #022c22;
 }
 
 html[data-theme="light"] section,
@@ -246,11 +247,7 @@ html[data-theme="light"] .gradient-text-blue {
 html[data-theme="light"] ::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
 }
-
-html[data-theme="light"] ::selection {
-  background: rgba(124,58,237,0.2);
-  color: #111827;
-}
+/* NOTE: light-mode ::selection is defined above in the triadic block — no duplicate here */
 
 /* ── View Transition (theme toggle circle reveal) ── */
 @keyframes vt-reveal {

@@ -36,7 +36,8 @@ export default function CosmicBackground() {
       ctx.clearRect(0, 0, width, height);
 
       // 1 — Background fill
-      ctx.fillStyle = light ? "#f0fdf4" : "#030610";
+      // Light: neutral off-white (#f8f9fa) — green is accent only, NOT background.
+      ctx.fillStyle = light ? "#f8f9fa" : "#030610";
       ctx.fillRect(0, 0, width, height);
 
       // 2 — Outer haze / nebula bleed  (light: emerald-cyan triad)
@@ -44,7 +45,7 @@ export default function CosmicBackground() {
       if (light) {
         haze.addColorStop(0, "rgba(16,185,129,0.09)");
         haze.addColorStop(0.5, "rgba(6,182,212,0.06)");
-        haze.addColorStop(1, "rgba(240,253,244,0.0)");
+        haze.addColorStop(1, "rgba(248,249,250,0.0)"); /* matches neutral bg */
       } else {
         haze.addColorStop(0, "rgba(8,20,80,0.0)");
         haze.addColorStop(0.5, "rgba(6,15,60,0.25)");
@@ -91,7 +92,7 @@ export default function CosmicBackground() {
         core.addColorStop(0, "rgba(52,211,153,0.38)");
         core.addColorStop(0.12, "rgba(16,185,129,0.20)");
         core.addColorStop(0.35, "rgba(6,182,212,0.09)");
-        core.addColorStop(1, "rgba(240,253,244,0)");
+        core.addColorStop(1, "rgba(248,249,250,0)"); /* transparent fade to neutral bg */
       } else {
         core.addColorStop(0, "rgba(220,240,255,0.95)");
         core.addColorStop(0.04, "rgba(160,210,255,0.85)");
@@ -159,10 +160,10 @@ export default function CosmicBackground() {
       // 7 — Vignette
       const vignette = ctx.createRadialGradient(cx, cy, R * 0.35, cx, cy, Math.max(width, height) * 0.82);
       if (light) {
-        // Green-tinted vignette — matches the emerald hero-bg
-        vignette.addColorStop(0, "rgba(240,253,244,0)");
-        vignette.addColorStop(0.55, "rgba(240,253,244,0.35)");
-        vignette.addColorStop(1, "rgba(236,253,245,0.85)");
+        // Neutral vignette — matches the off-white background, no green tint
+        vignette.addColorStop(0, "rgba(248,249,250,0)");
+        vignette.addColorStop(0.55, "rgba(248,249,250,0.35)");
+        vignette.addColorStop(1, "rgba(248,249,250,0.88)");
       } else {
         vignette.addColorStop(0, "rgba(3,6,16,0)");
         vignette.addColorStop(0.45, "rgba(3,6,16,0.55)");
