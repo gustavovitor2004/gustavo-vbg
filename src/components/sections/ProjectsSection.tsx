@@ -3,11 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { projects } from "@/data/projects";
-
-const container: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09 } },
-};
+import { useApp } from "@/context/AppContext";
 
 const item: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -33,7 +29,6 @@ const bannerColors: Record<string, string> = {
 
 const fallback = "linear-gradient(140deg, rgba(124,58,237,0.6), rgba(37,99,235,0.4))";
 
-// GitHub icon
 function GithubIcon({ size = 15 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -42,7 +37,6 @@ function GithubIcon({ size = 15 }: { size?: number }) {
   );
 }
 
-// External link icon
 function ExternalIcon({ size = 13 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -54,37 +48,53 @@ function ExternalIcon({ size = 13 }: { size?: number }) {
 }
 
 function ProjectCard({ project }: { project: (typeof projects)[0] }) {
+  const { t, theme } = useApp();
+  const isLight = theme === "light";
+
+  const textPrimary  = isLight ? "#0a0b1a" : "#ffffff";
+  const textMuted    = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.38)";
+  const cardBg       = isLight ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.025)";
+  const cardBorder   = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)";
+  const tagBg        = isLight ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.06)";
+  const tagBorder    = isLight ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.08)";
+  const tagColor     = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.42)";
+  const iconBg       = isLight ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.06)";
+  const iconBorder   = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.09)";
+  const iconColor    = isLight ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.55)";
+  const hoverBorder  = isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.13)";
+
   const status = statusConfig[project.status] ?? statusConfig.Archived;
   const bg = bannerColors[project.id] ?? fallback;
-  const bannerHeight = "164px";
 
   return (
     <motion.div
       variants={item}
       className="card-shine group rounded-2xl overflow-hidden flex flex-col"
       style={{
-        backgroundColor: "rgba(255,255,255,0.025)",
-        border: "1px solid rgba(255,255,255,0.07)",
+        backgroundColor: cardBg,
+        border: `1px solid ${cardBorder}`,
         height: "100%",
         transition: "border-color 0.25s, box-shadow 0.25s, transform 0.25s",
       }}
-      whileHover={{ y: -5, boxShadow: "0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.1)" }}
+      whileHover={{
+        y: -5,
+        boxShadow: isLight
+          ? "0 20px 60px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.1)"
+          : "0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.1)",
+      }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.13)";
+        (e.currentTarget as HTMLDivElement).style.borderColor = hoverBorder;
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.07)";
+        (e.currentTarget as HTMLDivElement).style.borderColor = cardBorder;
       }}
     >
       {/* Banner */}
-      <div className="relative shrink-0" style={{ height: bannerHeight, background: bg }}>
-        {/* Subtle noise overlay */}
+      <div className="relative shrink-0" style={{ height: "164px", background: bg }}>
         <div
           className="absolute inset-0"
           style={{ background: "rgba(5,8,22,0.25)", mixBlendMode: "multiply" }}
         />
-
-        {/* Featured badge removed */}
 
         {/* Status badge */}
         <span
@@ -108,7 +118,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
           {status.label}
         </span>
 
-        {/* Project initial — decorative */}
+        {/* Decorative initial */}
         <div
           className="absolute"
           style={{
@@ -132,8 +142,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
       <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", flex: 1 }}>
         {/* Title */}
         <h3
-          className="text-white font-bold"
-          style={{ fontSize: "15px", marginBottom: "8px", letterSpacing: "-0.01em", lineHeight: 1.3 }}
+          style={{ fontSize: "15px", fontWeight: 700, color: textPrimary, marginBottom: "8px", letterSpacing: "-0.01em", lineHeight: 1.3 }}
         >
           {project.title}
         </h3>
@@ -142,7 +151,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
         <p
           style={{
             fontSize: "12.5px",
-            color: "rgba(255,255,255,0.38)",
+            color: textMuted,
             lineHeight: 1.65,
             marginBottom: "14px",
             flex: 1,
@@ -164,9 +173,9 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
                 fontSize: "10px",
                 padding: "3px 9px",
                 borderRadius: "6px",
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                color: "rgba(255,255,255,0.42)",
+                background: tagBg,
+                border: `1px solid ${tagBorder}`,
+                color: tagColor,
                 fontWeight: 500,
                 fontFamily: "'JetBrains Mono', monospace",
               }}
@@ -180,8 +189,8 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
                 fontSize: "10px",
                 padding: "3px 9px",
                 borderRadius: "6px",
-                background: "rgba(255,255,255,0.04)",
-                color: "rgba(255,255,255,0.28)",
+                background: isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.04)",
+                color: isLight ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.28)",
               }}
             >
               +{project.technologies.length - 4}
@@ -196,7 +205,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              title="View on GitHub"
+              title={t("sites.github")}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -204,21 +213,21 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
                 width: "34px",
                 height: "34px",
                 borderRadius: "10px",
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.09)",
-                color: "rgba(255,255,255,0.55)",
+                background: iconBg,
+                border: `1px solid ${iconBorder}`,
+                color: iconColor,
                 textDecoration: "none",
                 transition: "background 0.2s, color 0.2s",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = "rgba(255,255,255,0.12)";
-                el.style.color = "#ffffff";
+                el.style.background = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.12)";
+                el.style.color = isLight ? "#0a0b1a" : "#ffffff";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = "rgba(255,255,255,0.06)";
-                el.style.color = "rgba(255,255,255,0.55)";
+                el.style.background = iconBg;
+                el.style.color = iconColor;
               }}
             >
               <GithubIcon size={15} />
@@ -259,15 +268,14 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
                 el.style.boxShadow = "none";
               }}
             >
-              {project.demoUrl ? "Visit Site" : "View Docs"}
+              {project.demoUrl ? t("sites.btn") : t("sites.docs")}
               <ExternalIcon size={12} />
             </a>
           )}
 
-          {/* Fallback when no links */}
           {!project.githubUrl && !project.demoUrl && !project.docsUrl && (
-            <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.2)", fontStyle: "italic" }}>
-              Coming soon
+            <span style={{ fontSize: "11px", color: isLight ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.2)", fontStyle: "italic" }}>
+              {t("coming.soon")}
             </span>
           )}
         </div>
@@ -279,7 +287,12 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
 const CATEGORIES = ["All", "Restaurant", "Bakery", "Pet Shop", "Automotive", "Events"];
 
 export default function ProjectsSection() {
+  const { t, theme } = useApp();
+  const isLight = theme === "light";
   const [activeFilter, setActiveFilter] = useState("All");
+
+  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
+
   const filtered = activeFilter === "All"
     ? projects
     : projects.filter((p) => p.category === activeFilter);
@@ -313,21 +326,30 @@ export default function ProjectsSection() {
         >
           <div>
             <p style={{ fontSize: "11px", fontWeight: 700, color: "#7c3aed", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
-              CLIENT SITES
+              {t("sites.label")}
             </p>
-            <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.05, letterSpacing: "-0.025em" }}>
-              My Sites
+            <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: textPrimary, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
+              {t("sites.title")}
             </h2>
           </div>
           <a
             href="https://github.com/gustavovitor2004"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "13px", fontWeight: 600, color: "rgba(167,139,250,0.75)", textDecoration: "none", transition: "color 0.2s" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#a78bfa"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(167,139,250,0.75)"; }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              fontSize: "13px",
+              fontWeight: 600,
+              color: isLight ? "rgba(124,58,237,0.7)" : "rgba(167,139,250,0.75)",
+              textDecoration: "none",
+              transition: "color 0.2s",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = isLight ? "#7c3aed" : "#a78bfa"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = isLight ? "rgba(124,58,237,0.7)" : "rgba(167,139,250,0.75)"; }}
           >
-            View on GitHub
+            {t("sites.github")}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 18l6-6-6-6" />
             </svg>
@@ -335,16 +357,15 @@ export default function ProjectsSection() {
         </motion.div>
 
         {/* Filter tabs */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "8px",
-            marginBottom: "36px",
-          }}
-        >
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "36px" }}>
           {CATEGORIES.map((cat) => {
             const isActive = activeFilter === cat;
+            const inactiveColor   = isLight ? "rgba(0,0,0,0.45)"  : "rgba(255,255,255,0.45)";
+            const inactiveBg      = isLight ? "rgba(0,0,0,0.04)"  : "rgba(255,255,255,0.05)";
+            const inactiveBorder  = isLight ? "rgba(0,0,0,0.08)"  : "rgba(255,255,255,0.08)";
+            const hoverColor      = isLight ? "rgba(0,0,0,0.7)"   : "rgba(255,255,255,0.75)";
+            const hoverBg         = isLight ? "rgba(0,0,0,0.07)"  : "rgba(255,255,255,0.09)";
+
             return (
               <button
                 key={cat}
@@ -354,24 +375,22 @@ export default function ProjectsSection() {
                   borderRadius: "9999px",
                   fontSize: "12px",
                   fontWeight: isActive ? 700 : 500,
-                  color: isActive ? "#fff" : "rgba(255,255,255,0.45)",
-                  background: isActive ? "rgba(124,58,237,0.22)" : "rgba(255,255,255,0.05)",
-                  border: isActive ? "1px solid rgba(124,58,237,0.45)" : "1px solid rgba(255,255,255,0.08)",
+                  color: isActive ? "#fff" : inactiveColor,
+                  background: isActive ? "rgba(124,58,237,0.22)" : inactiveBg,
+                  border: isActive ? "1px solid rgba(124,58,237,0.45)" : `1px solid ${inactiveBorder}`,
                   cursor: "pointer",
                   transition: "all 0.18s",
-                  position: "relative",
-                  overflow: "hidden",
                 }}
                 onMouseEnter={(e) => {
                   if (!isActive) {
-                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.09)";
-                    (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.75)";
+                    (e.currentTarget as HTMLButtonElement).style.background = hoverBg;
+                    (e.currentTarget as HTMLButtonElement).style.color = hoverColor;
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (!isActive) {
-                    (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.05)";
-                    (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.45)";
+                    (e.currentTarget as HTMLButtonElement).style.background = inactiveBg;
+                    (e.currentTarget as HTMLButtonElement).style.color = inactiveColor;
                   }
                 }}
               >

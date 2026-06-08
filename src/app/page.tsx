@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       <LoadingScreen />
-      <div style={{ background: "#050816", color: "white", minHeight: "100vh" }}>
+      <div style={{ background: "var(--page-bg)", color: "var(--text-primary)", minHeight: "100vh" }}>
         <Navbar />
         <Hero />
         <AboutSection />

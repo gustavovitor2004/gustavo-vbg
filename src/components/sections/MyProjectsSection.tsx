@@ -2,6 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import { apps } from "@/data/apps";
+import { useApp } from "@/context/AppContext";
 
 const container: Variants = {
   hidden: {},
@@ -30,6 +31,17 @@ function ExternalIcon() {
 }
 
 export default function MyProjectsSection() {
+  const { t, theme } = useApp();
+  const isLight = theme === "light";
+
+  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
+  const textMuted   = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.38)";
+  const cardBg      = isLight ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.025)";
+  const cardBorder  = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)";
+  const tagBg       = isLight ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.06)";
+  const tagBorder   = isLight ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.08)";
+  const tagColor    = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.42)";
+
   return (
     <section id="projects" style={{ padding: "100px 0 80px", position: "relative" }}>
       {/* Background tint */}
@@ -52,10 +64,10 @@ export default function MyProjectsSection() {
         >
           <div>
             <p style={{ fontSize: "11px", fontWeight: 700, color: "#06b6d4", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px" }}>
-              SAAS & APPS
+              {t("projects.label")}
             </p>
-            <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.05, letterSpacing: "-0.025em" }}>
-              My Projects
+            <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: textPrimary, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
+              {t("projects.title")}
             </h2>
           </div>
         </motion.div>
@@ -76,17 +88,22 @@ export default function MyProjectsSection() {
                 variants={item}
                 className="card-shine group rounded-2xl overflow-hidden flex flex-col"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.025)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  backgroundColor: cardBg,
+                  border: `1px solid ${cardBorder}`,
                   height: "100%",
                   transition: "border-color 0.25s, box-shadow 0.25s",
                 }}
-                whileHover={{ y: -5, boxShadow: `0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px ${app.accentColor}22` }}
+                whileHover={{
+                  y: -5,
+                  boxShadow: isLight
+                    ? `0 20px 60px rgba(0,0,0,0.12), 0 0 0 1px ${app.accentColor}22`
+                    : `0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px ${app.accentColor}22`,
+                }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLDivElement).style.borderColor = `${app.accentColor}33`;
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.07)";
+                  (e.currentTarget as HTMLDivElement).style.borderColor = cardBorder;
                 }}
               >
                 {/* Banner */}
@@ -116,7 +133,7 @@ export default function MyProjectsSection() {
                     {status.label}
                   </span>
 
-                  {/* Emoji + decorative letter */}
+                  {/* Emoji */}
                   <div
                     style={{
                       position: "absolute",
@@ -155,8 +172,7 @@ export default function MyProjectsSection() {
 
                   {/* Title */}
                   <h3
-                    className="text-white font-bold"
-                    style={{ fontSize: "16px", marginBottom: "8px", letterSpacing: "-0.01em", lineHeight: 1.3 }}
+                    style={{ fontSize: "16px", fontWeight: 700, color: textPrimary, marginBottom: "8px", letterSpacing: "-0.01em", lineHeight: 1.3 }}
                   >
                     {app.title}
                   </h3>
@@ -165,7 +181,7 @@ export default function MyProjectsSection() {
                   <p
                     style={{
                       fontSize: "12.5px",
-                      color: "rgba(255,255,255,0.38)",
+                      color: textMuted,
                       lineHeight: 1.65,
                       marginBottom: "14px",
                       flex: 1,
@@ -183,9 +199,9 @@ export default function MyProjectsSection() {
                           fontSize: "10px",
                           padding: "3px 9px",
                           borderRadius: "6px",
-                          background: "rgba(255,255,255,0.06)",
-                          border: "1px solid rgba(255,255,255,0.08)",
-                          color: "rgba(255,255,255,0.42)",
+                          background: tagBg,
+                          border: `1px solid ${tagBorder}`,
+                          color: tagColor,
                           fontWeight: 500,
                           fontFamily: "'JetBrains Mono', monospace",
                         }}
@@ -226,7 +242,7 @@ export default function MyProjectsSection() {
                       el.style.boxShadow = "none";
                     }}
                   >
-                    Open App
+                    {t("projects.btn")}
                     <ExternalIcon />
                   </a>
                 </div>

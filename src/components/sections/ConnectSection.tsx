@@ -3,6 +3,7 @@
 import { motion, type Variants } from "framer-motion";
 import { socials } from "@/data/socials";
 import { PlatformIcon } from "@/components/ui/PlatformIcon";
+import { useApp } from "@/context/AppContext";
 
 const container: Variants = {
   hidden: {},
@@ -15,17 +16,27 @@ const item: Variants = {
 };
 
 const buttonLabel: Record<string, string> = {
-  discord: "Open Chat",
-  youtube: "Subscribe",
+  discord:   "Open Chat",
+  youtube:   "Subscribe",
   instagram: "Follow",
-  whatsapp: "Message",
-  github: "Follow",
-  twitter: "Follow",
-  twitch: "Subscribe",
-  email: "Send Email",
+  whatsapp:  "Message",
+  github:    "Follow",
+  twitter:   "Follow",
+  twitch:    "Subscribe",
+  email:     "Send Email",
 };
 
 function SocialCard({ social }: { social: (typeof socials)[0] }) {
+  const { theme } = useApp();
+  const isLight = theme === "light";
+
+  const textPrimary  = isLight ? "#0a0b1a" : "#ffffff";
+  const textUsername = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.38)";
+  const textDesc     = isLight ? "rgba(0,0,0,0.38)" : "rgba(255,255,255,0.25)";
+  const cardBg       = isLight ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.026)";
+  const cardBorder   = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)";
+  const hoverBg      = isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.05)";
+
   const label = buttonLabel[social.id] ?? "Visit";
 
   return (
@@ -40,8 +51,8 @@ function SocialCard({ social }: { social: (typeof socials)[0] }) {
         gap: "16px",
         padding: "22px 24px",
         borderRadius: "18px",
-        background: "rgba(255,255,255,0.026)",
-        border: "1px solid rgba(255,255,255,0.07)",
+        background: cardBg,
+        border: `1px solid ${cardBorder}`,
         borderLeft: `3px solid ${social.color}55`,
         textDecoration: "none",
         cursor: "pointer",
@@ -49,21 +60,26 @@ function SocialCard({ social }: { social: (typeof socials)[0] }) {
         position: "relative",
         overflow: "hidden",
       }}
-      whileHover={{ y: -4, boxShadow: `0 16px 48px ${social.glowColor}, 0 0 0 1px ${social.color}20` }}
+      whileHover={{
+        y: -4,
+        boxShadow: isLight
+          ? `0 16px 48px rgba(0,0,0,0.1), 0 0 0 1px ${social.color}20`
+          : `0 16px 48px ${social.glowColor}, 0 0 0 1px ${social.color}20`,
+      }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLAnchorElement;
-        el.style.background = "rgba(255,255,255,0.05)";
+        el.style.background = hoverBg;
         el.style.borderColor = `${social.color}40`;
-        el.style.borderLeftColor = `${social.color}`;
+        el.style.borderLeftColor = social.color;
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLAnchorElement;
-        el.style.background = "rgba(255,255,255,0.026)";
-        el.style.borderColor = "rgba(255,255,255,0.07)";
+        el.style.background = cardBg;
+        el.style.borderColor = cardBorder;
         el.style.borderLeftColor = `${social.color}55`;
       }}
     >
-      {/* Background color wash on hover — subtle */}
+      {/* Background color wash */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -89,13 +105,13 @@ function SocialCard({ social }: { social: (typeof socials)[0] }) {
 
       {/* Info */}
       <div style={{ flex: 1, minWidth: 0, position: "relative", zIndex: 1 }}>
-        <p style={{ fontSize: "14.5px", fontWeight: 700, color: "#ffffff", lineHeight: 1.2, marginBottom: "3px" }}>
+        <p style={{ fontSize: "14.5px", fontWeight: 700, color: textPrimary, lineHeight: 1.2, marginBottom: "3px" }}>
           {social.platform}
         </p>
-        <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.38)", marginBottom: "4px", fontWeight: 500 }}>
+        <p style={{ fontSize: "12px", color: textUsername, marginBottom: "4px", fontWeight: 500 }}>
           {social.username}
         </p>
-        <p style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.25)", lineHeight: 1.4, fontStyle: "italic" }}>
+        <p style={{ fontSize: "11.5px", color: textDesc, lineHeight: 1.4, fontStyle: "italic" }}>
           {social.description}
         </p>
       </div>
@@ -130,14 +146,15 @@ function SocialCard({ social }: { social: (typeof socials)[0] }) {
 }
 
 export default function ConnectSection() {
+  const { t, theme } = useApp();
+  const isLight = theme === "light";
+  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
+
   const row1 = socials.slice(0, 3);
   const row2 = socials.slice(3);
 
   return (
-    <section
-      id="connect"
-      style={{ padding: "100px 0 80px", position: "relative" }}
-    >
+    <section id="connect" style={{ padding: "100px 0 80px", position: "relative" }}>
       {/* Background accent */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -166,18 +183,18 @@ export default function ConnectSection() {
               marginBottom: "8px",
             }}
           >
-            SOCIAL MEDIA
+            {t("social.label")}
           </p>
           <h2
             style={{
               fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
               fontWeight: 900,
-              color: "#ffffff",
+              color: textPrimary,
               lineHeight: 1.05,
               letterSpacing: "-0.025em",
             }}
           >
-            Find Me Online
+            {t("social.title")}
           </h2>
         </motion.div>
 
@@ -195,7 +212,7 @@ export default function ConnectSection() {
           ))}
         </motion.div>
 
-        {/* Row 2 — remaining cards, equal width */}
+        {/* Row 2 — remaining cards */}
         {row2.length > 0 && (
           <motion.div
             style={{

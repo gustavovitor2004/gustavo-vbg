@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { socials } from "@/data/socials";
 import { PlatformIcon } from "@/components/ui/PlatformIcon";
-import { profile, meta, navbar } from "@/config/site";
+import { profile, navbar } from "@/config/site";
+import { useApp } from "@/context/AppContext";
 
 const footerLinks = {
   Navigation: [
-    { label: "Home", href: "#home" },
-    { label: "Projects", href: "#projects" },
-    { label: "Blog", href: "#blog" },
+    { label: "Home",      href: "#home" },
+    { label: "Projects",  href: "#projects" },
+    { label: "Blog",      href: "#blog" },
     { label: "Community", href: "#servers" },
     { label: "All Links", href: "/links" },
   ],
@@ -21,10 +22,27 @@ const footerLinks = {
 };
 
 export default function Footer() {
+  const { theme } = useApp();
+  const isLight = theme === "light";
   const year = new Date().getFullYear();
 
+  const footerBg       = isLight ? "var(--page-bg)"       : "#050816";
+  const topBorder      = isLight ? "rgba(0,0,0,0.08)"     : "rgba(255,255,255,0.06)";
+  const textPrimary    = isLight ? "#0a0b1a"               : "#ffffff";
+  const textTagline    = isLight ? "rgba(0,0,0,0.45)"     : "rgba(255,255,255,0.32)";
+  const iconBg         = isLight ? "rgba(0,0,0,0.05)"     : "rgba(255,255,255,0.05)";
+  const iconBorder     = isLight ? "rgba(0,0,0,0.08)"     : "rgba(255,255,255,0.08)";
+  const iconColor      = isLight ? "rgba(0,0,0,0.4)"      : "rgba(255,255,255,0.4)";
+  const labelColor     = isLight ? "rgba(0,0,0,0.3)"      : "rgba(255,255,255,0.28)";
+  const linkColor      = isLight ? "rgba(0,0,0,0.5)"      : "rgba(255,255,255,0.42)";
+  const linkHover      = isLight ? "#0a0b1a"               : "rgba(255,255,255,0.85)";
+  const dividerColor   = isLight ? "rgba(0,0,0,0.08)"     : "rgba(255,255,255,0.06)";
+  const copyrightColor = isLight ? "rgba(0,0,0,0.35)"     : "rgba(255,255,255,0.22)";
+  const builtColor     = isLight ? "rgba(0,0,0,0.28)"     : "rgba(255,255,255,0.18)";
+  const accentColor    = isLight ? "rgba(124,58,237,0.6)" : "rgba(167,139,250,0.5)";
+
   return (
-    <footer style={{ position: "relative", borderTop: "1px solid rgba(255,255,255,0.06)", background: "#050816" }}>
+    <footer style={{ position: "relative", borderTop: `1px solid ${topBorder}`, background: footerBg }}>
       {/* Subtle top glow */}
       <div
         className="absolute top-0 left-1/2 pointer-events-none"
@@ -68,11 +86,11 @@ export default function Footer() {
               >
                 {navbar.brand[0]}
               </div>
-              <span style={{ fontWeight: 800, color: "#ffffff", fontSize: "15px", letterSpacing: "-0.01em" }}>
+              <span style={{ fontWeight: 800, color: textPrimary, fontSize: "15px", letterSpacing: "-0.01em" }}>
                 {navbar.brand}
               </span>
             </div>
-            <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.32)", lineHeight: 1.7, maxWidth: "220px", marginBottom: "20px" }}>
+            <p style={{ fontSize: "13px", color: textTagline, lineHeight: 1.7, maxWidth: "220px", marginBottom: "20px" }}>
               {profile.tagline} — Building for the web and sharing the journey.
             </p>
 
@@ -92,9 +110,9 @@ export default function Footer() {
                     width: "32px",
                     height: "32px",
                     borderRadius: "9px",
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: "rgba(255,255,255,0.4)",
+                    background: iconBg,
+                    border: `1px solid ${iconBorder}`,
+                    color: iconColor,
                     textDecoration: "none",
                     transition: "all 0.2s",
                     flexShrink: 0,
@@ -108,9 +126,9 @@ export default function Footer() {
                   }}
                   onMouseLeave={(e) => {
                     const el = e.currentTarget as HTMLAnchorElement;
-                    el.style.background = "rgba(255,255,255,0.05)";
-                    el.style.borderColor = "rgba(255,255,255,0.08)";
-                    el.style.color = "rgba(255,255,255,0.4)";
+                    el.style.background = iconBg;
+                    el.style.borderColor = iconBorder;
+                    el.style.color = iconColor;
                     el.style.transform = "translateY(0)";
                   }}
                 >
@@ -122,7 +140,7 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <p style={{ fontSize: "11px", fontWeight: 700, color: "rgba(255,255,255,0.28)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "16px" }}>
+            <p style={{ fontSize: "11px", fontWeight: 700, color: labelColor, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "16px" }}>
               Navigation
             </p>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -133,13 +151,13 @@ export default function Footer() {
                       href={link.href}
                       style={{
                         fontSize: "13.5px",
-                        color: "rgba(255,255,255,0.42)",
+                        color: linkColor,
                         textDecoration: "none",
                         transition: "color 0.2s",
                         display: "inline-block",
                       }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.85)"; }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.42)"; }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkHover; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkColor; }}
                     >
                       {link.label}
                     </Link>
@@ -148,13 +166,13 @@ export default function Footer() {
                       href={link.href}
                       style={{
                         fontSize: "13.5px",
-                        color: "rgba(255,255,255,0.42)",
+                        color: linkColor,
                         textDecoration: "none",
                         transition: "color 0.2s",
                         display: "inline-block",
                       }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.85)"; }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.42)"; }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkHover; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkColor; }}
                     >
                       {link.label}
                     </a>
@@ -166,7 +184,7 @@ export default function Footer() {
 
           {/* Connect */}
           <div>
-            <p style={{ fontSize: "11px", fontWeight: 700, color: "rgba(255,255,255,0.28)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "16px" }}>
+            <p style={{ fontSize: "11px", fontWeight: 700, color: labelColor, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "16px" }}>
               Connect
             </p>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -178,13 +196,13 @@ export default function Footer() {
                     rel={link.external ? "noopener noreferrer" : undefined}
                     style={{
                       fontSize: "13.5px",
-                      color: "rgba(255,255,255,0.42)",
+                      color: linkColor,
                       textDecoration: "none",
                       transition: "color 0.2s",
                       display: "inline-block",
                     }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.85)"; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.42)"; }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkHover; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkColor; }}
                   >
                     {link.label}
                   </a>
@@ -195,13 +213,7 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div
-          style={{
-            height: "1px",
-            background: "rgba(255,255,255,0.06)",
-            marginBottom: "24px",
-          }}
-        />
+        <div style={{ height: "1px", background: dividerColor, marginBottom: "24px" }} />
 
         {/* Bottom row */}
         <div
@@ -213,22 +225,22 @@ export default function Footer() {
             gap: "12px",
           }}
         >
-          <p style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.22)" }}>
+          <p style={{ fontSize: "12.5px", color: copyrightColor }}>
             © {year} {profile.name}. All rights reserved.
           </p>
-          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.18)" }}>
+          <p style={{ fontSize: "12px", color: builtColor }}>
             Built with{" "}
-            <span style={{ color: "rgba(167,139,250,0.5)" }}>Next.js</span>
+            <span style={{ color: accentColor }}>Next.js</span>
             {" "}·{" "}
-            <span style={{ color: "rgba(167,139,250,0.5)"}}>TailwindCSS</span>
+            <span style={{ color: accentColor }}>TailwindCSS</span>
             {" "}·{" "}
             <a
               href="https://vercel.com"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "rgba(167,139,250,0.5)", textDecoration: "none", transition: "color 0.2s" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#a78bfa"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(167,139,250,0.5)"; }}
+              style={{ color: accentColor, textDecoration: "none", transition: "color 0.2s" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = isLight ? "#7c3aed" : "#a78bfa"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = accentColor; }}
             >
               Vercel
             </a>

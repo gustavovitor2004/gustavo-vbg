@@ -2,6 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import { discordServers } from "@/data/servers";
+import { useApp } from "@/context/AppContext";
 
 const container: Variants = {
   hidden: {},
@@ -18,6 +19,15 @@ const serverIconMap: Record<string, string> = {
 };
 
 function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
+  const { t, theme } = useApp();
+  const isLight = theme === "light";
+
+  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
+  const textMuted   = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.35)";
+  const textDesc    = isLight ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.36)";
+  const cardBg      = isLight ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.026)";
+  const cardBorder  = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)";
+
   const iconText = serverIconMap[server.id] ?? server.name[0];
   const smallFont = iconText.length > 2;
 
@@ -30,16 +40,21 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
         flexDirection: "column",
         borderRadius: "18px",
         overflow: "hidden",
-        background: "rgba(255,255,255,0.026)",
-        border: "1px solid rgba(255,255,255,0.07)",
+        background: cardBg,
+        border: `1px solid ${cardBorder}`,
         transition: "border-color 0.25s, box-shadow 0.25s, transform 0.25s",
       }}
-      whileHover={{ y: -4, boxShadow: `0 16px 50px rgba(0,0,0,0.5), 0 0 0 1px ${server.color}22` }}
+      whileHover={{
+        y: -4,
+        boxShadow: isLight
+          ? `0 16px 50px rgba(0,0,0,0.12), 0 0 0 1px ${server.color}22`
+          : `0 16px 50px rgba(0,0,0,0.5), 0 0 0 1px ${server.color}22`,
+      }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLDivElement).style.borderColor = `${server.color}30`;
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.07)";
+        (e.currentTarget as HTMLDivElement).style.borderColor = cardBorder;
       }}
     >
       {/* Top color strip */}
@@ -74,7 +89,7 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
               style={{
                 fontSize: "15px",
                 fontWeight: 700,
-                color: "#ffffff",
+                color: textPrimary,
                 lineHeight: 1.25,
                 letterSpacing: "-0.01em",
                 marginBottom: "4px",
@@ -94,8 +109,8 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
                 }}
                 className="animate-pulse"
               />
-              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)", fontWeight: 500 }}>
-                {server.memberCount} members
+              <span style={{ fontSize: "12px", color: textMuted, fontWeight: 500 }}>
+                {server.memberCount} {t("servers.members")}
               </span>
             </div>
           </div>
@@ -105,7 +120,7 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
         <p
           style={{
             fontSize: "12.5px",
-            color: "rgba(255,255,255,0.36)",
+            color: textDesc,
             lineHeight: 1.65,
             marginBottom: "18px",
             display: "-webkit-box",
@@ -153,7 +168,7 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.014.043.031.057a19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z" />
           </svg>
-          Join Server
+          {t("servers.join")}
         </a>
       </div>
     </motion.div>
@@ -161,11 +176,13 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
 }
 
 export default function DiscordServers() {
+  const { t, theme } = useApp();
+  const isLight = theme === "light";
+  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
+  const textSub     = isLight ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.3)";
+
   return (
-    <section
-      id="servers"
-      style={{ padding: "100px 0 80px", position: "relative" }}
-    >
+    <section id="servers" style={{ padding: "100px 0 80px", position: "relative" }}>
       {/* Background */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -202,22 +219,22 @@ export default function DiscordServers() {
                 marginBottom: "8px",
               }}
             >
-              COMMUNITY
+              {t("servers.label")}
             </p>
             <h2
               style={{
                 fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
                 fontWeight: 900,
-                color: "#ffffff",
+                color: textPrimary,
                 lineHeight: 1.05,
                 letterSpacing: "-0.025em",
               }}
             >
-              Discord Servers
+              {t("servers.title")}
             </h2>
           </div>
-          <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.3)" }}>
-            Join the community — gamers, devs and creators all welcome.
+          <p style={{ fontSize: "13px", color: textSub }}>
+            {t("servers.subtitle")}
           </p>
         </motion.div>
 
