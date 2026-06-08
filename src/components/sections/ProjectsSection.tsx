@@ -163,6 +163,8 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
           alt=""
           aria-hidden="true"
           draggable={false}
+          loading="lazy"
+          decoding="async"
           className="project-thumb"
           style={{
             position: "absolute",
@@ -172,10 +174,14 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
             objectFit: "cover",
             objectPosition: "center top",
             display: "block",
-            transition: "transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94)",
+            transition: "transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.4s ease",
+            opacity: 1,
+          }}
+          onLoad={(e) => {
+            (e.currentTarget as HTMLImageElement).style.opacity = "1";
           }}
           onError={(e) => {
-            /* Image missing → hide it so the identity gradient shows */
+            /* Screenshot unavailable → hide and let the identity gradient show */
             (e.currentTarget as HTMLImageElement).style.display = "none";
           }}
         />
