@@ -45,31 +45,31 @@ const BANNER_DATA: Record<string, { fallback: string; overlay: string; accent: s
   /* 1 — Steakhouse: deep red, dark brown, warm amber */
   "costelao-do-gaucho": {
     fallback: "linear-gradient(150deg, #5a1212 0%, #3b1a08 50%, #1e0c04 100%)",
-    overlay:  "linear-gradient(180deg, rgba(70,15,15,0.28) 0%, rgba(20,8,4,0.78) 100%)",
+    overlay:  "linear-gradient(180deg, rgba(30,8,4,0.18) 0%, rgba(10,4,2,0.62) 100%)",
     accent:   "#C67C0A",
   },
   /* 2 — Bakery: coffee brown, warm beige, golden yellow */
   "cheiro-e-pao": {
     fallback: "linear-gradient(150deg, #6b4417 0%, #44280a 50%, #281605 100%)",
-    overlay:  "linear-gradient(180deg, rgba(80,50,15,0.28) 0%, rgba(32,18,6,0.78) 100%)",
+    overlay:  "linear-gradient(180deg, rgba(32,18,6,0.18) 0%, rgba(16,9,3,0.62) 100%)",
     accent:   "#D4A855",
   },
   /* 3 — Pet Shop: sky blue, soft purple, teal */
   "lalay-petshop": {
     fallback: "linear-gradient(150deg, #0e538f 0%, #6d28d9 50%, #0e7490 100%)",
-    overlay:  "linear-gradient(180deg, rgba(10,60,120,0.28) 0%, rgba(80,20,150,0.72) 100%)",
+    overlay:  "linear-gradient(180deg, rgba(10,30,80,0.18) 0%, rgba(40,10,80,0.60) 100%)",
     accent:   "#67E8F9",
   },
   /* 4 — Automotive: graphite black, industrial orange */
   "pinheiro-escapamentos": {
     fallback: "linear-gradient(150deg, #18181c 0%, #0d0d12 50%, #2c1800 100%)",
-    overlay:  "linear-gradient(180deg, rgba(18,18,22,0.35) 0%, rgba(185,70,0,0.72) 100%)",
+    overlay:  "linear-gradient(180deg, rgba(10,10,12,0.22) 0%, rgba(120,45,0,0.60) 100%)",
     accent:   "#F97316",
   },
   /* 5 — Events venue: forest green, golden, warm wood */
   "casa-da-mangueira": {
     fallback: "linear-gradient(150deg, #0f4d1e 0%, #1e3d10 50%, #3d2c08 100%)",
-    overlay:  "linear-gradient(180deg, rgba(10,55,22,0.28) 0%, rgba(65,45,8,0.78) 100%)",
+    overlay:  "linear-gradient(180deg, rgba(8,35,14,0.18) 0%, rgba(40,28,5,0.62) 100%)",
     accent:   "#C8A830",
   },
 };
