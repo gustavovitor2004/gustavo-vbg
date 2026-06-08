@@ -13,7 +13,7 @@ export const socials: Social[] = [
   {
     id: "discord",
     platform: "Discord",
-    username: "gustavo.vbg",
+    username: "_pujin_",
     url: "https://discord.com/users/1082744154544689212",
     color: "#5865F2",
     glowColor: "rgba(88,101,242,0.45)",
