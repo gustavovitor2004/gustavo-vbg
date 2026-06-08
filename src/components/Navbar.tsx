@@ -1,15 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import type { Lang } from "@/i18n/translations";
 
-// Section IDs to watch
+// Section IDs to watch — "blog" removed
 const SECTION_IDS = ["home", "about", "sites", "projects", "servers", "connect"];
 
-// Maps each section id to its translation key
 const NAV_KEYS: Record<string, string> = {
   home: "nav.home",
   about: "nav.about",
@@ -17,11 +16,6 @@ const NAV_KEYS: Record<string, string> = {
   projects: "nav.projects",
   servers: "nav.servers",
   connect: "nav.social",
-};
-
-const SECTION_HREFS: Record<string, string | undefined> = {
-  home: undefined, about: undefined, sites: undefined,
-  projects: undefined, servers: undefined, connect: undefined,
 };
 
 const LANGS: { code: Lang; label: string; flag: string }[] = [
@@ -37,32 +31,71 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
 
-  // Scroll state
+  /**
+   * Scrollspy click-lock:
+   * When the user clicks a nav item we immediately set `active` and then
+   * block the IntersectionObserver from overriding it while the smooth-scroll
+   * animation is running (≤ 900 ms).  Once the lock expires the observer
+   * resumes normal duty for manual scrolling.
+   */
+  const clickLock = useRef<boolean>(false);
+  const clickLockTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  // Scroll-shadow state
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  // Scrollspy
+  // Scrollspy — pauses while a click-navigation is in progress
   useEffect(() => {
     const ratios: Record<string, number> = {};
     SECTION_IDS.forEach((id) => (ratios[id] = 0));
+
     const pickMostVisible = () => {
+      // Do nothing while a programmatic scroll is in flight
+      if (clickLock.current) return;
       let best = "", bestRatio = 0;
-      SECTION_IDS.forEach((id) => { if (ratios[id] > bestRatio) { bestRatio = ratios[id]; best = id; } });
+      SECTION_IDS.forEach((id) => {
+        if (ratios[id] > bestRatio) { bestRatio = ratios[id]; best = id; }
+      });
       if (best) setActive(best);
     };
+
     const observer = new IntersectionObserver(
-      (entries) => { entries.forEach((e) => { ratios[e.target.id] = e.intersectionRatio; }); pickMostVisible(); },
-      { threshold: Array.from({ length: 21 }, (_, i) => i * 0.05), rootMargin: "-20% 0px -20% 0px" }
+      (entries) => {
+        entries.forEach((e) => { ratios[e.target.id] = e.intersectionRatio; });
+        pickMostVisible();
+      },
+      {
+        // Wider dead-zone so only the section that dominates the viewport fires
+        threshold: Array.from({ length: 11 }, (_, i) => i * 0.1),
+        rootMargin: "-30% 0px -30% 0px",
+      }
     );
-    SECTION_IDS.forEach((id) => { const el = document.getElementById(id); if (el) observer.observe(el); });
+
+    SECTION_IDS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
     return () => observer.disconnect();
   }, []);
 
   const handleNav = (id: string) => {
-    setMenuOpen(false); setActive(id);
+    setMenuOpen(false);
+
+    // 1. Immediately mark the target as active (no flicker)
+    setActive(id);
+
+    // 2. Lock the observer so intermediate sections don't steal the pill
+    clickLock.current = true;
+    clearTimeout(clickLockTimer.current);
+    clickLockTimer.current = setTimeout(() => {
+      clickLock.current = false;
+    }, 900); // smooth-scroll completes well within 900 ms
+
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -100,7 +133,6 @@ export default function Navbar() {
             {SECTION_IDS.map((id) => {
               const isActive = active === id;
               const label = t(NAV_KEYS[id]);
-              const href = SECTION_HREFS[id];
               const style: React.CSSProperties = { position: "relative", padding: "6px 12px", borderRadius: "9999px", fontSize: "13px", background: "transparent", border: "none", cursor: "pointer", outline: "none", textDecoration: "none", display: "inline-flex", alignItems: "center" };
               const inner = (
                 <>
@@ -111,7 +143,6 @@ export default function Navbar() {
                   <span style={{ position: "relative", zIndex: 1, transition: "color 0.2s", color: isActive ? (isLight ? "#5b21b6" : "#fff") : (isLight ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.48)"), fontWeight: isActive ? 600 : 400 }}>{label}</span>
                 </>
               );
-              if (href) return <Link key={id} href={href} onClick={() => setActive(id)} style={style}>{inner}</Link>;
               return <button key={id} onClick={() => handleNav(id)} style={style}>{inner}</button>;
             })}
           </nav>

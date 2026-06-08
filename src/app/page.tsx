@@ -7,7 +7,6 @@ import AboutSection from "@/components/sections/AboutSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import MyProjectsSection from "@/components/sections/MyProjectsSection";
 import DiscordServers from "@/components/sections/DiscordServers";
-import BlogSection from "@/components/sections/BlogSection";
 import ConnectSection from "@/components/sections/ConnectSection";
 import Footer from "@/components/Footer";
 
@@ -21,7 +20,6 @@ export default function Home() {
         <AboutSection />
         <ProjectsSection />
         <MyProjectsSection />
-        <BlogSection />
         <DiscordServers />
         <ConnectSection />
         <Footer />

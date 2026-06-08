@@ -16,8 +16,7 @@ export default function Footer() {
     navigation: [
       { labelKey: "nav.home", href: "#home" },
       { labelKey: "nav.projects", href: "#projects" },
-      { labelKey: "nav.blog", href: "#blog" },
-      { labelKey: "footer.link.community", href: "#servers" },
+      { labelKey: "nav.servers", href: "#servers" },
       { labelKey: "footer.link.allLinks", href: "/links" },
     ],
     connect: socials.slice(0, 4).map((s) => ({
