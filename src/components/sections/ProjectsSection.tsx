@@ -4,19 +4,30 @@ import { useState } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { projects } from "@/data/projects";
 import { useApp } from "@/context/AppContext";
+import { useThemeTokens } from "@/hooks/useThemeTokens";
+import type { ProjectStatus } from "@/data/projects";
 
 const item: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
-const statusConfig: Record<string, { bg: string; color: string; pulse?: boolean; label: string }> = {
-  Online:   { bg: "rgba(16,185,129,0.15)",  color: "#34d399", pulse: true, label: "Online" },
-  WIP:      { bg: "rgba(245,158,11,0.15)",  color: "#fbbf24", label: "In Progress" },
-  Beta:     { bg: "rgba(59,130,246,0.15)",  color: "#60a5fa", label: "Beta" },
-  Finished: { bg: "rgba(124,58,237,0.15)",  color: "#a78bfa", label: "Finished" },
-  Archived: { bg: "rgba(107,114,128,0.12)", color: "#9ca3af", label: "Archived" },
+const STATUS_STYLE: Record<ProjectStatus, { bg: string; color: string; pulse?: boolean; labelKey: string }> = {
+  Online:   { bg: "rgba(16,185,129,0.15)",  color: "#34d399", pulse: true, labelKey: "sites.status.online" },
+  WIP:      { bg: "rgba(245,158,11,0.15)",  color: "#fbbf24", labelKey: "sites.status.wip" },
+  Beta:     { bg: "rgba(59,130,246,0.15)",  color: "#60a5fa", labelKey: "sites.status.beta" },
+  Finished: { bg: "rgba(124,58,237,0.15)",  color: "#a78bfa", labelKey: "sites.status.finished" },
+  Archived: { bg: "rgba(107,114,128,0.12)", color: "#9ca3af", labelKey: "sites.status.archived" },
 };
+
+const CATEGORY_FILTERS = [
+  { id: "all", key: null },
+  { id: "restaurant", key: "sites.category.restaurant" },
+  { id: "bakery", key: "sites.category.bakery" },
+  { id: "petshop", key: "sites.category.petshop" },
+  { id: "automotive", key: "sites.category.automotive" },
+  { id: "events", key: "sites.category.events" },
+] as const;
 
 const bannerColors: Record<string, string> = {
   "project-1": "linear-gradient(140deg, rgba(124,58,237,0.7) 0%, rgba(6,182,212,0.45) 100%)",
@@ -48,22 +59,22 @@ function ExternalIcon({ size = 13 }: { size?: number }) {
 }
 
 function ProjectCard({ project }: { project: (typeof projects)[0] }) {
-  const { t, theme } = useApp();
-  const isLight = theme === "light";
+  const { t } = useApp();
+  const { isLight, text, surface } = useThemeTokens();
 
-  const textPrimary  = isLight ? "#0a0b1a" : "#ffffff";
-  const textMuted    = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.38)";
-  const cardBg       = isLight ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.025)";
-  const cardBorder   = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)";
-  const tagBg        = isLight ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.06)";
-  const tagBorder    = isLight ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.08)";
-  const tagColor     = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.42)";
-  const iconBg       = isLight ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.06)";
-  const iconBorder   = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.09)";
-  const iconColor    = isLight ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.55)";
-  const hoverBorder  = isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.13)";
+  const textPrimary = text.primary;
+  const textMuted = text.muted;
+  const cardBg = surface.card;
+  const cardBorder = surface.border;
+  const tagBg = surface.border;
+  const tagBorder = surface.border;
+  const tagColor = text.muted;
+  const iconBg = surface.border;
+  const iconBorder = surface.border;
+  const iconColor = text.faint;
+  const hoverBorder = isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.13)";
 
-  const status = statusConfig[project.status] ?? statusConfig.Archived;
+  const status = STATUS_STYLE[project.status] ?? STATUS_STYLE.Archived;
   const bg = bannerColors[project.id] ?? fallback;
 
   return (
@@ -115,7 +126,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
               style={{ display: "block", width: "5px", height: "5px", borderRadius: "50%", background: status.color }}
             />
           )}
-          {status.label}
+          {t(status.labelKey)}
         </span>
 
         {/* Decorative initial */}
@@ -161,7 +172,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
             overflow: "hidden",
           }}
         >
-          {project.description}
+          {t(`sites.project.${project.id}.description`)}
         </p>
 
         {/* Tech tags */}
@@ -222,7 +233,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
                 el.style.background = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.12)";
-                el.style.color = isLight ? "#0a0b1a" : "#ffffff";
+                el.style.color = text.primary;
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
@@ -274,7 +285,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
           )}
 
           {!project.githubUrl && !project.demoUrl && !project.docsUrl && (
-            <span style={{ fontSize: "11px", color: isLight ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.2)", fontStyle: "italic" }}>
+            <span style={{ fontSize: "11px", color: text.faint, fontStyle: "italic", opacity: 0.7 }}>
               {t("coming.soon")}
             </span>
           )}
@@ -284,18 +295,19 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   );
 }
 
-const CATEGORIES = ["All", "Restaurant", "Bakery", "Pet Shop", "Automotive", "Events"];
-
 export default function ProjectsSection() {
-  const { t, theme } = useApp();
-  const isLight = theme === "light";
-  const [activeFilter, setActiveFilter] = useState("All");
+  const { t } = useApp();
+  const { isLight, text } = useThemeTokens();
+  const [activeFilter, setActiveFilter] = useState("all");
 
-  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
+  const textPrimary = text.primary;
 
-  const filtered = activeFilter === "All"
+  const filtered = activeFilter === "all"
     ? projects
-    : projects.filter((p) => p.category === activeFilter);
+    : projects.filter((p) => {
+        const filter = CATEGORY_FILTERS.find((f) => f.id === activeFilter);
+        return filter?.key && p.categoryKey === filter.key;
+      });
 
   return (
     <section id="sites" style={{ padding: "100px 0 80px", position: "relative" }}>
@@ -358,18 +370,19 @@ export default function ProjectsSection() {
 
         {/* Filter tabs */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "36px" }}>
-          {CATEGORIES.map((cat) => {
-            const isActive = activeFilter === cat;
-            const inactiveColor   = isLight ? "rgba(0,0,0,0.45)"  : "rgba(255,255,255,0.45)";
-            const inactiveBg      = isLight ? "rgba(0,0,0,0.04)"  : "rgba(255,255,255,0.05)";
-            const inactiveBorder  = isLight ? "rgba(0,0,0,0.08)"  : "rgba(255,255,255,0.08)";
-            const hoverColor      = isLight ? "rgba(0,0,0,0.7)"   : "rgba(255,255,255,0.75)";
-            const hoverBg         = isLight ? "rgba(0,0,0,0.07)"  : "rgba(255,255,255,0.09)";
+          {CATEGORY_FILTERS.map((cat) => {
+            const isActive = activeFilter === cat.id;
+            const inactiveColor = text.muted;
+            const inactiveBg = isLight ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.05)";
+            const inactiveBorder = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)";
+            const hoverColor = text.primary;
+            const hoverBg = isLight ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.09)";
+            const label = cat.key ? t(cat.key) : t("sites.filter.all");
 
             return (
               <button
-                key={cat}
-                onClick={() => setActiveFilter(cat)}
+                key={cat.id}
+                onClick={() => setActiveFilter(cat.id)}
                 style={{
                   padding: "6px 16px",
                   borderRadius: "9999px",
@@ -394,7 +407,7 @@ export default function ProjectsSection() {
                   }
                 }}
               >
-                {cat}
+                {label}
               </button>
             );
           })}

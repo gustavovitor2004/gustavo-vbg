@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import { socials } from "@/data/socials";
 import { PlatformIcon } from "@/components/ui/PlatformIcon";
 import { useApp } from "@/context/AppContext";
+import { useThemeTokens } from "@/hooks/useThemeTokens";
 
 const container: Variants = {
   hidden: {},
@@ -15,29 +16,21 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
-const buttonLabel: Record<string, string> = {
-  discord:   "Open Chat",
-  youtube:   "Subscribe",
-  instagram: "Follow",
-  whatsapp:  "Message",
-  github:    "Follow",
-  twitter:   "Follow",
-  twitch:    "Subscribe",
-  email:     "Send Email",
-};
-
 function SocialCard({ social }: { social: (typeof socials)[0] }) {
-  const { theme } = useApp();
-  const isLight = theme === "light";
+  const { t } = useApp();
+  const { isLight, text, surface } = useThemeTokens();
 
-  const textPrimary  = isLight ? "#0a0b1a" : "#ffffff";
-  const textUsername = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.38)";
-  const textDesc     = isLight ? "rgba(0,0,0,0.38)" : "rgba(255,255,255,0.25)";
-  const cardBg       = isLight ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.026)";
-  const cardBorder   = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)";
-  const hoverBg      = isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.05)";
+  const textPrimary = text.primary;
+  const textUsername = text.muted;
+  const textDesc = text.faint;
+  const cardBg = surface.card;
+  const cardBorder = surface.border;
+  const hoverBg = isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.05)";
 
-  const label = buttonLabel[social.id] ?? "Visit";
+  const actionKey = `social.action.${social.id}`;
+  const descKey = `social.desc.${social.id}`;
+  const label = t(actionKey) === actionKey ? t("social.action.default") : t(actionKey);
+  const description = t(descKey) === descKey ? social.description : t(descKey);
 
   return (
     <motion.a
@@ -112,7 +105,7 @@ function SocialCard({ social }: { social: (typeof socials)[0] }) {
           {social.username}
         </p>
         <p style={{ fontSize: "11.5px", color: textDesc, lineHeight: 1.4, fontStyle: "italic" }}>
-          {social.description}
+          {description}
         </p>
       </div>
 
@@ -146,9 +139,9 @@ function SocialCard({ social }: { social: (typeof socials)[0] }) {
 }
 
 export default function ConnectSection() {
-  const { t, theme } = useApp();
-  const isLight = theme === "light";
-  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
+  const { t } = useApp();
+  const { text } = useThemeTokens();
+  const textPrimary = text.primary;
 
   const row1 = socials.slice(0, 3);
   const row2 = socials.slice(3);

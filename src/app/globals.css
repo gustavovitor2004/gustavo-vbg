@@ -83,72 +83,111 @@
 }
 
 /* ── Theme tokens ── */
-:root {
+:root,
+html[data-theme="dark"] {
+  color-scheme: dark;
   --background: #030712;
   --foreground: #f9fafb;
   --page-bg: #050816;
+  --hero-bg: #030610;
   --section-bg: transparent;
   --card-bg: rgba(255,255,255,0.025);
   --card-border: rgba(255,255,255,0.07);
   --text-primary: #ffffff;
-  --text-muted: rgba(255,255,255,0.38);
+  --text-secondary: #e5e7eb;
+  --text-muted: rgba(255,255,255,0.55);
+  --text-faint: rgba(255,255,255,0.38);
   --text-dim: rgba(255,255,255,0.55);
+  --text-on-accent: #ffffff;
+  --glass-bg: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.08);
+  --scrollbar-track: #050510;
+  --accent-highlight: #c4b5fd;
+  --accent-blue: #93c5fd;
+  --accent-green: #86efac;
   --vt-x: 50%;
   --vt-y: 50%;
 }
 
-/* Light mode overrides */
 html[data-theme="light"] {
-  --page-bg: #f0f2ff;
-  --hero-bg: #eef0ff;
-  --card-bg: rgba(255,255,255,0.85);
-  --card-border: rgba(0,0,0,0.08);
-  --text-primary: #0a0b1a;
-  --text-muted: rgba(0,0,0,0.45);
-  --text-dim: rgba(0,0,0,0.6);
+  color-scheme: light;
+  --background: #f4f6fc;
+  --foreground: #111827;
+  --page-bg: #f4f6fc;
+  --hero-bg: #eef1fb;
+  --section-bg: #f4f6fc;
+  --card-bg: #ffffff;
+  --card-border: rgba(17,24,39,0.10);
+  --text-primary: #111827;
+  --text-secondary: #1f2937;
+  --text-muted: #4b5563;
+  --text-faint: #6b7280;
+  --text-dim: #6b7280;
+  --text-on-accent: #ffffff;
+  --glass-bg: rgba(255,255,255,0.92);
+  --glass-border: rgba(17,24,39,0.10);
+  --scrollbar-track: #e8eaff;
+  --accent-highlight: #6d28d9;
+  --accent-blue: #2563eb;
+  --accent-green: #059669;
 }
-html[data-theme="light"] body {
+
+html,
+body {
   background: var(--page-bg);
   color: var(--text-primary);
 }
-html[data-theme="light"] section {
-  background: var(--page-bg);
+
+html[data-theme="light"] body {
+  color: var(--text-primary) !important;
 }
+
+html[data-theme="light"] section,
+html[data-theme="light"] footer,
+html[data-theme="light"] main {
+  background: var(--section-bg);
+}
+
 html[data-theme="light"] #home {
   background: var(--hero-bg) !important;
 }
+
+html[data-theme="light"] :where(
+  h1, h2, h3, h4, h5, h6,
+  p, span, li, a, label, small, strong, em, dt, dd, figcaption
+) {
+  color: inherit;
+}
+
+html[data-theme="light"] :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--text-primary);
+}
+
 html[data-theme="light"] .glass,
 html[data-theme="light"] .card-shine {
   background: var(--card-bg) !important;
   border-color: var(--card-border) !important;
   color: var(--text-primary) !important;
 }
-html[data-theme="light"] h1,
-html[data-theme="light"] h2,
-html[data-theme="light"] h3,
-html[data-theme="light"] h4,
-html[data-theme="light"] p {
-  color: var(--text-primary);
+
+html[data-theme="light"] .glass {
+  background: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
 }
-html[data-theme="light"] .gradient-text {
-  /* keep gradient fill, override the inherited color reset */
+
+html[data-theme="light"] .gradient-text,
+html[data-theme="light"] .gradient-text-blue {
   color: transparent !important;
+  -webkit-text-fill-color: transparent;
 }
-/* Stronger light-mode overrides for inline-styled elements */
-html[data-theme="light"] .card-shine h3,
-html[data-theme="light"] .card-shine h4 {
-  color: var(--text-primary) !important;
-}
-html[data-theme="light"] .card-shine > div > p,
-html[data-theme="light"] .card-shine p:not([class*="badge"]) {
-  color: var(--text-muted) !important;
-}
+
 html[data-theme="light"] ::-webkit-scrollbar-track {
-  background: #e8eaff;
+  background: var(--scrollbar-track);
 }
+
 html[data-theme="light"] ::selection {
   background: rgba(124,58,237,0.2);
-  color: #0a0b1a;
+  color: #111827;
 }
 
 /* ── View Transition (theme toggle circle reveal) ── */
@@ -177,15 +216,15 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--page-bg);
+  color: var(--text-primary);
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #050510; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #a855f7, #06b6d4);
   border-radius: 3px;

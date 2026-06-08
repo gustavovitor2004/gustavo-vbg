@@ -5,96 +5,50 @@ import { socials } from "@/data/socials";
 import { PlatformIcon } from "@/components/ui/PlatformIcon";
 import { profile, navbar } from "@/config/site";
 import { useApp } from "@/context/AppContext";
-
-const footerLinks = {
-  Navigation: [
-    { label: "Home",      href: "#home" },
-    { label: "Projects",  href: "#projects" },
-    { label: "Blog",      href: "#blog" },
-    { label: "Community", href: "#servers" },
-    { label: "All Links", href: "/links" },
-  ],
-  Connect: socials.slice(0, 4).map((s) => ({
-    label: s.platform,
-    href: s.url,
-    external: true,
-  })),
-};
+import { useThemeTokens } from "@/hooks/useThemeTokens";
 
 export default function Footer() {
-  const { theme } = useApp();
-  const isLight = theme === "light";
+  const { t } = useApp();
+  const { text, surface } = useThemeTokens();
   const year = new Date().getFullYear();
 
-  const footerBg       = isLight ? "var(--page-bg)"       : "#050816";
-  const topBorder      = isLight ? "rgba(0,0,0,0.08)"     : "rgba(255,255,255,0.06)";
-  const textPrimary    = isLight ? "#0a0b1a"               : "#ffffff";
-  const textTagline    = isLight ? "rgba(0,0,0,0.45)"     : "rgba(255,255,255,0.32)";
-  const iconBg         = isLight ? "rgba(0,0,0,0.05)"     : "rgba(255,255,255,0.05)";
-  const iconBorder     = isLight ? "rgba(0,0,0,0.08)"     : "rgba(255,255,255,0.08)";
-  const iconColor      = isLight ? "rgba(0,0,0,0.4)"      : "rgba(255,255,255,0.4)";
-  const labelColor     = isLight ? "rgba(0,0,0,0.3)"      : "rgba(255,255,255,0.28)";
-  const linkColor      = isLight ? "rgba(0,0,0,0.5)"      : "rgba(255,255,255,0.42)";
-  const linkHover      = isLight ? "#0a0b1a"               : "rgba(255,255,255,0.85)";
-  const dividerColor   = isLight ? "rgba(0,0,0,0.08)"     : "rgba(255,255,255,0.06)";
-  const copyrightColor = isLight ? "rgba(0,0,0,0.35)"     : "rgba(255,255,255,0.22)";
-  const builtColor     = isLight ? "rgba(0,0,0,0.28)"     : "rgba(255,255,255,0.18)";
-  const accentColor    = isLight ? "rgba(124,58,237,0.6)" : "rgba(167,139,250,0.5)";
+  const footerLinks = {
+    navigation: [
+      { labelKey: "nav.home", href: "#home" },
+      { labelKey: "nav.projects", href: "#projects" },
+      { labelKey: "nav.blog", href: "#blog" },
+      { labelKey: "footer.link.community", href: "#servers" },
+      { labelKey: "footer.link.allLinks", href: "/links" },
+    ],
+    connect: socials.slice(0, 4).map((s) => ({
+      label: s.platform,
+      href: s.url,
+      external: true,
+    })),
+  };
 
   return (
-    <footer style={{ position: "relative", borderTop: `1px solid ${topBorder}`, background: footerBg }}>
-      {/* Subtle top glow */}
+    <footer style={{ position: "relative", borderTop: `1px solid ${surface.border}`, background: surface.page }}>
       <div
         className="absolute top-0 left-1/2 pointer-events-none"
-        style={{
-          transform: "translateX(-50%)",
-          width: "600px",
-          height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(124,58,237,0.4), transparent)",
-        }}
+        style={{ transform: "translateX(-50%)", width: "600px", height: "1px", background: "linear-gradient(90deg, transparent, rgba(124,58,237,0.4), transparent)" }}
       />
 
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "64px 32px 40px" }}>
-        {/* Main footer grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            gap: "48px",
-            marginBottom: "48px",
-          }}
-          className="grid-cols-1 sm:grid-cols-3"
-        >
-          {/* Brand column */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "48px", marginBottom: "48px" }} className="grid-cols-1 sm:grid-cols-3">
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-              <div
-                style={{
-                  width: "34px",
-                  height: "34px",
-                  borderRadius: "10px",
-                  background: "linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "15px",
-                  fontWeight: 900,
-                  color: "#ffffff",
-                  boxShadow: "0 4px 16px rgba(124,58,237,0.4)",
-                  flexShrink: 0,
-                }}
-              >
+              <div style={{ width: "34px", height: "34px", borderRadius: "10px", background: "linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "15px", fontWeight: 900, color: "#ffffff", boxShadow: "0 4px 16px rgba(124,58,237,0.4)", flexShrink: 0 }}>
                 {navbar.brand[0]}
               </div>
-              <span style={{ fontWeight: 800, color: textPrimary, fontSize: "15px", letterSpacing: "-0.01em" }}>
+              <span style={{ fontWeight: 800, color: text.primary, fontSize: "15px", letterSpacing: "-0.01em" }}>
                 {navbar.brand}
               </span>
             </div>
-            <p style={{ fontSize: "13px", color: textTagline, lineHeight: 1.7, maxWidth: "220px", marginBottom: "20px" }}>
-              {profile.tagline} — Building for the web and sharing the journey.
+            <p style={{ fontSize: "13px", color: text.muted, lineHeight: 1.7, maxWidth: "220px", marginBottom: "20px" }}>
+              {t("hero.tagline")} — {t("footer.taglineSuffix")}
             </p>
 
-            {/* Social icons row */}
             <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
               {socials.map((s) => (
                 <a
@@ -103,20 +57,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   title={s.platform}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "32px",
-                    height: "32px",
-                    borderRadius: "9px",
-                    background: iconBg,
-                    border: `1px solid ${iconBorder}`,
-                    color: iconColor,
-                    textDecoration: "none",
-                    transition: "all 0.2s",
-                    flexShrink: 0,
-                  }}
+                  style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "32px", height: "32px", borderRadius: "9px", background: surface.border, border: `1px solid ${surface.border}`, color: text.faint, textDecoration: "none", transition: "all 0.2s", flexShrink: 0 }}
                   onMouseEnter={(e) => {
                     const el = e.currentTarget as HTMLAnchorElement;
                     el.style.background = `${s.color}20`;
@@ -126,9 +67,9 @@ export default function Footer() {
                   }}
                   onMouseLeave={(e) => {
                     const el = e.currentTarget as HTMLAnchorElement;
-                    el.style.background = iconBg;
-                    el.style.borderColor = iconBorder;
-                    el.style.color = iconColor;
+                    el.style.background = surface.border;
+                    el.style.borderColor = surface.border;
+                    el.style.color = text.faint;
                     el.style.transform = "translateY(0)";
                   }}
                 >
@@ -138,43 +79,20 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Navigation */}
           <div>
-            <p style={{ fontSize: "11px", fontWeight: 700, color: labelColor, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "16px" }}>
-              Navigation
+            <p style={{ fontSize: "11px", fontWeight: 700, color: text.faint, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "16px" }}>
+              {t("footer.navigation")}
             </p>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
-              {footerLinks.Navigation.map((link) => (
-                <li key={link.label}>
+              {footerLinks.navigation.map((link) => (
+                <li key={link.labelKey}>
                   {link.href.startsWith("/") ? (
-                    <Link
-                      href={link.href}
-                      style={{
-                        fontSize: "13.5px",
-                        color: linkColor,
-                        textDecoration: "none",
-                        transition: "color 0.2s",
-                        display: "inline-block",
-                      }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkHover; }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkColor; }}
-                    >
-                      {link.label}
+                    <Link href={link.href} style={{ fontSize: "13.5px", color: text.muted, textDecoration: "none", transition: "color 0.2s", display: "inline-block" }}>
+                      {t(link.labelKey)}
                     </Link>
                   ) : (
-                    <a
-                      href={link.href}
-                      style={{
-                        fontSize: "13.5px",
-                        color: linkColor,
-                        textDecoration: "none",
-                        transition: "color 0.2s",
-                        display: "inline-block",
-                      }}
-                      onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkHover; }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkColor; }}
-                    >
-                      {link.label}
+                    <a href={link.href} style={{ fontSize: "13.5px", color: text.muted, textDecoration: "none", transition: "color 0.2s", display: "inline-block" }}>
+                      {t(link.labelKey)}
                     </a>
                   )}
                 </li>
@@ -182,28 +100,14 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Connect */}
           <div>
-            <p style={{ fontSize: "11px", fontWeight: 700, color: labelColor, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "16px" }}>
-              Connect
+            <p style={{ fontSize: "11px", fontWeight: 700, color: text.faint, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "16px" }}>
+              {t("footer.connect")}
             </p>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
-              {footerLinks.Connect.map((link) => (
+              {footerLinks.connect.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    target={link.external ? "_blank" : undefined}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                    style={{
-                      fontSize: "13.5px",
-                      color: linkColor,
-                      textDecoration: "none",
-                      transition: "color 0.2s",
-                      display: "inline-block",
-                    }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkHover; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = linkColor; }}
-                  >
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" style={{ fontSize: "13.5px", color: text.muted, textDecoration: "none", transition: "color 0.2s", display: "inline-block" }}>
                     {link.label}
                   </a>
                 </li>
@@ -212,36 +116,19 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div style={{ height: "1px", background: dividerColor, marginBottom: "24px" }} />
+        <div style={{ height: "1px", background: surface.border, marginBottom: "24px" }} />
 
-        {/* Bottom row */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "12px",
-          }}
-        >
-          <p style={{ fontSize: "12.5px", color: copyrightColor }}>
-            © {year} {profile.name}. All rights reserved.
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
+          <p style={{ fontSize: "12.5px", color: text.faint }}>
+            {t("footer.rights", { year, name: profile.name })}
           </p>
-          <p style={{ fontSize: "12px", color: builtColor }}>
-            Built with{" "}
-            <span style={{ color: accentColor }}>Next.js</span>
+          <p style={{ fontSize: "12px", color: text.faint }}>
+            {t("footer.builtWith")}{" "}
+            <span style={{ color: "rgba(167,139,250,0.85)" }}>Next.js</span>
             {" "}·{" "}
-            <span style={{ color: accentColor }}>TailwindCSS</span>
+            <span style={{ color: "rgba(167,139,250,0.85)" }}>TailwindCSS</span>
             {" "}·{" "}
-            <a
-              href="https://vercel.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: accentColor, textDecoration: "none", transition: "color 0.2s" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = isLight ? "#7c3aed" : "#a78bfa"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = accentColor; }}
-            >
+            <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(167,139,250,0.85)", textDecoration: "none" }}>
               Vercel
             </a>
           </p>

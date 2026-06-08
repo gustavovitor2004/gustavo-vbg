@@ -3,6 +3,7 @@
 import { motion, type Variants } from "framer-motion";
 import { discordServers } from "@/data/servers";
 import { useApp } from "@/context/AppContext";
+import { useThemeTokens } from "@/hooks/useThemeTokens";
 
 const container: Variants = {
   hidden: {},
@@ -19,14 +20,19 @@ const serverIconMap: Record<string, string> = {
 };
 
 function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
-  const { t, theme } = useApp();
-  const isLight = theme === "light";
+  const { t } = useApp();
+  const { isLight, text, surface } = useThemeTokens();
 
-  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
-  const textMuted   = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.35)";
-  const textDesc    = isLight ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.36)";
-  const cardBg      = isLight ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.026)";
-  const cardBorder  = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)";
+  const textPrimary = text.primary;
+  const textMuted = text.muted;
+  const textDesc = text.faint;
+  const cardBg = surface.card;
+  const cardBorder = surface.border;
+
+  const descriptionKey = `servers.${server.id}.description`;
+  const memberKey = `servers.${server.id}.memberCount`;
+  const description = t(descriptionKey) === descriptionKey ? server.description : t(descriptionKey);
+  const memberCount = t(memberKey) === memberKey ? server.memberCount : t(memberKey);
 
   const iconText = serverIconMap[server.id] ?? server.name[0];
   const smallFont = iconText.length > 2;
@@ -110,7 +116,7 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
                 className="animate-pulse"
               />
               <span style={{ fontSize: "12px", color: textMuted, fontWeight: 500 }}>
-                {server.memberCount} {t("servers.members")}
+                {memberCount} {t("servers.members")}
               </span>
             </div>
           </div>
@@ -129,7 +135,7 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
             overflow: "hidden",
           }}
         >
-          {server.description}
+          {description}
         </p>
 
         {/* Join button */}
@@ -176,10 +182,10 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
 }
 
 export default function DiscordServers() {
-  const { t, theme } = useApp();
-  const isLight = theme === "light";
-  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
-  const textSub     = isLight ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.3)";
+  const { t } = useApp();
+  const { text } = useThemeTokens();
+  const textPrimary = text.primary;
+  const textSub = text.faint;
 
   return (
     <section id="servers" style={{ padding: "100px 0 80px", position: "relative" }}>

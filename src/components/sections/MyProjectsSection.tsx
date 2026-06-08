@@ -3,6 +3,7 @@
 import { motion, type Variants } from "framer-motion";
 import { apps } from "@/data/apps";
 import { useApp } from "@/context/AppContext";
+import { useThemeTokens } from "@/hooks/useThemeTokens";
 
 const container: Variants = {
   hidden: {},
@@ -14,10 +15,10 @@ const item: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } },
 };
 
-const statusConfig: Record<string, { bg: string; color: string; pulse?: boolean; label: string }> = {
-  Online: { bg: "rgba(16,185,129,0.15)", color: "#34d399", pulse: true, label: "Live" },
-  Beta:   { bg: "rgba(59,130,246,0.15)",  color: "#60a5fa", label: "Beta" },
-  WIP:    { bg: "rgba(245,158,11,0.15)",  color: "#fbbf24", label: "In Progress" },
+const STATUS_STYLE: Record<string, { bg: string; color: string; pulse?: boolean; labelKey: string }> = {
+  Online: { bg: "rgba(16,185,129,0.15)", color: "#34d399", pulse: true, labelKey: "projects.status.live" },
+  Beta:   { bg: "rgba(59,130,246,0.15)",  color: "#60a5fa", labelKey: "projects.status.beta" },
+  WIP:    { bg: "rgba(245,158,11,0.15)",  color: "#fbbf24", labelKey: "projects.status.wip" },
 };
 
 function ExternalIcon() {
@@ -31,16 +32,16 @@ function ExternalIcon() {
 }
 
 export default function MyProjectsSection() {
-  const { t, theme } = useApp();
-  const isLight = theme === "light";
+  const { t } = useApp();
+  const { isLight, text, surface } = useThemeTokens();
 
-  const textPrimary = isLight ? "#0a0b1a" : "#ffffff";
-  const textMuted   = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.38)";
-  const cardBg      = isLight ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.025)";
-  const cardBorder  = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)";
-  const tagBg       = isLight ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.06)";
-  const tagBorder   = isLight ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.08)";
-  const tagColor    = isLight ? "rgba(0,0,0,0.5)"  : "rgba(255,255,255,0.42)";
+  const textPrimary = text.primary;
+  const textMuted = text.muted;
+  const cardBg = surface.card;
+  const cardBorder = surface.border;
+  const tagBg = surface.border;
+  const tagBorder = surface.border;
+  const tagColor = text.muted;
 
   return (
     <section id="projects" style={{ padding: "100px 0 80px", position: "relative" }}>
@@ -81,7 +82,11 @@ export default function MyProjectsSection() {
           viewport={{ once: true, margin: "-60px" }}
         >
           {apps.map((app) => {
-            const status = statusConfig[app.status] ?? statusConfig.WIP;
+            const status = STATUS_STYLE[app.status] ?? STATUS_STYLE.WIP;
+            const taglineKey = `projects.app.${app.id}.tagline`;
+            const descKey = `projects.app.${app.id}.description`;
+            const tagline = t(taglineKey) === taglineKey ? app.tagline : t(taglineKey);
+            const description = t(descKey) === descKey ? app.description : t(descKey);
             return (
               <motion.div
                 key={app.id}
@@ -130,7 +135,7 @@ export default function MyProjectsSection() {
                         style={{ display: "block", width: "5px", height: "5px", borderRadius: "50%", background: status.color }}
                       />
                     )}
-                    {status.label}
+                    {t(status.labelKey)}
                   </span>
 
                   {/* Emoji */}
@@ -167,7 +172,7 @@ export default function MyProjectsSection() {
                     color: app.accentColor,
                     marginBottom: "10px",
                   }}>
-                    {app.tagline}
+                    {tagline}
                   </span>
 
                   {/* Title */}
@@ -187,7 +192,7 @@ export default function MyProjectsSection() {
                       flex: 1,
                     }}
                   >
-                    {app.description}
+                    {description}
                   </p>
 
                   {/* Tech tags */}

@@ -1,9 +1,11 @@
 "use client";
 
 import { useApp } from "@/context/AppContext";
+import { useThemeTokens } from "@/hooks/useThemeTokens";
 
 export default function GitHubActivity() {
   const { t } = useApp();
+  const { text, surface } = useThemeTokens();
 
   return (
     <div
@@ -11,12 +13,11 @@ export default function GitHubActivity() {
         marginTop: "56px",
         padding: "28px 32px",
         borderRadius: "20px",
-        background: "rgba(255,255,255,0.025)",
-        border: "1px solid rgba(255,255,255,0.07)",
+        background: surface.card,
+        border: `1px solid ${surface.border}`,
         overflow: "hidden",
       }}
     >
-      {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px", flexWrap: "wrap", gap: "12px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <div
@@ -36,10 +37,10 @@ export default function GitHubActivity() {
             </svg>
           </div>
           <div>
-            <p style={{ fontSize: "14px", fontWeight: 700, color: "#ffffff", lineHeight: 1.2 }}>
-              {t("about.github.label").replace("GITHUB ACTIVITY", "GitHub Activity").replace("ATIVIDADE NO GITHUB", "Atividade no GitHub").replace("ACTIVIDAD EN GITHUB", "Actividad en GitHub")}
+            <p style={{ fontSize: "14px", fontWeight: 700, color: text.primary, lineHeight: 1.2 }}>
+              {t("about.github.label")}
             </p>
-            <p style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.35)", marginTop: "2px" }}>
+            <p style={{ fontSize: "11.5px", color: text.faint, marginTop: "2px" }}>
               {t("about.github.title")}
             </p>
           </div>
@@ -67,17 +68,11 @@ export default function GitHubActivity() {
         </a>
       </div>
 
-      {/* Chart — ghchart.rshah.org with purple palette */}
       <div style={{ overflow: "hidden", borderRadius: "10px" }}>
         <img
           src="https://ghchart.rshah.org/7c3aed/gustavovitor2004"
           alt="GitHub Contribution Chart"
-          style={{
-            width: "100%",
-            height: "auto",
-            display: "block",
-            filter: "brightness(1.1) contrast(1.05)",
-          }}
+          style={{ width: "100%", height: "auto", display: "block", filter: "brightness(1.1) contrast(1.05)" }}
           loading="lazy"
         />
       </div>
