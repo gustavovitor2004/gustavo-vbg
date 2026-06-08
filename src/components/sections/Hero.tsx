@@ -123,23 +123,29 @@ export default function Hero() {
           <span style={{ color: textPrimary, display: "block" }}>
             {profile.name.split(" ")[0]}
           </span>
-          <span
-            style={{
-              // Dark mode: violet/blue gradient on dark bg — unchanged
-              // Light mode: deep emerald→teal — dark enough for WCAG AA on #f8f9fa
-              //   #065f46 (emerald-800) → #047857 (emerald-700) → #0e7490 (cyan-700)
-              //   Contrast ratio ≈ 7:1 against #f8f9fa — passes WCAG AAA
-              background: isLight
-                ? "linear-gradient(130deg, #065f46 0%, #047857 45%, #0e7490 100%)"
-                : "linear-gradient(130deg, #c4b5fd 0%, #818cf8 40%, #67e8f9 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              display: "block",
-            }}
-          >
-            {profile.name.split(" ").slice(1).join(" ")}
-          </span>
+          {isLight ? (
+            /* Light mode — plain solid color, NO background-clip trick.
+               Using background-clip:text with dark gradient colors creates a
+               paint-order race: the block fills solid green before the clip
+               is applied, hiding the text behind an opaque rectangle.
+               Solution: skip the gradient entirely; use deep slate directly. */
+            <span style={{ color: "#0f172a", display: "block" }}>
+              {profile.name.split(" ").slice(1).join(" ")}
+            </span>
+          ) : (
+            /* Dark mode — violet/blue gradient, unchanged */
+            <span
+              style={{
+                background: "linear-gradient(130deg, #c4b5fd 0%, #818cf8 40%, #67e8f9 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                display: "block",
+              }}
+            >
+              {profile.name.split(" ").slice(1).join(" ")}
+            </span>
+          )}
         </motion.h1>
 
         {/* Tagline */}
