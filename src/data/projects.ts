@@ -38,6 +38,19 @@ function shot(siteUrl: string): string {
 // ── Client websites (shown in "My Sites") ─────────────────────────────────
 export const projects: Project[] = [
   {
+    id: "espacoprime",
+    title: "Espaço Prime",
+    description:
+      "Landing page de alto impacto para espaço premium em Salvador - BA. Integração WhatsApp, design moderno e focado em conversão.",
+    thumbnail: shot("https://espacoprime-whatsappgustavo-75998596215.vercel.app"),
+    technologies: ["HTML5", "CSS3", "JavaScript"],
+    status: "Finished",
+    demoUrl: "https://espacoprime-whatsappgustavo-75998596215.vercel.app",
+    featured: true,
+    categoryKey: "sites.category.beauty",
+    gradient: "from-emerald-600/20 to-teal-600/20",
+  },
+  {
     id: "costelao-do-gaucho",
     title: "Costelão do Gaúcho",
     description:
