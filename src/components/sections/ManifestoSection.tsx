@@ -1,186 +1,253 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import { useApp } from "@/context/AppContext";
 import { useThemeTokens } from "@/hooks/useThemeTokens";
 
-const STATS = [
-  { value: "7+", label: "Sites shipped" },
-  { value: "2+", label: "Years building" },
-  { value: "1",  label: "SaaS product" },
+const TECH = [
+  "Next.js", "TypeScript", "React", "Node.js",
+  "TailwindCSS", "Framer Motion", "Vercel", "Git",
+  "HTML5 & CSS3", "Python", "JavaScript",
 ];
 
 export default function ManifestoSection() {
-  const { isLight } = useThemeTokens();
-
-  const accent = "var(--accent)";
-  const t1     = "var(--text-primary)";
-  const t2     = "var(--text-muted)";
-  const border = "var(--card-border)";
-  const bg2    = isLight ? "rgba(0,0,0,0.025)" : "rgba(255,255,255,0.02)";
+  const { t } = useApp();
+  const { text, surface } = useThemeTokens();
+  const shouldReduce = useReducedMotion();
 
   return (
     <section
-      id="manifesto"
+      id="about"
       style={{
-        padding: "120px 0",
-        background: bg2,
-        borderTop: `1px solid ${border}`,
-        borderBottom: `1px solid ${border}`,
+        background: "var(--hero-bg)",
+        borderTop: `1px solid ${surface.border}`,
+        borderBottom: `1px solid ${surface.border}`,
+        padding: "clamp(80px, 12vw, 140px) 0",
       }}
     >
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px" }}>
-
+      <div
+        style={{
+          maxWidth: "1320px",
+          margin: "0 auto",
+          padding: "0 clamp(20px, 5vw, 48px)",
+        }}
+      >
         <div
+          className="flex-col md:flex-row"
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "80px",
-            alignItems: "start",
+            display: "flex",
+            gap: "clamp(48px, 8vw, 96px)",
+            alignItems: "flex-start",
           }}
-          className="grid-cols-1 md:grid-cols-2"
         >
-          {/* Left: editorial text */}
-          <div>
+          {/* Left column */}
+          <div style={{ flex: "1 1 55%" }}>
             <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              style={{ fontFamily: "var(--font-mono)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: accent, marginBottom: "32px" }}
-            >
-              About
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={shouldReduce ? undefined : { opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.05 }}
+              transition={{ duration: 0.5, ease: "easeOut" as const }}
               style={{
-                fontSize: "clamp(1.4rem, 3vw, 2.2rem)",
-                fontWeight: 300,
-                color: t1,
-                lineHeight: 1.45,
-                letterSpacing: "-0.02em",
-                marginBottom: "32px",
+                fontSize: "10px",
+                fontWeight: 700,
+                fontFamily: "'JetBrains Mono', monospace",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--accent)",
+                marginBottom: "clamp(24px, 4vw, 36px)",
               }}
             >
-              I build products on the internet.
-              <br />
-              <span style={{ color: t2 }}>
-                From architecture to deployment, independently.
-              </span>
+              {t("about.section.label")}
             </motion.p>
 
+            {/* Statement */}
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={shouldReduce ? undefined : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              style={{ display: "flex", flexDirection: "column", gap: "16px" }}
+              transition={{ duration: 0.55, delay: 0.05, ease: "easeOut" as const }}
+              style={{ marginBottom: "clamp(24px, 4vw, 36px)" }}
             >
-              <p style={{ fontSize: "15px", fontWeight: 400, color: t2, lineHeight: 1.8 }}>
-                I started in IT support in 2021 — debugging systems, fixing networks,
-                talking to real clients. That foundation shaped how I build software:
-                with precision, empathy, and a bias toward shipping.
+              <p
+                style={{
+                  fontSize: "clamp(1.4rem, 3vw, 2.2rem)",
+                  fontWeight: 300,
+                  lineHeight: 1.25,
+                  letterSpacing: "-0.02em",
+                  color: text.primary,
+                  marginBottom: "4px",
+                }}
+              >
+                {t("about.section.s1")}
               </p>
-              <p style={{ fontSize: "15px", fontWeight: 400, color: t2, lineHeight: 1.8 }}>
-                Today I&apos;m a full-stack developer building SaaS products and
-                conversion-focused websites. Based in Bahia, Brazil, working with
-                clients worldwide.
+              <p
+                style={{
+                  fontSize: "clamp(1.4rem, 3vw, 2.2rem)",
+                  fontWeight: 300,
+                  lineHeight: 1.25,
+                  letterSpacing: "-0.02em",
+                  color: text.muted,
+                }}
+              >
+                {t("about.section.s2")}
               </p>
             </motion.div>
 
-            <motion.a
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.25 }}
-              href="/now"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                marginTop: "32px",
-                fontFamily: "var(--font-mono)",
-                fontSize: "11px",
-                fontWeight: 600,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: t1,
-                textDecoration: "none",
-                borderBottom: `1px solid ${border}`,
-                paddingBottom: "3px",
-                transition: "color 0.2s, border-color 0.2s",
-              }}
-              onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = accent; el.style.borderColor = accent; }}
-              onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = t1; el.style.borderColor = border; }}
-            >
-              What I&apos;m doing now →
-            </motion.a>
-          </div>
-
-          {/* Right: stats + skills */}
-          <div>
-            {/* Stats */}
+            {/* Bio paragraphs */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={shouldReduce ? undefined : { opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" as const }}
+            >
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: text.muted,
+                  lineHeight: 1.75,
+                  marginBottom: "16px",
+                  maxWidth: "520px",
+                }}
+              >
+                {t("about.section.p1")}
+              </p>
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: text.muted,
+                  lineHeight: 1.75,
+                  marginBottom: "24px",
+                  maxWidth: "520px",
+                }}
+              >
+                {t("about.section.p2")}
+              </p>
+              <Link
+                href="/now"
+                className="arrow-link"
+                style={{ color: text.muted }}
+              >
+                {t("about.section.nowLink")}
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Right column */}
+          <div style={{ flex: "1 1 40%" }}>
+            {/* Stats */}
+            <motion.div
+              initial={shouldReduce ? undefined : { opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.12, ease: "easeOut" as const }}
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr 1fr",
                 gap: "1px",
-                background: border,
-                border: `1px solid ${border}`,
-                marginBottom: "48px",
+                background: surface.border,
+                marginBottom: "clamp(32px, 5vw, 48px)",
               }}
             >
-              {STATS.map(({ value, label }) => (
+              {[
+                { num: "7+", labelKey: "about.section.statSites" },
+                { num: "2+", labelKey: "about.section.statYears" },
+                { num: "1", labelKey: "about.section.statSaas" },
+              ].map(({ num, labelKey }) => (
                 <div
-                  key={label}
+                  key={labelKey}
                   style={{
-                    padding: "28px 24px",
-                    background: isLight ? "#FFFFFF" : "#141414",
+                    background: "var(--card-bg)",
+                    padding: "clamp(16px, 3vw, 24px) clamp(12px, 2vw, 20px)",
+                    textAlign: "center",
                   }}
                 >
-                  <p style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 800, color: t1, letterSpacing: "-0.03em", lineHeight: 1 }}>
-                    {value}
+                  <p
+                    style={{
+                      fontSize: "clamp(1.4rem, 3vw, 2rem)",
+                      fontWeight: 800,
+                      color: text.primary,
+                      letterSpacing: "-0.03em",
+                      lineHeight: 1,
+                      marginBottom: "6px",
+                    }}
+                  >
+                    {num}
                   </p>
-                  <p style={{ fontFamily: "var(--font-mono)", fontSize: "10px", fontWeight: 500, color: t2, letterSpacing: "0.08em", textTransform: "uppercase", marginTop: "8px" }}>
-                    {label}
+                  <p
+                    style={{
+                      fontSize: "10px",
+                      color: text.faint,
+                      fontFamily: "'JetBrains Mono', monospace",
+                      letterSpacing: "0.06em",
+                      textTransform: "uppercase",
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {t(labelKey)}
                   </p>
                 </div>
               ))}
             </motion.div>
 
-            {/* Stack */}
+            {/* Stack label */}
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={shouldReduce ? undefined : { opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.2 }}
+              transition={{ duration: 0.45, delay: 0.16, ease: "easeOut" as const }}
             >
-              <p style={{ fontFamily: "var(--font-mono)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-faint)", marginBottom: "20px" }}>
-                Core Stack
+              <p
+                style={{
+                  fontSize: "9px",
+                  fontWeight: 700,
+                  fontFamily: "'JetBrains Mono', monospace",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: text.faint,
+                  marginBottom: "14px",
+                }}
+              >
+                {t("about.section.stackLabel")}
               </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {["TypeScript", "Next.js", "React", "TailwindCSS", "Vercel", "Framer Motion", "HTML5", "CSS3"].map((tech) => (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                {TECH.map((tech) => (
                   <span
                     key={tech}
                     style={{
-                      fontFamily: "var(--font-mono)",
                       fontSize: "11px",
                       fontWeight: 500,
-                      padding: "5px 12px",
-                      border: `1px solid ${border}`,
-                      color: t2,
-                      letterSpacing: "0.02em",
-                      transition: "border-color 0.15s, color 0.15s",
+                      fontFamily: "'JetBrains Mono', monospace",
+                      color: text.muted,
+                      padding: "4px 10px",
+                      border: `1px solid ${surface.border}`,
+                      transition: "color 0.15s, border-color 0.15s",
+                      cursor: "default",
                     }}
-                    onMouseEnter={(e) => { const el = e.currentTarget as HTMLSpanElement; el.style.borderColor = accent; el.style.color = t1; }}
-                    onMouseLeave={(e) => { const el = e.currentTarget as HTMLSpanElement; el.style.borderColor = border; el.style.color = t2; }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLSpanElement;
+                      el.style.color = "var(--accent)";
+                      el.style.borderColor = "var(--accent)";
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLSpanElement;
+                      el.style.color = text.muted;
+                      el.style.borderColor = surface.border;
+                    }}
                   >
                     {tech}
                   </span>

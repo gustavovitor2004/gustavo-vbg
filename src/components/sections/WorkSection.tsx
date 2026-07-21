@@ -1,232 +1,263 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { useApp } from "@/context/AppContext";
 import { useThemeTokens } from "@/hooks/useThemeTokens";
 
-interface WorkEntry {
-  index: string;
-  title: string;
-  type: string;
+type WorkEntry = {
+  n: string;
+  titleKey: string;
+  typeKey: string;
   year: string;
   url?: string;
   featured?: boolean;
-}
+};
 
 const WORK: WorkEntry[] = [
-  { index: "01", title: "GridHunter",            type: "SaaS Platform",    year: "2024", url: "https://gridhunter.vercel.app", featured: true },
-  { index: "02", title: "Espaço Prime",           type: "Landing Page",     year: "2024", url: "https://espacoprime-whatsappgustavo-75998596215.vercel.app" },
-  { index: "03", title: "Costelão do Gaúcho",     type: "Restaurant Site",  year: "2024", url: "https://costelaodogaucho-whatsappgustavo-75998596215.vercel.app" },
-  { index: "04", title: "Cheiro & Pão",           type: "Bakery Site",      year: "2024", url: "https://cheiro-e-pao-whatsappgustavo-75998596215.vercel.app" },
-  { index: "05", title: "Lalay Pet Shop",         type: "Pet Shop Site",    year: "2024", url: "https://lalaypetshop-whatsappgustavo-75998596215.vercel.app" },
-  { index: "06", title: "Pinheiro Escapamentos",  type: "Automotive Site",  year: "2024", url: "https://pinheiroescapamentos-whatsappgustavo-75998596215.vercel.app" },
-  { index: "07", title: "Casa da Mangueira",      type: "Events Site",      year: "2024", url: "https://casadamangueiraeventos-whatsappgustavo-75998596215.vercel.app" },
+  { n: "01", titleKey: "GridHunter", typeKey: "work.type.saas", year: "2025", url: "https://gridhunter.vercel.app", featured: true },
+  { n: "02", titleKey: "Espaço Prime", typeKey: "work.type.landing", year: "2024", url: "https://espacoprime-whatsappgustavo-75998596215.vercel.app" },
+  { n: "03", titleKey: "Costelão do Gaúcho", typeKey: "work.type.restaurant", year: "2024", url: "https://costelaodogaucho-whatsappgustavo-75998596215.vercel.app/" },
+  { n: "04", titleKey: "Cheiro & Pão", typeKey: "work.type.bakery", year: "2024", url: "https://cheiro-e-pao-whatsappgustavo-75998596215.vercel.app/" },
+  { n: "05", titleKey: "Lalay Pet Shop", typeKey: "work.type.petshop", year: "2024", url: "https://lalaypetshop-whatsappgustavo-75998596215.vercel.app/" },
+  { n: "06", titleKey: "Pinheiro Escapamentos", typeKey: "work.type.automotive", year: "2024", url: "https://pinheiroescapamentos-whatsappgustavo-75998596215.vercel.app/" },
+  { n: "07", titleKey: "Casa da Mangueira Eventos", typeKey: "work.type.events", year: "2024", url: "https://casadamangueiraeventos-whatsappgustavo-75998596215.vercel.app/" },
 ];
 
 function WorkRow({ entry, i }: { entry: WorkEntry; i: number }) {
-  const { isLight } = useThemeTokens();
   const [hovered, setHovered] = useState(false);
+  const { t } = useApp();
+  const { text, surface } = useThemeTokens();
+  const shouldReduce = useReducedMotion();
 
-  const accent = "var(--accent)";
-  const t1     = "var(--text-primary)";
-  const t2     = "var(--text-muted)";
-  const border = "var(--card-border)";
-  const rowBg  = hovered ? (isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.025)") : "transparent";
-
-  const row = (
+  const Row = (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={shouldReduce ? undefined : { opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: 0.05 * i, ease: "easeOut" as const }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.4, delay: i * 0.07, ease: "easeOut" as const }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         display: "grid",
         gridTemplateColumns: "48px 1fr auto auto 32px",
         alignItems: "center",
-        gap: "24px",
-        padding: "22px 0",
-        borderBottom: `1px solid ${border}`,
-        background: rowBg,
-        transition: "background 0.2s",
+        gap: "clamp(8px, 2vw, 24px)",
+        padding: "clamp(14px, 2vw, 20px) 0",
+        borderBottom: `1px solid ${surface.border}`,
+        background: hovered ? (surface.glass ?? "transparent") : "transparent",
+        transition: "background 0.15s",
         cursor: entry.url ? "pointer" : "default",
       }}
     >
       {/* Index */}
       <span
         style={{
-          fontFamily: "var(--font-mono)",
           fontSize: "11px",
+          fontFamily: "'JetBrains Mono', monospace",
           fontWeight: 500,
-          color: hovered ? accent : "var(--text-faint)",
-          letterSpacing: "0.06em",
-          transition: "color 0.2s",
+          color: hovered ? "var(--accent)" : text.faint,
+          transition: "color 0.15s",
+          userSelect: "none",
         }}
       >
-        {entry.index}
+        {entry.n}
       </span>
 
-      {/* Title */}
-      <span
-        style={{
-          fontSize: "clamp(16px, 2vw, 22px)",
-          fontWeight: hovered ? 500 : 400,
-          color: hovered ? t1 : "var(--text-secondary, var(--text-primary))",
-          letterSpacing: "-0.01em",
-          transition: "color 0.2s, font-weight 0.1s",
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-        }}
-      >
-        {entry.title}
+      {/* Title + badge */}
+      <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
+        <span
+          style={{
+            fontSize: "clamp(13px, 1.4vw, 16px)",
+            fontWeight: 500,
+            color: hovered ? "var(--text-primary)" : text.secondary,
+            transition: "color 0.15s",
+            letterSpacing: "-0.01em",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {entry.titleKey}
+        </span>
         {entry.featured && (
           <span
             style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "8px",
+              fontSize: "9px",
               fontWeight: 700,
-              letterSpacing: "0.12em",
+              fontFamily: "'JetBrains Mono', monospace",
+              letterSpacing: "0.1em",
               textTransform: "uppercase",
-              color: accent,
-              border: `1px solid var(--accent-dim)`,
-              padding: "2px 7px",
-              opacity: 0.9,
+              color: "var(--accent)",
+              border: "1px solid var(--accent)",
+              padding: "2px 6px",
+              flexShrink: 0,
             }}
           >
-            Featured
+            {t("work.featured")}
           </span>
         )}
-      </span>
+      </div>
 
-      {/* Type */}
+      {/* Type — hidden on small screens */}
       <span
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "11px",
-          fontWeight: 500,
-          color: t2,
-          letterSpacing: "0.06em",
-          textTransform: "uppercase",
-          whiteSpace: "nowrap",
-        }}
         className="hidden md:block"
+        style={{
+          fontSize: "12px",
+          color: text.faint,
+          fontFamily: "'JetBrains Mono', monospace",
+          whiteSpace: "nowrap",
+          transition: "color 0.15s",
+        }}
       >
-        {entry.type}
+        {t(entry.typeKey)}
       </span>
 
       {/* Year */}
       <span
         style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "11px",
-          fontWeight: 500,
-          color: "var(--text-faint)",
-          letterSpacing: "0.06em",
+          fontSize: "12px",
+          color: text.faint,
+          fontFamily: "'JetBrains Mono', monospace",
+          whiteSpace: "nowrap",
         }}
       >
         {entry.year}
       </span>
 
       {/* Arrow */}
-      <motion.span
-        animate={{ x: hovered ? 4 : 0 }}
-        transition={{ duration: 0.15 }}
-        style={{
-          color: hovered ? accent : "var(--text-faint)",
-          fontSize: "16px",
-          lineHeight: 1,
-          transition: "color 0.2s",
-        }}
-      >
-        →
-      </motion.span>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        {entry.url && (
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={hovered ? "var(--accent)" : text.faint}
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ transition: "stroke 0.15s, transform 0.15s", transform: hovered ? "translate(2px,-2px)" : "none" }}
+            aria-hidden="true"
+          >
+            <line x1="7" y1="17" x2="17" y2="7" />
+            <polyline points="7 7 17 7 17 17" />
+          </svg>
+        )}
+      </div>
     </motion.div>
   );
 
   if (entry.url) {
     return (
       <a href={entry.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block" }}>
-        {row}
+        {Row}
       </a>
     );
   }
-  return row;
+  return Row;
 }
 
 export default function WorkSection() {
-  const { isLight } = useThemeTokens();
-  const accent = "var(--accent)";
-  const t1     = "var(--text-primary)";
-  const border = "var(--card-border)";
+  const { t } = useApp();
+  const { text, surface } = useThemeTokens();
+  const shouldReduce = useReducedMotion();
 
   return (
-    <section id="work" style={{ padding: "120px 0 80px", background: "var(--page-bg)" }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 48px" }}>
-
+    <section
+      id="work"
+      style={{
+        padding: "clamp(80px, 12vw, 140px) 0",
+        borderTop: `1px solid ${surface.border}`,
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1320px",
+          margin: "0 auto",
+          padding: "0 clamp(20px, 5vw, 48px)",
+        }}
+      >
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={shouldReduce ? undefined : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "space-between",
-            marginBottom: "64px",
-            flexWrap: "wrap",
-            gap: "16px",
-          }}
+          transition={{ duration: 0.5, ease: "easeOut" as const }}
+          style={{ marginBottom: "clamp(32px, 5vw, 56px)" }}
         >
-          <div>
-            <p style={{ fontFamily: "var(--font-mono)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: accent, marginBottom: "12px" }}>
-              Selected Work
-            </p>
+          <p
+            style={{
+              fontSize: "10px",
+              fontWeight: 700,
+              fontFamily: "'JetBrains Mono', monospace",
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "var(--accent)",
+              marginBottom: "10px",
+            }}
+          >
+            {t("work.label")}
+          </p>
+          <div className="flex-col md:flex-row" style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "16px" }}>
             <h2
               style={{
-                fontSize: "clamp(2.4rem, 5vw, 4rem)",
+                fontSize: "clamp(1.8rem, 4vw, 3rem)",
                 fontWeight: 800,
-                color: t1,
+                color: text.primary,
                 letterSpacing: "-0.035em",
-                lineHeight: 1,
+                lineHeight: 1.05,
               }}
             >
-              Projects
+              {t("work.heading")}
             </h2>
+            <p
+              style={{
+                fontSize: "13px",
+                color: text.muted,
+                maxWidth: "340px",
+                lineHeight: 1.6,
+                textAlign: "right",
+              }}
+              className="hidden md:block"
+            >
+              {t("work.description")}
+            </p>
           </div>
-          <p style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--text-muted)", letterSpacing: "0.04em", maxWidth: "280px", lineHeight: 1.6, textAlign: "right" }}>
-            Client websites, SaaS products and experiments built from 2023 onwards.
-          </p>
         </motion.div>
 
-        {/* Table header */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
+        {/* Column headers */}
+        <div
           style={{
             display: "grid",
             gridTemplateColumns: "48px 1fr auto auto 32px",
-            alignItems: "center",
-            gap: "24px",
+            gap: "clamp(8px, 2vw, 24px)",
             paddingBottom: "12px",
-            borderBottom: `1px solid ${border}`,
+            borderBottom: `1px solid ${surface.border}`,
           }}
         >
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-faint)" }}>#</span>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-faint)" }}>Project</span>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-faint)" }} className="hidden md:block">Type</span>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-faint)" }}>Year</span>
-          <span />
-        </motion.div>
+          {[t("work.col.index"), t("work.col.project"), t("work.col.type"), t("work.col.year"), ""].map((h, i) => (
+            <span
+              key={i}
+              className={i === 2 ? "hidden md:block" : ""}
+              style={{
+                fontSize: "9px",
+                fontWeight: 700,
+                fontFamily: "'JetBrains Mono', monospace",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: text.faint,
+              }}
+            >
+              {h}
+            </span>
+          ))}
+        </div>
 
         {/* Rows */}
         <div>
           {WORK.map((entry, i) => (
-            <WorkRow key={entry.index} entry={entry} i={i} />
+            <WorkRow key={entry.n} entry={entry} i={i} />
           ))}
         </div>
       </div>

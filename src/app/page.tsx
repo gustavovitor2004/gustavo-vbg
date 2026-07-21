@@ -15,15 +15,15 @@ export default function Home() {
     <>
       <LoadingScreen />
       <ScrollProgress />
-      <div style={{ background: "var(--page-bg)", color: "var(--text-primary)", minHeight: "100vh" }}>
-        <Navbar />
+      <Navbar />
+      <main id="main-content">
         <Hero />
         <WorkSection />
         <ManifestoSection />
         <DiscordServers />
         <ConnectSection />
-        <Footer />
-      </div>
+      </main>
+      <Footer />
     </>
   );
 }

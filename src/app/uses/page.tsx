@@ -60,8 +60,7 @@ const USES: UsesCategory[] = [
 ];
 
 function CategoryBlock({ cat, delay }: { cat: UsesCategory; delay: number }) {
-  const { isLight, text, surface } = useThemeTokens();
-  const accent = isLight ? "#047857" : "#7c3aed";
+  const { text, surface } = useThemeTokens();
 
   return (
     <motion.div
@@ -79,16 +78,16 @@ function CategoryBlock({ cat, delay }: { cat: UsesCategory; delay: number }) {
             width: "28px",
             height: "28px",
             borderRadius: "8px",
-            background: `${accent}13`,
-            border: `1px solid ${accent}22`,
+            background: "color-mix(in srgb, var(--accent) 10%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--accent) 22%, transparent)",
             fontSize: "13px",
-            color: accent,
+            color: "var(--accent)",
             flexShrink: 0,
           }}
         >
           {cat.icon}
         </span>
-        <h2 style={{ fontSize: "13px", fontWeight: 800, color: text.primary, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+        <h2 style={{ fontSize: "13px", fontWeight: 800, color: text.primary, textTransform: "uppercase" as const, letterSpacing: "0.04em" }}>
           {cat.label}
         </h2>
       </div>
@@ -128,15 +127,15 @@ function CategoryBlock({ cat, delay }: { cat: UsesCategory; delay: number }) {
                   width: "28px",
                   height: "28px",
                   borderRadius: "8px",
-                  background: `${accent}10`,
-                  border: `1px solid ${accent}20`,
-                  color: accent,
+                  background: "color-mix(in srgb, var(--accent) 10%, transparent)",
+                  border: "1px solid color-mix(in srgb, var(--accent) 20%, transparent)",
+                  color: "var(--accent)",
                   flexShrink: 0,
                   transition: "background 0.18s",
                   textDecoration: "none",
                 }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = `${accent}22`; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = `${accent}10`; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "color-mix(in srgb, var(--accent) 22%, transparent)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "color-mix(in srgb, var(--accent) 10%, transparent)"; }}
               >
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
@@ -153,8 +152,7 @@ function CategoryBlock({ cat, delay }: { cat: UsesCategory; delay: number }) {
 }
 
 export default function UsesPage() {
-  const { isLight, text } = useThemeTokens();
-  const accent = isLight ? "#047857" : "#7c3aed";
+  const { text } = useThemeTokens();
 
   return (
     <div style={{ background: "var(--page-bg)", color: "var(--text-primary)", minHeight: "100vh" }}>
@@ -175,7 +173,7 @@ export default function UsesPage() {
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} style={{ marginBottom: "56px" }}>
-          <p style={{ fontSize: "11px", fontWeight: 700, color: accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px", fontFamily: "'JetBrains Mono', monospace" }}>
+          <p style={{ fontSize: "11px", fontWeight: 700, color: "var(--accent)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px", fontFamily: "'JetBrains Mono', monospace" }}>
             /uses
           </p>
           <h1 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 900, color: text.primary, letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "16px" }}>

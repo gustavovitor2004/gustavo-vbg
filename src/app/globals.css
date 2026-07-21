@@ -264,6 +264,27 @@ html[data-theme="light"] main {
 }
 
 /* ─────────────────────────────────────────────
+   ACCESSIBILITY — SKIP LINK
+───────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 99999;
+  padding: 8px 16px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: top 0.15s;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* ─────────────────────────────────────────────
    MOBILE
 ───────────────────────────────────────────── */
 @media (max-width: 767px) {

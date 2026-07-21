@@ -38,8 +38,7 @@ const NOW: NowItem[] = [
 ];
 
 function NowCard({ item, i }: { item: NowItem; i: number }) {
-  const { isLight, text, surface } = useThemeTokens();
-  const accent = isLight ? "#047857" : "#7c3aed";
+  const { text, surface } = useThemeTokens();
 
   return (
     <motion.div
@@ -53,7 +52,7 @@ function NowCard({ item, i }: { item: NowItem; i: number }) {
         border: `1px solid ${surface.border}`,
         transition: "border-color 0.2s",
       }}
-      onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = `${accent}35`; }}
+      onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = "var(--accent)"; }}
       onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = surface.border; }}
     >
       <div style={{ display: "flex", alignItems: "flex-start", gap: "14px" }}>
@@ -65,10 +64,10 @@ function NowCard({ item, i }: { item: NowItem; i: number }) {
             width: "40px",
             height: "40px",
             borderRadius: "12px",
-            background: `${accent}13`,
-            border: `1px solid ${accent}25`,
+            background: "color-mix(in srgb, var(--accent) 10%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--accent) 25%, transparent)",
             fontSize: "18px",
-            color: accent,
+            color: "var(--accent)",
             flexShrink: 0,
             marginTop: "2px",
           }}
@@ -87,7 +86,7 @@ function NowCard({ item, i }: { item: NowItem; i: number }) {
               href={item.link.href}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ fontSize: "12px", fontWeight: 600, color: accent, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px" }}
+              style={{ fontSize: "12px", fontWeight: 600, color: "var(--accent)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px" }}
             >
               {item.link.label}
               <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -104,8 +103,7 @@ function NowCard({ item, i }: { item: NowItem; i: number }) {
 }
 
 export default function NowPage() {
-  const { isLight, text } = useThemeTokens();
-  const accent = isLight ? "#047857" : "#7c3aed";
+  const { text } = useThemeTokens();
 
   return (
     <div style={{ background: "var(--page-bg)", color: "var(--text-primary)", minHeight: "100vh" }}>
@@ -126,7 +124,7 @@ export default function NowPage() {
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} style={{ marginBottom: "48px" }}>
-          <p style={{ fontSize: "11px", fontWeight: 700, color: accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px", fontFamily: "'JetBrains Mono', monospace" }}>
+          <p style={{ fontSize: "11px", fontWeight: 700, color: "var(--accent)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "8px", fontFamily: "'JetBrains Mono', monospace" }}>
             /now
           </p>
           <h1 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 900, color: text.primary, letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "16px" }}>
@@ -135,7 +133,7 @@ export default function NowPage() {
           <p style={{ fontSize: "14px", color: text.muted, lineHeight: 1.7, maxWidth: "480px" }}>
             A snapshot of what occupies my time and attention right now. Updated periodically.
             Inspired by{" "}
-            <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer" style={{ color: accent, textDecoration: "none" }}>
+            <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "none" }}>
               nownownow.com
             </a>.
           </p>

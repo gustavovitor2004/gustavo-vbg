@@ -38,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-full" style={{ color: "var(--text-primary)" }}>
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <AppProvider>{children}</AppProvider>
       </body>
     </html>
