@@ -18,6 +18,8 @@ export default function Footer() {
       { labelKey: "nav.projects", href: "#projects" },
       { labelKey: "nav.servers", href: "#servers" },
       { labelKey: "footer.link.allLinks", href: "/links" },
+      { labelKey: "footer.link.now", href: "/now" },
+      { labelKey: "footer.link.uses", href: "/uses" },
     ],
     connect: socials.slice(0, 4).map((s) => ({
       label: s.platform,
