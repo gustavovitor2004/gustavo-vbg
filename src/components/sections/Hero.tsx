@@ -1,505 +1,264 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { socials } from "@/data/socials";
-import { PlatformIcon } from "@/components/ui/PlatformIcon";
-import { profile, navbar } from "@/config/site";
-import CosmicBackground from "@/components/CosmicBackground";
-import { useApp } from "@/context/AppContext";
 import { useThemeTokens } from "@/hooks/useThemeTokens";
 
-export default function Hero() {
-  const { t } = useApp();
-  const { isLight, text, surface } = useThemeTokens();
+const ease = "easeOut" as const;
 
-  const textPrimary = text.primary;
-  const textMuted = text.muted;
-  const textDim = text.faint;
-  const borderSub = surface.border;
+export default function Hero() {
+  const { isLight } = useThemeTokens();
+  const yearRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (yearRef.current) yearRef.current.textContent = String(new Date().getFullYear());
+  }, []);
+
+  const accent = "var(--accent)";
+  const t1     = "var(--text-primary)";
+  const t2     = "var(--text-muted)";
+  const border = "var(--card-border)";
 
   return (
     <section
       id="home"
-      className="relative overflow-hidden"
       style={{
-        minHeight: "100vh",
+        minHeight: "100svh",
+        background: isLight ? "var(--hero-bg)" : "#090909",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        background: isLight ? "var(--hero-bg)" : "#030610",
+        justifyContent: "space-between",
+        padding: "0",
+        overflow: "hidden",
+        position: "relative",
       }}
     >
-      {/* ── Galaxy background ── */}
-      <CosmicBackground />
-
-      {/* ── Content — centered overlay ── */}
+      {/* Subtle noise texture */}
       <div
-        className="hero-content relative z-10 w-full flex flex-col items-center"
+        aria-hidden="true"
         style={{
-          maxWidth: "860px",
-          margin: "0 auto",
-          padding: "140px 32px 100px",
-          textAlign: "center",
+          position: "absolute",
+          inset: 0,
+          backgroundImage: isLight
+            ? "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E\")"
+            : "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E\")",
+          backgroundSize: "256px 256px",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* TOP ROW */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2, ease }}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          padding: "80px 48px 0",
+          position: "relative",
         }}
       >
-        {/* Collection label */}
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          style={{
-            fontSize: "11px",
-            fontWeight: 700,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: textDim,
-            marginBottom: "20px",
-            fontFamily: "'JetBrains Mono', monospace",
-          }}
-        >
-          {t("hero.label")}
-        </motion.p>
-
-        {/* Available badge */}
-        {profile.availableForProjects && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.06 }}
-            style={{ display: "inline-flex", marginBottom: "28px" }}
-          >
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "6px 16px 6px 10px",
-                borderRadius: "9999px",
-                background: isLight ? "rgba(22,163,74,0.12)" : "rgba(34,197,94,0.08)",
-                border: isLight ? "1px solid rgba(22,163,74,0.45)" : "1px solid rgba(34,197,94,0.2)",
-              }}
-            >
-              <span
-                className="badge-pulse"
-                style={{
-                  display: "block",
-                  width: "7px",
-                  height: "7px",
-                  borderRadius: "50%",
-                  background: isLight ? "#16a34a" : "#22c55e",
-                  flexShrink: 0,
-                }}
-              />
-              <span
-                style={{
-                  fontSize: "12px",
-                  /* light: forest green (#065F46) for WCAG AA compliance */
-                  color: isLight ? "#065F46" : "rgba(134,239,172,0.9)",
-                  fontWeight: 600,
-                  letterSpacing: "0.02em",
-                }}
-              >
-                {t("hero.available")}
-              </span>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Name — large centered */}
-        <motion.h1
-          className="hero-name"
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          style={{
-            fontSize: "clamp(3.2rem, 8.5vw, 6.5rem)",
-            fontWeight: 900,
-            lineHeight: 0.95,
-            letterSpacing: "-0.04em",
-            marginBottom: "24px",
-          }}
-        >
-          <span style={{ color: textPrimary, display: "block" }}>
-            {profile.name.split(" ")[0]}
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.14em", color: t2, textTransform: "uppercase" }}>
+            Portfolio
           </span>
-          {isLight ? (
-            /* Light mode — plain solid color, NO background-clip trick.
-               Using background-clip:text with dark gradient colors creates a
-               paint-order race: the block fills solid green before the clip
-               is applied, hiding the text behind an opaque rectangle.
-               Solution: skip the gradient entirely; use deep slate directly. */
-            <span style={{ color: "#0f172a", display: "block" }}>
-              {profile.name.split(" ").slice(1).join(" ")}
-            </span>
-          ) : (
-            /* Dark mode — violet/blue gradient, unchanged */
-            <span
-              style={{
-                background: "linear-gradient(130deg, #c4b5fd 0%, #818cf8 40%, #67e8f9 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                display: "block",
-              }}
-            >
-              {profile.name.split(" ").slice(1).join(" ")}
-            </span>
-          )}
+          <span ref={yearRef} style={{ fontFamily: "var(--font-mono)", fontSize: "10px", fontWeight: 500, color: "var(--text-faint)", letterSpacing: "0.06em" }}>
+            2025
+          </span>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span className="pulse-dot" />
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.14em", color: accent, textTransform: "uppercase" }}>
+            Available for work
+          </span>
+        </div>
+      </motion.div>
+
+      {/* CENTER — massive editorial type */}
+      <div
+        style={{
+          padding: "0 40px",
+          position: "relative",
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        {/* GUSTAVO — ultralight */}
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.35, ease }}
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "clamp(64px, 14.5vw, 200px)",
+            fontWeight: 100,
+            letterSpacing: "-0.03em",
+            lineHeight: 0.9,
+            color: t1,
+            userSelect: "none",
+            margin: 0,
+          }}
+        >
+          GUSTAVO
         </motion.h1>
 
-        {/* Tagline */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          style={{
-            fontSize: "clamp(1rem, 2vw, 1.15rem)",
-            fontWeight: 500,
-            color: isLight ? "#047857" : "rgba(167,139,250,0.8)",
-            marginBottom: "16px",
-            letterSpacing: "0.02em",
-          }}
-        >
-          {t("hero.tagline")}
-        </motion.p>
-
-        {/* Bio */}
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.28 }}
-          style={{
-            fontSize: "15px",
-            color: textMuted,
-            lineHeight: 1.8,
-            maxWidth: "480px",
-            marginBottom: "44px",
-          }}
-        >
-          {t("hero.bio")}
-        </motion.p>
-
-        {/* CTAs */}
+        {/* GOMES + role */}
         <motion.div
-          className="hero-ctas"
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.36 }}
+          transition={{ duration: 0.9, delay: 0.48, ease }}
           style={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "12px",
+            alignItems: "flex-end",
+            justifyContent: "space-between",
             flexWrap: "wrap",
-            marginBottom: "56px",
-          }}
-        >
-          <a
-            href="#projects"
-            className="btn-press"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontSize: "14px",
-              fontWeight: 600,
-              color: "#ffffff",
-              padding: "14px 34px",
-              borderRadius: "9999px",
-              background: isLight
-                ? "linear-gradient(135deg, #059669 0%, #0891b2 100%)"
-                : "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)",
-              boxShadow: isLight
-                ? "0 4px 32px rgba(5,150,105,0.45), 0 0 0 1px rgba(5,150,105,0.25)"
-                : "0 4px 32px rgba(124,58,237,0.55), 0 0 0 1px rgba(124,58,237,0.3)",
-              textDecoration: "none",
-              transition: "transform 0.2s, box-shadow 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement;
-              el.style.transform = "translateY(-2px)";
-              el.style.boxShadow = isLight
-                ? "0 8px 40px rgba(5,150,105,0.6), 0 0 0 1px rgba(5,150,105,0.4)"
-                : "0 8px 40px rgba(124,58,237,0.7), 0 0 0 1px rgba(124,58,237,0.45)";
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement;
-              el.style.transform = "translateY(0)";
-              el.style.boxShadow = isLight
-                ? "0 4px 32px rgba(5,150,105,0.45), 0 0 0 1px rgba(5,150,105,0.25)"
-                : "0 4px 32px rgba(124,58,237,0.55), 0 0 0 1px rgba(124,58,237,0.3)";
-            }}
-          >
-            {t("hero.cta.work")}
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </a>
-
-          <a
-            href={navbar.cta.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-press"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "9px",
-              fontSize: "14px",
-              fontWeight: 600,
-              /* light: dark forest green for WCAG AA on light-green bg */
-              color: isLight ? "#14532d" : "#ffffff",
-              padding: "14px 34px",
-              borderRadius: "9999px",
-              border: isLight ? "1px solid rgba(22,163,74,0.55)" : "1px solid rgba(37,211,102,0.35)",
-              background: isLight ? "rgba(22,163,74,0.13)" : "rgba(37,211,102,0.1)",
-              textDecoration: "none",
-              transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement;
-              el.style.background   = isLight ? "rgba(22,163,74,0.22)" : "rgba(37,211,102,0.18)";
-              el.style.borderColor  = isLight ? "rgba(22,163,74,0.72)" : "rgba(37,211,102,0.6)";
-              el.style.boxShadow    = isLight ? "0 0 24px rgba(22,163,74,0.22)" : "0 0 24px rgba(37,211,102,0.25)";
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLAnchorElement;
-              el.style.background   = isLight ? "rgba(22,163,74,0.13)" : "rgba(37,211,102,0.1)";
-              el.style.borderColor  = isLight ? "rgba(22,163,74,0.55)" : "rgba(37,211,102,0.35)";
-              el.style.boxShadow    = "none";
-            }}
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style={{ color: "#25d366", flexShrink: 0 }}>
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-            {t("nav.whatsapp")}
-          </a>
-        </motion.div>
-
-        {/* Stats row — centered */}
-        <motion.div
-          className="hero-stats"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.44 }}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingTop: "28px",
-            borderTop: `1px solid ${borderSub}`,
-            marginBottom: "24px",
-            gap: "0",
-            flexWrap: "wrap",
-            width: "100%",
-          }}
-        >
-          {[
-            { value: "5+", labelKey: "hero.stat.sites" },
-            { value: "2+", labelKey: "hero.stat.years" },
-          ].map((stat, i, arr) => (
-            <div key={stat.labelKey} style={{ display: "flex", alignItems: "center" }}>
-              <div
-                className="hero-stat-item"
-                style={{
-                  paddingLeft: i === 0 ? 0 : "28px",
-                  paddingRight: "28px",
-                  paddingBottom: "4px",
-                  textAlign: "center",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "22px",
-                    fontWeight: 900,
-                    color: textPrimary,
-                    lineHeight: 1,
-                    letterSpacing: "-0.025em",
-                  }}
-                >
-                  {stat.value}
-                </p>
-                <p
-                  style={{
-                    fontSize: "11px",
-                    color: textDim,
-                    marginTop: "4px",
-                    fontWeight: 500,
-                    letterSpacing: "0.02em",
-                  }}
-                >
-                  {t(stat.labelKey)}
-                </p>
-              </div>
-              {i < arr.length - 1 && (
-                <div
-                  className="hero-stat-divider"
-                  style={{
-                    width: "1px",
-                    height: "32px",
-                    background: borderSub,
-                  }}
-                />
-              )}
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Social pills — centered */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.52 }}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "8px",
-            flexWrap: "wrap",
+            gap: "16px",
+            marginTop: "4px",
           }}
         >
           <span
             style={{
-              fontSize: "10px",
-              color: textDim,
-              fontWeight: 700,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              marginRight: "4px",
+              fontFamily: "var(--font-sans)",
+              fontSize: "clamp(64px, 14.5vw, 200px)",
+              fontWeight: 900,
+              letterSpacing: "-0.04em",
+              lineHeight: 0.88,
+              color: accent,
+              userSelect: "none",
             }}
           >
-            {t("social.findon")}
+            GOMES
           </span>
-          {socials.map((s) => {
-            /**
-             * Light-mode circle contrast fix
-             * ─────────────────────────────────────────────────────────────
-             * Dark mode  → low-opacity tints are fine on a dark canvas
-             *   bg:     ${color}12  (7%)   border: ${color}22 (13%)
-             *
-             * Light mode → same percentages vanish on #f8f9fa.
-             *   Non-GitHub: raise bg → 16% (28 hex), border → 38% (60 hex)
-             *   GitHub:     #e2e8f0 (slate-200) is near-white → completely
-             *               invisible in light mode.  Override with GitHub's
-             *               canonical dark charcoal (#24292e) so the ring
-             *               and icon are clearly readable.
-             */
-            const isGH = s.id === "github";
 
-            // Rest bg/border (light vs dark)
-            const bg     = isLight
-              ? (isGH ? "rgba(36,41,46,0.09)"  : `${s.color}28`)
-              : `${s.color}12`;
-            const border = isLight
-              ? (isGH ? "rgba(36,41,46,0.32)"  : `${s.color}60`)
-              : `${s.color}22`;
+          <div style={{ paddingBottom: "clamp(8px, 1.5vw, 20px)", paddingRight: "8px", textAlign: "right" }}>
+            <p
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "clamp(10px, 1.1vw, 14px)",
+                fontWeight: 500,
+                letterSpacing: "0.12em",
+                color: t2,
+                textTransform: "uppercase",
+                lineHeight: 1.6,
+              }}
+            >
+              Full-Stack<br />Developer
+            </p>
+          </div>
+        </motion.div>
 
-            // Hover bg/border
-            const hoverBg     = isLight
-              ? (isGH ? "rgba(36,41,46,0.18)"  : `${s.color}40`)
-              : `${s.color}28`;
-            const hoverBorder = isLight
-              ? (isGH ? "rgba(36,41,46,0.52)"  : `${s.color}90`)
-              : `${s.color}55`;
+        {/* Rule */}
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.65, ease }}
+          style={{ height: "1px", background: border, marginTop: "clamp(24px, 4vw, 48px)", transformOrigin: "left" }}
+        />
 
-            // Icon colour class — GitHub gets explicit dark gray in light mode
-            const iconClass = isLight
-              ? (isGH ? "text-gray-800" : "text-gray-600")
-              : "text-white/55";
+        {/* Tagline row */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.8, ease }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "24px",
+            flexWrap: "wrap",
+            gap: "12px",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "clamp(14px, 1.6vw, 20px)",
+              fontWeight: 300,
+              color: t2,
+              letterSpacing: "-0.01em",
+              lineHeight: 1.5,
+              maxWidth: "540px",
+            }}
+          >
+            Building digital products that matter.
+            <br />
+            <span style={{ color: "var(--text-faint)" }}>From architecture to deployment, independently.</span>
+          </p>
 
-            return (
-              <a
-                key={s.id}
-                href={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={`${s.platform} — ${s.username}`}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "50%",
-                  background: bg,
-                  border: `1px solid ${border}`,
-                  textDecoration: "none",
-                  transition: "all 0.2s",
-                  flexShrink: 0,
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLAnchorElement;
-                  el.style.background = hoverBg;
-                  el.style.borderColor = hoverBorder;
-                  el.style.transform = "translateY(-3px)";
-                  el.style.boxShadow = `0 6px 22px ${isGH && isLight ? "rgba(36,41,46,0.22)" : s.glowColor}`;
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLAnchorElement;
-                  el.style.background = bg;
-                  el.style.borderColor = border;
-                  el.style.transform = "translateY(0)";
-                  el.style.boxShadow = "none";
-                }}
-              >
-                <PlatformIcon id={s.id} size={15} className={iconClass} />
-              </a>
-            );
-          })}
+          <div style={{ display: "flex", gap: "32px", alignItems: "center" }}>
+            <a
+              href="#work"
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "11px",
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                color: t1,
+                textDecoration: "none",
+                textTransform: "uppercase",
+                borderBottom: `1px solid ${border}`,
+                paddingBottom: "3px",
+                transition: "border-color 0.2s, color 0.2s",
+              }}
+              onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = accent; el.style.color = accent; }}
+              onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = border; el.style.color = t1; }}
+            >
+              View Work
+            </a>
+            <a
+              href="https://wa.me/5575998596215"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "11px",
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                color: t2,
+                textDecoration: "none",
+                textTransform: "uppercase",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = t1; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = t2; }}
+            >
+              WhatsApp ↗
+            </a>
+          </div>
         </motion.div>
       </div>
 
-      {/* ── Scroll indicator ── */}
+      {/* BOTTOM ROW */}
       <motion.div
-        className="absolute bottom-8 left-1/2"
-        style={{
-          transform: "translateX(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "6px",
-          zIndex: 10,
-        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.6 }}
+        transition={{ duration: 0.6, delay: 1.0, ease }}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          padding: "0 48px 36px",
+        }}
       >
-        <span
-          style={{
-            fontSize: "9px",
-            color: textDim,
-            letterSpacing: "0.18em",
-            fontWeight: 700,
-            textTransform: "uppercase",
-          }}
-        >
-          {t("scroll")}
-        </span>
-        <motion.div
-          style={{
-            width: "1px",
-            height: "44px",
-            background: isLight
-              ? "linear-gradient(to bottom, rgba(5,150,105,0.7), transparent)"
-              : "linear-gradient(to bottom, rgba(124,58,237,0.7), transparent)",
-          }}
-          animate={{ scaleY: [0.25, 1, 0.25], opacity: [0.3, 1, 0.3] }}
-          transition={{
-            repeat: Infinity,
-            duration: 2.2,
-            ease: "easeInOut" as const,
-          }}
-        />
+        <p style={{ fontFamily: "var(--font-mono)", fontSize: "10px", fontWeight: 500, color: "var(--text-faint)", letterSpacing: "0.08em" }}>
+          Bahia · Brazil · GMT-3
+        </p>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "10px", fontWeight: 500, color: "var(--text-faint)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+            Scroll
+          </span>
+          <motion.span
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+            style={{ color: "var(--text-faint)", fontSize: "12px", lineHeight: 1 }}
+          >
+            ↓
+          </motion.span>
+        </div>
       </motion.div>
     </section>
   );

@@ -1,76 +1,93 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { profile } from "@/config/site";
-import { useApp } from "@/context/AppContext";
 
 export default function LoadingScreen() {
-  const { t } = useApp();
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
-  const exitTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
-    // Skip on subsequent visits within the same browser session
-    if (typeof window !== "undefined" && sessionStorage.getItem("visited")) {
+    if (typeof sessionStorage !== "undefined" && sessionStorage.getItem("visited")) {
       setVisible(false);
       return;
     }
 
-    const interval = setInterval(() => {
-      setProgress((p) => {
-        if (p >= 100) {
-          clearInterval(interval);
-          exitTimer.current = setTimeout(() => {
-            setVisible(false);
-            sessionStorage.setItem("visited", "1");
-          }, 400);
-          return 100;
-        }
-        return p + Math.random() * 18 + 4;
-      });
-    }, 80);
-    return () => {
-      clearInterval(interval);
-      clearTimeout(exitTimer.current);
+    const steps = [15, 35, 60, 80, 100];
+    let i = 0;
+    const tick = () => {
+      if (i < steps.length) {
+        setProgress(steps[i]);
+        i++;
+        setTimeout(tick, 160 + i * 60);
+      } else {
+        setTimeout(() => {
+          setVisible(false);
+          sessionStorage.setItem("visited", "1");
+        }, 300);
+      }
     };
+    tick();
   }, []);
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          className="fixed inset-0 z-[100000] flex flex-col items-center justify-center"
-          style={{ background: "var(--page-bg)" }}
-          exit={{ opacity: 0, scale: 0.98 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" as const }}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            background: "#090909",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "40px",
+          }}
         >
-          <div className="absolute inset-0 grid-bg opacity-40" />
-
-          <div className="orb w-80 h-80 top-1/4 left-1/4" style={{ animationDelay: "0s", background: "var(--orb-a, rgba(124,58,237,0.20))" }} />
-          <div className="orb w-64 h-64 bottom-1/4 right-1/4" style={{ animationDelay: "3s", background: "var(--orb-b, rgba(6,182,212,0.15))" }} />
-
-          <motion.div className="relative z-10 flex flex-col items-center gap-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-            <motion.div className="w-20 h-20 rounded-2xl glass neon-border-purple flex items-center justify-center text-4xl" animate={{ rotate: [0, 5, -5, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-              ✦
-            </motion.div>
-
-            <div className="text-center">
-              <h1 className="text-3xl font-bold gradient-text mb-1">{profile.name}</h1>
-              <p className="text-sm font-mono tracking-widest uppercase" style={{ color: "var(--text-faint)" }}>
-                {t("loading.text")}
-              </p>
-            </div>
-
-            <div className="w-64 h-1 rounded-full overflow-hidden" style={{ background: "var(--card-border)" }}>
-              <motion.div className="h-full rounded-full" style={{ width: `${Math.min(progress, 100)}%`, background: "linear-gradient(90deg, var(--progress-a, #7c3aed), var(--progress-b, #22d3ee))" }} transition={{ duration: 0.1 }} />
-            </div>
-
-            <p className="text-xs font-mono" style={{ color: "var(--text-faint)" }}>
-              {Math.min(Math.round(progress), 100)}%
-            </p>
+          {/* Monogram */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" as const }}
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "48px",
+              fontWeight: 700,
+              color: "#E8E4DE",
+              letterSpacing: "-0.04em",
+              lineHeight: 1,
+            }}
+          >
+            GG
           </motion.div>
+
+          {/* Progress bar */}
+          <div
+            style={{
+              width: "120px",
+              height: "1px",
+              background: "rgba(255,255,255,0.08)",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <motion.div
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.25, ease: "easeOut" as const }}
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                height: "100%",
+                background: "#C8935A",
+              }}
+            />
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

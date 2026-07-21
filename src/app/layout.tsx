@@ -6,7 +6,7 @@ import { AppProvider } from "@/context/AppContext";
 export const metadata: Metadata = {
   title: meta.title,
   description: meta.description,
-  keywords: ["portfolio", "developer", "creator", "discord", "projects", "web design", "freelance", "Next.js"],
+  keywords: ["portfolio", "developer", "full-stack", "freelance", "Next.js", "TypeScript", "Bahia", "Brazil"],
   metadataBase: new URL(meta.siteUrl),
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: meta.description,
     type: "website",
     url: meta.siteUrl,
-    siteName: "Gustavo VBG",
+    siteName: "Gustavo Gomes",
     locale: "pt_BR",
   },
   twitter: {
@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100;0,14..32,200;0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,300;1,14..32,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
