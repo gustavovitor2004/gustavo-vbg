@@ -23,6 +23,7 @@ const STATUS_STYLE: Record<ProjectStatus, { bg: string; color: string; pulse?: b
 
 const CATEGORY_FILTERS = [
   { id: "all", key: null },
+  { id: "beauty", key: "sites.category.beauty" },
   { id: "restaurant", key: "sites.category.restaurant" },
   { id: "bakery", key: "sites.category.bakery" },
   { id: "petshop", key: "sites.category.petshop" },
@@ -72,6 +73,12 @@ const BANNER_DATA: Record<string, { fallback: string; overlay: string; accent: s
     fallback: "linear-gradient(150deg, #0f4d1e 0%, #1e3d10 50%, #3d2c08 100%)",
     overlay:  "linear-gradient(180deg, rgba(8,35,14,0.18) 0%, rgba(40,28,5,0.62) 100%)",
     accent:   "#C8A830",
+  },
+  /* Espaço Prime — emerald, teal, deep green */
+  "espacoprime": {
+    fallback: "linear-gradient(150deg, #064e3b 0%, #065f46 50%, #0e7490 100%)",
+    overlay:  "linear-gradient(180deg, rgba(4,40,28,0.18) 0%, rgba(6,60,50,0.62) 100%)",
+    accent:   "#34d399",
   },
 };
 
@@ -408,7 +415,9 @@ export default function ProjectsSection() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse 60% 50% at 80% 50%, rgba(124,58,237,0.06) 0%, transparent 70%)",
+          background: isLight
+            ? "radial-gradient(ellipse 60% 50% at 80% 50%, rgba(5,150,105,0.05) 0%, transparent 70%)"
+            : "radial-gradient(ellipse 60% 50% at 80% 50%, rgba(124,58,237,0.06) 0%, transparent 70%)",
         }}
       />
 

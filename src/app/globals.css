@@ -93,6 +93,10 @@ html[data-theme="dark"] {
   --section-bg: transparent;
   --card-bg: rgba(255,255,255,0.025);
   --card-border: rgba(255,255,255,0.07);
+  --orb-a: rgba(124,58,237,0.20);
+  --orb-b: rgba(6,182,212,0.15);
+  --progress-a: #7c3aed;
+  --progress-b: #22d3ee;
   --text-primary: #ffffff;
   --text-secondary: #e5e7eb;
   --text-muted: rgba(255,255,255,0.55);
@@ -125,6 +129,10 @@ html[data-theme="light"] {
   /* Cards are white — creates depth against the gray page */
   --card-bg: #ffffff;
   --card-border: rgba(17,24,39,0.09);
+  --orb-a: rgba(5,150,105,0.14);
+  --orb-b: rgba(6,182,212,0.10);
+  --progress-a: #059669;
+  --progress-b: #0891b2;
   /* Text scale: deep ink grays, never pure black */
   --text-primary: #0f172a;
   --text-secondary: #1e293b;

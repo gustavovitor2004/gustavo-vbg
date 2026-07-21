@@ -6,12 +6,23 @@ import { AppProvider } from "@/context/AppContext";
 export const metadata: Metadata = {
   title: meta.title,
   description: meta.description,
-  keywords: ["portfolio", "developer", "creator", "discord", "projects"],
+  keywords: ["portfolio", "developer", "creator", "discord", "projects", "web design", "freelance", "Next.js"],
+  metadataBase: new URL(meta.siteUrl),
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
   openGraph: {
     title: meta.title,
     description: meta.description,
     type: "website",
     url: meta.siteUrl,
+    siteName: "Gustavo VBG",
+    locale: "pt_BR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: meta.title,
+    description: meta.description,
+    creator: "@gustavo_vbg",
   },
 };
 

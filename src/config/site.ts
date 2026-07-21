@@ -29,7 +29,7 @@ export const meta = {
   description:
     "Personal portfolio and creator hub of Gustavo Gomes — developer, content creator, and community builder.",
   /** URL of your site (no trailing slash) */
-  siteUrl: "https://bloggustavogomes.vercel.app",
+  siteUrl: "https://gustavogomes.vercel.app",
 } as const;
 
 // ─── NAVBAR ────────────────────────────────────────────────────────────────

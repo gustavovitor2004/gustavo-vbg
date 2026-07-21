@@ -188,7 +188,7 @@ function ServerCard({ server }: { server: (typeof discordServers)[0] }) {
 
 export default function DiscordServers() {
   const { t } = useApp();
-  const { text } = useThemeTokens();
+  const { isLight, text } = useThemeTokens();
   const textPrimary = text.primary;
   const textSub = text.faint;
 
@@ -198,8 +198,9 @@ export default function DiscordServers() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background:
-            "radial-gradient(ellipse 50% 60% at 80% 40%, rgba(88,101,242,0.08) 0%, transparent 70%)",
+          background: isLight
+            ? "radial-gradient(ellipse 50% 60% at 80% 40%, rgba(5,150,105,0.06) 0%, transparent 70%)"
+            : "radial-gradient(ellipse 50% 60% at 80% 40%, rgba(88,101,242,0.08) 0%, transparent 70%)",
         }}
       />
 

@@ -140,7 +140,7 @@ function SocialCard({ social }: { social: (typeof socials)[0] }) {
 
 export default function ConnectSection() {
   const { t } = useApp();
-  const { text } = useThemeTokens();
+  const { isLight, text } = useThemeTokens();
   const textPrimary = text.primary;
 
   const row1 = socials.slice(0, 3);
@@ -152,8 +152,9 @@ export default function ConnectSection() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background:
-            "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(124,58,237,0.07) 0%, transparent 70%)",
+          background: isLight
+            ? "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(5,150,105,0.06) 0%, transparent 70%)"
+            : "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(124,58,237,0.07) 0%, transparent 70%)",
         }}
       />
 
@@ -170,7 +171,7 @@ export default function ConnectSection() {
             style={{
               fontSize: "11px",
               fontWeight: 700,
-              color: "#ec4899",
+              color: isLight ? "#047857" : "#ec4899",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               marginBottom: "8px",

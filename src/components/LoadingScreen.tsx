@@ -12,11 +12,20 @@ export default function LoadingScreen() {
   const exitTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
+    // Skip on subsequent visits within the same browser session
+    if (typeof window !== "undefined" && sessionStorage.getItem("visited")) {
+      setVisible(false);
+      return;
+    }
+
     const interval = setInterval(() => {
       setProgress((p) => {
         if (p >= 100) {
           clearInterval(interval);
-          exitTimer.current = setTimeout(() => setVisible(false), 400);
+          exitTimer.current = setTimeout(() => {
+            setVisible(false);
+            sessionStorage.setItem("visited", "1");
+          }, 400);
           return 100;
         }
         return p + Math.random() * 18 + 4;
@@ -39,8 +48,8 @@ export default function LoadingScreen() {
         >
           <div className="absolute inset-0 grid-bg opacity-40" />
 
-          <div className="orb w-80 h-80 bg-purple-600/20 top-1/4 left-1/4" style={{ animationDelay: "0s" }} />
-          <div className="orb w-64 h-64 bg-cyan-600/15 bottom-1/4 right-1/4" style={{ animationDelay: "3s" }} />
+          <div className="orb w-80 h-80 top-1/4 left-1/4" style={{ animationDelay: "0s", background: "var(--orb-a, rgba(124,58,237,0.20))" }} />
+          <div className="orb w-64 h-64 bottom-1/4 right-1/4" style={{ animationDelay: "3s", background: "var(--orb-b, rgba(6,182,212,0.15))" }} />
 
           <motion.div className="relative z-10 flex flex-col items-center gap-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
             <motion.div className="w-20 h-20 rounded-2xl glass neon-border-purple flex items-center justify-center text-4xl" animate={{ rotate: [0, 5, -5, 0] }} transition={{ duration: 2, repeat: Infinity }}>
@@ -55,7 +64,7 @@ export default function LoadingScreen() {
             </div>
 
             <div className="w-64 h-1 rounded-full overflow-hidden" style={{ background: "var(--card-border)" }}>
-              <motion.div className="h-full rounded-full bg-gradient-to-r from-purple-500 to-cyan-400" style={{ width: `${Math.min(progress, 100)}%` }} transition={{ duration: 0.1 }} />
+              <motion.div className="h-full rounded-full" style={{ width: `${Math.min(progress, 100)}%`, background: "linear-gradient(90deg, var(--progress-a, #7c3aed), var(--progress-b, #22d3ee))" }} transition={{ duration: 0.1 }} />
             </div>
 
             <p className="text-xs font-mono" style={{ color: "var(--text-faint)" }}>

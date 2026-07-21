@@ -4,6 +4,7 @@ import LoadingScreen from "@/components/LoadingScreen";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/sections/Hero";
 import AboutSection from "@/components/sections/AboutSection";
+import GitHubActivity from "@/components/GitHubActivity";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import MyProjectsSection from "@/components/sections/MyProjectsSection";
 import DiscordServers from "@/components/sections/DiscordServers";
@@ -18,6 +19,7 @@ export default function Home() {
         <Navbar />
         <Hero />
         <AboutSection />
+        <GitHubActivity />
         <ProjectsSection />
         <MyProjectsSection />
         <DiscordServers />

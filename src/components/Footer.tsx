@@ -9,7 +9,7 @@ import { useThemeTokens } from "@/hooks/useThemeTokens";
 
 export default function Footer() {
   const { t } = useApp();
-  const { text, surface } = useThemeTokens();
+  const { isLight, text, surface } = useThemeTokens();
   const year = new Date().getFullYear();
 
   const footerLinks = {
@@ -30,11 +30,11 @@ export default function Footer() {
     <footer style={{ position: "relative", borderTop: `1px solid ${surface.border}`, background: surface.page }}>
       <div
         className="absolute top-0 left-1/2 pointer-events-none"
-        style={{ transform: "translateX(-50%)", width: "600px", height: "1px", background: "linear-gradient(90deg, transparent, rgba(124,58,237,0.4), transparent)" }}
+        style={{ transform: "translateX(-50%)", width: "600px", height: "1px", background: isLight ? "linear-gradient(90deg, transparent, rgba(5,150,105,0.35), transparent)" : "linear-gradient(90deg, transparent, rgba(124,58,237,0.4), transparent)" }}
       />
 
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "64px 32px 40px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "48px", marginBottom: "48px" }} className="grid-cols-1 sm:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-12" style={{ marginBottom: "48px" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
               <div style={{ width: "34px", height: "34px", borderRadius: "10px", background: "linear-gradient(135deg, #7c3aed 0%, #2563eb 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "15px", fontWeight: 900, color: "#ffffff", boxShadow: "0 4px 16px rgba(124,58,237,0.4)", flexShrink: 0 }}>
@@ -123,11 +123,11 @@ export default function Footer() {
           </p>
           <p style={{ fontSize: "12px", color: text.faint }}>
             {t("footer.builtWith")}{" "}
-            <span style={{ color: "rgba(167,139,250,0.85)" }}>Next.js</span>
+            <span style={{ color: isLight ? "#047857" : "rgba(167,139,250,0.85)" }}>Next.js</span>
             {" "}·{" "}
-            <span style={{ color: "rgba(167,139,250,0.85)" }}>TailwindCSS</span>
+            <span style={{ color: isLight ? "#047857" : "rgba(167,139,250,0.85)" }}>TailwindCSS</span>
             {" "}·{" "}
-            <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(167,139,250,0.85)", textDecoration: "none" }}>
+            <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" style={{ color: isLight ? "#047857" : "rgba(167,139,250,0.85)", textDecoration: "none" }}>
               Vercel
             </a>
           </p>
