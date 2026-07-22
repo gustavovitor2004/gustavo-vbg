@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { useApp } from "@/context/AppContext";
 import { useThemeTokens } from "@/hooks/useThemeTokens";
+import { projects } from "@/data/projects";
 
 const TECH = [
   "Next.js", "TypeScript", "React", "Node.js",
@@ -164,9 +165,9 @@ export default function ManifestoSection() {
               }}
             >
               {[
-                { num: "7+", labelKey: "about.section.statSites" },
+                { num: `${projects.length}+`, labelKey: "about.section.statSites" },
                 { num: "2+", labelKey: "about.section.statYears" },
-                { num: "1", labelKey: "about.section.statSaas" },
+                { num: "1", labelKey: "about.section.statVibe" },
               ].map(({ num, labelKey }) => (
                 <div
                   key={labelKey}

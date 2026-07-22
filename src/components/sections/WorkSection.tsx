@@ -11,17 +11,19 @@ type WorkEntry = {
   typeKey: string;
   year: string;
   url?: string;
+  githubUrl?: string;
   featured?: boolean;
 };
 
 const WORK: WorkEntry[] = [
-  { n: "01", titleKey: "GridHunter", typeKey: "work.type.saas", year: "2025", url: "https://gridhunter.vercel.app", featured: true },
-  { n: "02", titleKey: "Espaço Prime", typeKey: "work.type.landing", year: "2024", url: "https://espacoprime-whatsappgustavo-75998596215.vercel.app" },
-  { n: "03", titleKey: "Costelão do Gaúcho", typeKey: "work.type.restaurant", year: "2024", url: "https://costelaodogaucho-whatsappgustavo-75998596215.vercel.app/" },
-  { n: "04", titleKey: "Cheiro & Pão", typeKey: "work.type.bakery", year: "2024", url: "https://cheiro-e-pao-whatsappgustavo-75998596215.vercel.app/" },
-  { n: "05", titleKey: "Lalay Pet Shop", typeKey: "work.type.petshop", year: "2024", url: "https://lalaypetshop-whatsappgustavo-75998596215.vercel.app/" },
-  { n: "06", titleKey: "Pinheiro Escapamentos", typeKey: "work.type.automotive", year: "2024", url: "https://pinheiroescapamentos-whatsappgustavo-75998596215.vercel.app/" },
-  { n: "07", titleKey: "Casa da Mangueira Eventos", typeKey: "work.type.events", year: "2024", url: "https://casadamangueiraeventos-whatsappgustavo-75998596215.vercel.app/" },
+  {
+    n: "01",
+    titleKey: "Dra. Paloma Almeida",
+    typeKey: "work.type.legal",
+    year: "2025",
+    url: "https://advpalmeida.vercel.app",
+    githubUrl: "https://github.com/gustavovitor2004/apalomabarros",
+  },
 ];
 
 function WorkRow({ entry, i }: { entry: WorkEntry; i: number }) {
@@ -30,7 +32,7 @@ function WorkRow({ entry, i }: { entry: WorkEntry; i: number }) {
   const { text, surface } = useThemeTokens();
   const shouldReduce = useReducedMotion();
 
-  const Row = (
+  return (
     <motion.div
       initial={shouldReduce ? undefined : { opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -38,9 +40,10 @@ function WorkRow({ entry, i }: { entry: WorkEntry; i: number }) {
       transition={{ duration: 0.4, delay: i * 0.07, ease: "easeOut" as const }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={() => entry.url && window.open(entry.url, "_blank", "noopener,noreferrer")}
       style={{
         display: "grid",
-        gridTemplateColumns: "48px 1fr auto auto 32px",
+        gridTemplateColumns: "48px 1fr auto auto auto",
         alignItems: "center",
         gap: "clamp(8px, 2vw, 24px)",
         padding: "clamp(14px, 2vw, 20px) 0",
@@ -125,37 +128,55 @@ function WorkRow({ entry, i }: { entry: WorkEntry; i: number }) {
         {entry.year}
       </span>
 
-      {/* Arrow */}
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        {entry.url && (
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke={hovered ? "var(--accent)" : text.faint}
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{ transition: "stroke 0.15s, transform 0.15s", transform: hovered ? "translate(2px,-2px)" : "none" }}
-            aria-hidden="true"
+      {/* Icons */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "10px" }}>
+        {entry.githubUrl && (
+          <a
+            href={entry.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              display: "flex",
+              color: hovered ? text.primary : text.faint,
+              transition: "color 0.15s",
+            }}
+            aria-label="View on GitHub"
           >
-            <line x1="7" y1="17" x2="17" y2="7" />
-            <polyline points="7 7 17 7 17 17" />
-          </svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+            </svg>
+          </a>
+        )}
+        {entry.url && (
+          <a
+            href={entry.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            style={{ display: "flex" }}
+            aria-label={`Visit ${entry.titleKey}`}
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={hovered ? "var(--accent)" : text.faint}
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ transition: "stroke 0.15s, transform 0.15s", transform: hovered ? "translate(2px,-2px)" : "none" }}
+              aria-hidden="true"
+            >
+              <line x1="7" y1="17" x2="17" y2="7" />
+              <polyline points="7 7 17 7 17 17" />
+            </svg>
+          </a>
         )}
       </div>
     </motion.div>
   );
-
-  if (entry.url) {
-    return (
-      <a href={entry.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", display: "block" }}>
-        {Row}
-      </a>
-    );
-  }
-  return Row;
 }
 
 export default function WorkSection() {
@@ -230,7 +251,7 @@ export default function WorkSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "48px 1fr auto auto 32px",
+            gridTemplateColumns: "48px 1fr auto auto auto",
             gap: "clamp(8px, 2vw, 24px)",
             paddingBottom: "12px",
             borderBottom: `1px solid ${surface.border}`,
